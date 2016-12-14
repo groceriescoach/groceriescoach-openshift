@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Homebrand Baking Aids Bi Carb Soda",
+    "description": " Homebrand Baking Aids Bi<br>Carb Soda 500g",
+    "price": 1.79,
+    "saving": 0,
+    "wasPrice": 1.79,
+    "imageUrl": "https://www2.woolworthsonline.com.au/Content/wowProductImages/small/251189.jpg",
+    "store": "Woolworths",
+    "packageSize": "500g",
+    "unitPrice": null
+  },
+  {
+    "name": "Mckenzie's Bi Carb Soda",
+    "description": " Mckenzie's Bi Carb Soda 500g",
+    "price": 2.5,
+    "saving": 0,
+    "wasPrice": 2.5,
+    "imageUrl": "https://www2.woolworthsonline.com.au/Content/wowProductImages/small/075201.jpg",
+    "store": "Woolworths",
+    "packageSize": "500g",
+    "unitPrice": null
+  },
+  {
+    "name": "Bicarbonate Soda",
+    "description": null,
+    "price": 2.64,
+    "saving": null,
+    "wasPrice": null,
+    "imageUrl": "http://shop.coles.com.au/wcsstore/Coles-CAS/images/4/7/3/473953-th.jpg",
+    "store": "Coles",
+    "packageSize": "500g",
+    "unitPrice": "$0.53 per 100G"
+  },
+  {
+    "name": "Bicarbonate Soda",
+    "description": null,
+    "price": 3.7,
+    "saving": null,
+    "wasPrice": null,
+    "imageUrl": "http://shop.coles.com.au/wcsstore/Coles-CAS/images/5/2/2/5226882-th.jpg",
+    "store": "Coles",
+    "packageSize": "1kg",
+    "unitPrice": "$0.37 per 100G"
+  },
+  {
+    "name": "Bexters Soda Crystals 200g",
+    "description": "Bexters Soda Crystals 200g",
+    "price": 3.99,
+    "saving": 1,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/73116/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Mckenzies Bi Carb Soda",
+    "description": " Mckenzies Bi Carb Soda 350g",
+    "price": 4,
+    "saving": 0,
+    "wasPrice": 4,
+    "imageUrl": "https://www2.woolworthsonline.com.au/Content/wowProductImages/small/347118.jpg",
+    "store": "Woolworths",
+    "packageSize": "350g",
+    "unitPrice": null
+  },
+  {
+    "name": "Bicarbonate Soda Canister",
+    "description": null,
+    "price": 4.4,
+    "saving": null,
+    "wasPrice": null,
+    "imageUrl": "http://shop.coles.com.au/wcsstore/Coles-CAS/images/5/8/2/5824818-th.jpg",
+    "store": "Coles",
+    "packageSize": "350g",
+    "unitPrice": "$1.26 per 100G"
+  },
+  {
+    "name": "Fleet Phospho-Soda 45ml",
+    "description": "Fleet Phospho-Soda 45ml",
+    "price": 4.99,
+    "saving": 0,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/4893/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Gaviscon P Liquid 1000mL (2 x 500mL)",
+    "description": "Gaviscon P Liquid 1000mL (2 x 500mL)",
+    "price": 7.39,
+    "saving": 0,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/5142/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Bexters Soda Crystals 800g",
+    "description": "Bexters Soda Crystals 800g",
+    "price": 8.99,
+    "saving": 1,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/73117/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Sodibic 840mg 100 Capsules (Prescription Only)",
+    "description": "Sodibic 840mg 100 Capsules (Prescription Only)",
+    "price": 10.69,
+    "saving": 0,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/7793/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Sodibic 840mg 100 Capsules",
+    "description": "Sodibic 840mg 100 Capsules",
+    "price": 10.69,
+    "saving": 0,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/69445/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Chlorvescent Tablets 60",
+    "description": "Chlorvescent Tablets 60",
+    "price": 11.69,
+    "saving": 0,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/61081/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Chlorvescent Tablets 180 (3 x 60)",
+    "description": "Chlorvescent Tablets 180 (3 x 60)",
+    "price": 11.69,
+    "saving": 0,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/71867/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Bexters Soda Crystals Applicator",
+    "description": "Bexters Soda Crystals Applicator",
+    "price": 17.99,
+    "saving": 2,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/75250/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  },
+  {
+    "name": "Finish Quantum Powerball Tablets Baking Soda 45 Pack",
+    "description": "Finish Quantum Powerball Tablets Baking Soda 45 Pack",
+    "price": 19.99,
+    "saving": 0,
+    "wasPrice": null,
+    "imageUrl": "https://static.chemistwarehouse.com.au/ams/media/productimages/76497/100.jpg",
+    "store": "ChemistWarehouse",
+    "packageSize": null,
+    "unitPrice": null
+  }
+]

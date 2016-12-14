@@ -1,0 +1,36 @@
+<md-card md-whiteframe="5">
+    <md-card-header>
+        <md-card-header-text>
+<!--
+            <span class="md-headline">{{ product.name }}</span>
+            <span class="md-subhead">{{ product.description }}</span>
+-->
+        </md-card-header-text>
+    </md-card-header>
+    <md-card-title layout-padding>
+        <md-card-title-media>
+            <div class="md-media-lg">
+                <img ng-src="{{product.imageUrl}}" alt="{{product.name}}"/>
+            </div>
+        </md-card-title-media>
+        <md-card-title-text>
+            <span class="md-headline">{{product.brand}} {{ product.name }}</span>
+            <span class="md-subhead">{{ product.description }}</span>
+            <span class="md-subhead">{{ product.price | currency}} <span ng-show="product.unitPriceStr">({{ product.unitPriceStr }})</span></span>
+            <span class="md-subhead" ng-show="product.saving > 0"><span class="discount">Was: {{ product.wasPrice | currency }} Save: {{ product.saving | currency }}</span></span>
+            <span ng-show="product.quantityPriceList">
+                <span class="md-subhead" ng-repeat="quantityPrice in product.quantityPriceList">
+                    <span class="discount">
+                        Buy {{ quantityPrice.quantity }} for {{ quantityPrice.price | currency}}
+                        <span ng-show="quantityPrice.unitPriceStr">({{ quantityPrice.unitPriceStr }})</span>
+                    </span>
+                </span>
+            </span>
+            <span class="md-subhead">{{ product.packageSize }}</span>
+            <span class="md-subhead">{{ product.store }}</span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+
+    </md-card-content>
+</md-card>

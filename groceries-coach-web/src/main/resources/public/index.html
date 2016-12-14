@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="GroceriesCoachApp">
+    <head>
+        <title>Groceries Coach</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--<link rel="stylesheet" href="css/angular-material-gc.css">-->
+        <link rel="stylesheet" href="css/angular-material-1.1.0-rc5/angular-material.min.css">
+        <link rel="stylesheet" href="css/groceries-coach.css">
+        <link rel="stylesheet" href="css/app.css">
+    </head>
+    <body ng-cloak class="ng-cloak">
+
+        <md-toolbar class="md-menu-toolbar">
+            <md-menu-bar>
+                <div layout="row">
+                    <h1>Groceries Coach</h1>
+                </div>
+            </md-menu-bar>
+        </md-toolbar>
+
+
+        <div ui-view></div>
+
+
+        <script src="js/lib/angular-1.5.7/angular.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-route.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-aria.min.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-animate.min.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-loader.min.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-sanitize.min.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-resource.min.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-touch.min.js"></script>
+        <script src="js/lib/angular-1.5.7/angular-messages.min.js"></script>
+
+        <script src="js/lib/angular-material-1.1.0-rc5/angular-material.min.js"></script>
+
+        <script src="js/lib/angular-ui-router/angular-ui-router.min.js"></script>
+
+
+        <!--<script src="app/groceriescoach.js"></script>-->
+
+        <script src="js/app/common/common-utilities.module.js"></script>
+        <script src="js/app/common/service-utility.js"></script>
+
+        <script src="js/app/productsearch/product-search.module.js"></script>
+        <script src="js/app/productsearch/product-search.controller.js"></script>
+        <script src="js/app/productsearch/product-search.service.js"></script>
+
+        <script src="js/app/security/security.module.js"></script>
+        <script src="js/app/security/security.controller.js"></script>
+
+        <script src="js/app/widgets/widgets.module.js"></script>
+        <script src="js/app/widgets/gcProductsInfo.js"></script>
+        <script src="js/app/widgets/gcProductInfo.js"></script>
+
+        <script src="js/app/app.js"></script>
+
+
+    </body>
+</html>

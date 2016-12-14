@@ -1,0 +1,22 @@
+{
+  "Products": null,
+  "Corrections": [
+    {
+      "Word": "redrock",
+      "CorrectionList": [
+        "readers",
+        "retractable",
+        "retractible",
+        "retroglam",
+        "riders",
+        "rutherglen"
+      ]
+    },
+    {
+      "Word": "deli",
+      "CorrectionList": []
+    }
+  ],
+  "SearchResultsCount": 0,
+  "VisualShoppingAisleResponse": null
+}

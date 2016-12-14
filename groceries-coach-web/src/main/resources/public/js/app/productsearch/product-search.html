@@ -1,0 +1,53 @@
+<div ng-controller="ProductSearchController as productSearchVm" layout="row" layout-sm="column" layout-xs="column">
+    <div flex-gt-sm="40">
+        <form id="productSearchForm" name="productSearchForm" ng-submit="productSearchVm.searchForProducts()" flex>
+            <md-content layout-padding>
+                <md-input-container class="md-block">
+                    <label for="keywords">Product keywords:</label>
+                    <input id="keywords" name="keywords" type="text" ng-model="productSearchVm.searchCriteria.keywords"
+                           required md-maxlength="50" />
+                    <div ng-messages="productSearchForm.keywords.$error">
+                        <div ng-message="required">
+                            Keywords is required.
+                        </div>
+                        <div ng-message="md-maxlength">
+                            Please restrict keywords to 50 characters.
+                        </div>
+                    </div>
+                </md-input-container>
+            </md-content>
+            <md-content layout-padding>
+                <div layout layout-sm="row" layout-wrap>
+                    <div ng-repeat="store in productSearchVm.stores" flex="50">
+                        <md-checkbox ng-checked="productSearchVm.exists(store.key)" ng-click="productSearchVm.toggle(store.key)" aria-label="store.value">
+                            {{ store.value }}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </md-content>
+            <md-content layout-padding>
+                <md-input-container class="md-block">
+                    <label>Sort by:</label>
+                    <md-select id="searchCriteria" name="searchCriteria" ng-model="productSearchVm.searchCriteria.sortBy" required>
+                        <md-option ng-repeat="sortType in productSearchVm.sortTypes" value="{{sortType.key}}">
+                            {{sortType.value}}
+                        </md-option>
+                    </md-select>
+                    <div ng-messages="productSearchForm.searchCriteria.$error">
+                        <div ng-message="required">
+                            Sort by is required.
+                        </div>
+                    </div>
+                </md-input-container>
+            </md-content>
+            <div layout layout-sm="column">
+                <md-button class="md-primary md-cornered" type="submit" ng-disabled="productSearchForm.$invalid">
+                    Search
+                </md-button>
+            </div>
+        </form>
+    </div>
+    <div flex-gt-sm="60">
+        <gc-products-info products="productSearchVm.products"></gc-products-info>
+    </div>
+</div>

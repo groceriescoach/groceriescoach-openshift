@@ -1,0 +1,216 @@
+// 20160718084445
+// https://www.woolworths.com.au/apis/ui/Search/products?IsSpecial=false&PageNumber=1&PageSize=50&SearchTerm=bicarb-soda&SortType=Relevance
+
+{
+  "Products": [
+    {
+      "Products": [
+        {
+          "Stockcode": 347118,
+          "CupPrice": 1.14,
+          "CupMeasure": "100G",
+          "CupString": "$1.14 / 100G",
+          "HasCupPrice": true,
+          "Price": 4,
+          "Name": "Mckenzies Bi Carb Soda",
+          "UrlFriendlyName": "mckenzies-bi-carb-soda",
+          "Description": " Mckenzies Bi Carb Soda 350g",
+          "SmallImageFile": "/Content/wowProductImages/small/347118.jpg",
+          "MediumImageFile": "/Content/wowProductImages/medium/347118.jpg",
+          "LargeImageFile": "/Content/wowProductImages/large/347118.jpg",
+          "IsOnSpecial": false,
+          "IsEdrSpecial": false,
+          "SavingsAmount": 0,
+          "WasPrice": 4,
+          "QuantityInTrolley": 0,
+          "Unit": "Each",
+          "MinimumQuantity": 1,
+          "IsInTrolley": false,
+          "Source": "SearchProducts",
+          "SupplyLimit": 36,
+          "PackageSize": "350g",
+          "IsPmDelivery": false,
+          "IsForCollection": true,
+          "IsForDelivery": true,
+          "ImageTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": "",
+            "TagType": "None"
+          },
+          "CentreTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": null,
+            "TagType": "None"
+          },
+          "FooterTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": null,
+            "TagType": "None"
+          },
+          "IsCentreTag": false,
+          "IsFooterEnabled": false,
+          "UnitWeightInGrams": 350,
+          "SupplyLimitMessage": "'Mckenzies Bi Carb Soda' has a supply limit of 36. The quantity in your trolley has been reduced accordingly. To purchase a larger quantity, please contact us on 1800 000 610, or e-mail us at shoponline@woolworths.com.au. Please note - we do not supply trade orders.",
+          "SmallFormatDescription": "Mckenzies Bi Carb Soda",
+          "IsAvailable": true,
+          "AgeRestricted": false,
+          "DisplayQuantity": 1,
+          "RichDescription": "mckenzie's bi-carb is a natural food grade product that does not use any aluminium-based additivies in the processing of the product. it has a number of uses in and around the home.",
+          "IsDeliveryPass": false,
+          "HideWasSavedPrice": false
+        }
+      ],
+      "Name": " Mckenzies Bi Carb Soda "
+    },
+    {
+      "Products": [
+        {
+          "Stockcode": 75201,
+          "CupPrice": 0.5,
+          "CupMeasure": "100G",
+          "CupString": "$0.50 / 100G",
+          "HasCupPrice": true,
+          "Price": 2.5,
+          "Name": "Mckenzie's Bi Carb Soda",
+          "UrlFriendlyName": "mckenzie-s-bi-carb-soda",
+          "Description": " Mckenzie's Bi Carb Soda 500g",
+          "SmallImageFile": "/Content/wowProductImages/small/075201.jpg",
+          "MediumImageFile": "/Content/wowProductImages/medium/075201.jpg",
+          "LargeImageFile": "/Content/wowProductImages/large/075201.jpg",
+          "IsOnSpecial": false,
+          "IsEdrSpecial": false,
+          "SavingsAmount": 0.0,
+          "WasPrice": 2.5,
+          "QuantityInTrolley": 0,
+          "Unit": "Each",
+          "MinimumQuantity": 1,
+          "IsInTrolley": false,
+          "Source": "SearchProducts",
+          "SupplyLimit": 36,
+          "PackageSize": "500g",
+          "IsPmDelivery": false,
+          "IsForCollection": true,
+          "IsForDelivery": true,
+          "ImageTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": "",
+            "TagType": "None"
+          },
+          "CentreTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": null,
+            "TagType": "None"
+          },
+          "FooterTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": null,
+            "TagType": "None"
+          },
+          "IsCentreTag": false,
+          "IsFooterEnabled": false,
+          "UnitWeightInGrams": 500,
+          "SupplyLimitMessage": "'Mckenzie's Bi Carb Soda' has a supply limit of 36. The quantity in your trolley has been reduced accordingly. To purchase a larger quantity, please contact us on 1800 000 610, or e-mail us at shoponline@woolworths.com.au. Please note - we do not supply trade orders.",
+          "SmallFormatDescription": "Mckenzie's Bi Carb Soda",
+          "IsAvailable": true,
+          "AgeRestricted": false,
+          "DisplayQuantity": 1,
+          "RichDescription": "mckenzie's bi-carb is a natural food grade product that does not use any aluminium-based additives in the processing of the product. it has a number of uses in and around the home.",
+          "IsDeliveryPass": false,
+          "HideWasSavedPrice": false
+        }
+      ],
+      "Name": " Mckenzie's Bi Carb Soda "
+    },
+    {
+      "Products": [
+        {
+          "Stockcode": 251189,
+          "CupPrice": 0.32,
+          "CupMeasure": "100G",
+          "CupString": "$0.32 / 100G",
+          "HasCupPrice": true,
+          "Price": 1.61,
+          "Name": "Homebrand Baking Aids Bi Carb Soda",
+          "UrlFriendlyName": "homebrand-baking-aids-bi-carb-soda",
+          "Description": " Homebrand Baking Aids Bi<br>Carb Soda 500g",
+          "SmallImageFile": "/Content/wowProductImages/small/251189.jpg",
+          "MediumImageFile": "/Content/wowProductImages/medium/251189.jpg",
+          "LargeImageFile": "/Content/wowProductImages/medium/251189.jpg",
+          "IsOnSpecial": false,
+          "IsEdrSpecial": false,
+          "SavingsAmount": 0.00,
+          "WasPrice": 1.61,
+          "QuantityInTrolley": 0,
+          "Unit": "Each",
+          "MinimumQuantity": 1,
+          "IsInTrolley": false,
+          "Source": "SearchProducts",
+          "SupplyLimit": 36,
+          "PackageSize": "500g",
+          "IsPmDelivery": false,
+          "IsForCollection": true,
+          "IsForDelivery": true,
+          "ImageTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": "",
+            "TagType": "None"
+          },
+          "CentreTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": null,
+            "TagType": "None"
+          },
+          "FooterTag": {
+            "TagContent": null,
+            "TagLink": null,
+            "FallbackText": null,
+            "TagType": "None"
+          },
+          "IsCentreTag": false,
+          "IsFooterEnabled": false,
+          "UnitWeightInGrams": 500,
+          "SupplyLimitMessage": "'Homebrand Baking Aids Bi Carb Soda' has a supply limit of 36. The quantity in your trolley has been reduced accordingly. To purchase a larger quantity, please contact us on 1800 000 610, or e-mail us at shoponline@woolworths.com.au. Please note - we do not supply trade orders.",
+          "SmallFormatDescription": "Homebrand Baking Aids Bi Carb Soda",
+          "IsAvailable": true,
+          "AgeRestricted": false,
+          "DisplayQuantity": 1,
+          "RichDescription": "",
+          "IsDeliveryPass": false,
+          "HideWasSavedPrice": false
+        }
+      ],
+      "Name": " Homebrand Baking Aids Bi Carb<br>Soda "
+    }
+  ],
+  "Corrections": null,
+  "SearchResultsCount": 3,
+  "VisualShoppingAisleResponse": [
+    {
+      "Name": "Spreads, Breakfast, Baking \n& Desserts",
+      "UrlFriendlyName": "spreads-breakfast-baking-desserts",
+      "Color": "#ffffff",
+      "TextColor": "#373737",
+      "NumberColor": "#929292",
+      "IconFile": "/Content/wowAisleImages/spreads-breakfast-baking-desserts.svg",
+      "ChildCategories": [
+        {
+          "Name": "baking ingredients",
+          "UrlFriendlyName": "baking-ingredients",
+          "ImageFile": "baking-ingredients.jpg",
+          "ProductCount": 3,
+          "IsRestricted": false,
+          "IsEligibleForRanking": false
+        }
+      ],
+      "HasLandingPage": false
+    }
+  ]
+}

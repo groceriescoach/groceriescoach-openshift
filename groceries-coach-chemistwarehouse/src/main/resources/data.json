@@ -1,0 +1,125 @@
+//  http://www.chemistwarehouse.com.au/cmsglobalfiles/handlers/predictive_search.ashx?term=salt
+//  https://static.chemistwarehouse.com.au/ams/media/productimages/55048/200.jpg
+
+[
+  {
+    "id": "647",
+    "label": "Scheussler Tissue Salts",
+    "value": "Scheussler Tissue Salts",
+    "category": "Category",
+    "image": "0",
+    "Price": "",
+    "Savings": "0",
+    "IsScript": "0"
+  },
+  {
+    "id": "7513",
+    "label": "Toppin Salt 100 Tablets",
+    "value": "Toppin Salt 100 Tablets",
+    "category": "Product",
+    "image": "1",
+    "Price": "10.99",
+    "Savings": "1.7",
+    "IsScript": "0"
+  },
+  {
+    "id": "74511",
+    "label": "Blooms Celtic Organic Sea Salt 500g",
+    "value": "Blooms Celtic Organic Sea Salt 500g",
+    "category": "Product",
+    "image": "1",
+    "Price": "7.99",
+    "Savings": "1.96",
+    "IsScript": "0"
+  },
+  {
+    "id": "4268",
+    "label": "Eno Fruit Salt Lemon 200g",
+    "value": "Eno Fruit Salt Lemon 200g",
+    "category": "Product",
+    "image": "1",
+    "Price": "9.99",
+    "Savings": "0",
+    "IsScript": "0"
+  },
+  {
+    "id": "4270",
+    "label": "Eno Fruit Salt Regular 200g",
+    "value": "Eno Fruit Salt Regular 200g",
+    "category": "Product",
+    "image": "1",
+    "Price": "9.99",
+    "Savings": "0",
+    "IsScript": "0"
+  },
+  {
+    "id": "74082",
+    "label": "Piranha Vege Crackers Balsamic Vinegar & Sea Salt 100g",
+    "value": "Piranha Vege Crackers Balsamic Vinegar & Sea Salt 100g",
+    "category": "Product",
+    "image": "1",
+    "Price": "2.99",
+    "Savings": "0.3",
+    "IsScript": "0"
+  },
+  {
+    "id": "62748",
+    "label": "Martin & Pleasance Tissue Salts Calc Fluor Elasticity 125 Tablets",
+    "value": "Martin & Pleasance Tissue Salts Calc Fluor Elasticity 125 Tablets",
+    "category": "Product",
+    "image": "1",
+    "Price": "10.69",
+    "Savings": "1.26",
+    "IsScript": "0"
+  },
+  {
+    "id": "62749",
+    "label": "Martin & Pleasance Tissue Salts Comb 12 General Tonic 125 Tablets",
+    "value": "Martin & Pleasance Tissue Salts Comb 12 General Tonic 125 Tablets",
+    "category": "Product",
+    "image": "1",
+    "Price": "10.69",
+    "Savings": "1.26",
+    "IsScript": "0"
+  },
+  {
+    "id": "62750",
+    "label": "Martin & Pleasance Tissue Salts Comb 5 Nerve Tonic 125 Tablets",
+    "value": "Martin & Pleasance Tissue Salts Comb 5 Nerve Tonic 125 Tablets",
+    "category": "Product",
+    "image": "1",
+    "Price": "10.69",
+    "Savings": "1.26",
+    "IsScript": "0"
+  },
+  {
+    "id": "62752",
+    "label": "Martin & Pleasance Tissue Salts Comb Q Sinus 125 Tablets",
+    "value": "Martin & Pleasance Tissue Salts Comb Q Sinus 125 Tablets",
+    "category": "Product",
+    "image": "1",
+    "Price": "10.69",
+    "Savings": "1.26",
+    "IsScript": "0"
+  },
+  {
+    "id": "62754",
+    "label": "Martin & Pleasance Tissue Salts Mag Phos Muscle Relaxant 125 Tablets",
+    "value": "Martin & Pleasance Tissue Salts Mag Phos Muscle Relaxant 125 Tablets",
+    "category": "Product",
+    "image": "1",
+    "Price": "10.69",
+    "Savings": "1.26",
+    "IsScript": "0"
+  },
+  {
+    "id": "0",
+    "label": "",
+    "value": "",
+    "category": "Product",
+    "image": "0",
+    "Price": "0",
+    "Savings": "0",
+    "IsScript": "0"
+  }
+]

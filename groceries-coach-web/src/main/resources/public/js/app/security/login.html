@@ -1,0 +1,31 @@
+<div layout="row">
+    <div flex="30"></div>
+    <div flex="40" ng-controller="SecurityController as securityVm" layout="column" class="md-padding">
+        <form id="loginForm" name="loginForm" ng-submit="securityVm.authenticate()">
+            <md-input-container>
+                <label for="username">Username:</label>
+                <input id="username" name="username" type="text" required md-maxlength="50"
+                       ng-model="securityVm.credentials.username" minlength="4"/>
+
+                <div ng-messages="loginForm.username.$error" ng-show="loginForm.username.$dirty">
+                    <div ng-message="required">Username is required!</div>
+                    <div ng-message="md-maxlength">That's too long</div>
+                    <div ng-message="minlength">That's too short</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label for="password">Password:</label>
+                <input id="password" type="password" name="password" required
+                       ng-model="securityVm.credentials.password"/>
+
+                <div ng-messages="loginForm.password.$error" ng-show="loginForm.password.$dirty">
+                    <div ng-message="required">Password is required!</div>
+                </div>
+            </md-input-container>
+            <md-button class="md-primary" type="submit">
+                Log in
+            </md-button>
+        </form>
+    </div>
+    <div flex="30"></div>
+</div>
