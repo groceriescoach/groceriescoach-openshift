@@ -47,9 +47,9 @@ public class WoolworthsService implements StoreSearchService {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://www.woolworths.com.au/apis/ui/Search/products")
                 .queryParam("IsSpecial", "false")
                 .queryParam("PageNumber", "1")
-                .queryParam("PageSize", "50")
+                .queryParam("PageSize", "36")
                 .queryParam("SearchTerm", trimmedKeywords)
-                .queryParam("SortType", WoolworthsSortType.Relevance.getKey());
+                .queryParam("SortType", WoolworthsSortType.Personalised.getKey());
 
         WoolworthsSearchResult searchResult = restTemplate.getForObject(builder.build().toUri(), WoolworthsSearchResult.class);
 

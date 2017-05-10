@@ -4,7 +4,7 @@ import com.groceriescoach.core.domain.GroceriesCoachSortType;
 
 public enum WoolworthsSortType {
 
-    Relevance("Relevance", "Relevance"),
+    Personalised("Personalised", "Personalised"),
     A_TO_Z_ProductName("Name", "A to Z (Product Name)"),
     Z_TO_A_ProductName("NameDesc", "Z to A (Product Name"),
     Aisle("Aisle", "Aisle"),
