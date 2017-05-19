@@ -29,7 +29,35 @@
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>
-            <artifactId>groceries-coach-woolies</artifactId>
+            <artifactId>groceries-coach-amcal</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-babiesrus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-babyandtoddlertown</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-babybounce</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-babybunting</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-babykingdom</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-babyvillage</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-bigw</artifactId>
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>
@@ -41,7 +69,19 @@
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-kmart</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-priceline</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-target</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-woolies</artifactId>
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>

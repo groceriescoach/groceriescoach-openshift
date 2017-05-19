@@ -40,7 +40,7 @@ public class JsonMappingTest {
 
         for (File file : files) {
             WoolworthsSearchResult searchResult = mapper.reader().forType(WoolworthsSearchResult.class).readValue(file);
-            List<Product> products = searchResult.toProducts();
+            List<Product> products = searchResult.toProducts("test");
             logger.debug("{}", products);
         }
     }
@@ -66,7 +66,7 @@ public class JsonMappingTest {
 
         for (File file : files) {
             WoolworthsSearchResult searchResult = mapper.reader().forType(WoolworthsSearchResult.class).readValue(file);
-            List<Product> products = searchResult.toProducts();
+            List<Product> products = searchResult.toProducts("test");
             logger.debug("{}", products);
         }
     }

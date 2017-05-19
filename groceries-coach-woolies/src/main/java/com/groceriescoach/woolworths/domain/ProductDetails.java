@@ -482,19 +482,20 @@ public class ProductDetails implements Serializable {
         this.deliveryPass = deliveryPass;
     }
 
-    public static List<Product> toProducts(ProductDetails productDetailsArray[]) {
+    public static List<Product> toProducts(ProductDetails productDetailsArray[], String keywords) {
         List<Product> products = new ArrayList<>();
         for (ProductDetails productDetails: productDetailsArray) {
-            products.add(productDetails.toGroceriesCoachProduct());
+            products.add(productDetails.toGroceriesCoachProduct(keywords));
         }
         return products;
     }
 
-    private Product toGroceriesCoachProduct() {
+    private Product toGroceriesCoachProduct(String keywords) {
         Product product = new Product();
         product.setName(removeHtml(name));
         product.setDescription(removeHtml(description));
-        product.setImageUrl(mediumImageFile);
+        product.setImageUrl(largeImageFile);
+        product.setUrl("https://www.woolworths.com.au/Shop/Search/Products?searchTerm=" + keywords + "&productId=" + stockCode);
         product.setPrice(price);
         product.setWasPrice(wasPrice);
         product.setPackageSize(packageSize);

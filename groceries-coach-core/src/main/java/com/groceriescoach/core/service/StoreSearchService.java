@@ -7,9 +7,9 @@ import com.groceriescoach.core.domain.Store;
 import java.util.List;
 import java.util.concurrent.Future;
 
-public interface StoreSearchService {
+public interface StoreSearchService<P extends Product> {
 
-    Future<List<Product>> search(String keywords, GroceriesCoachSortType sortType);
+    Future<List<P>> search(String keywords, GroceriesCoachSortType sortType);
 
     Store getStore();
 }

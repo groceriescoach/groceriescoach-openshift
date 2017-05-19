@@ -17,11 +17,9 @@ import static com.groceriescoach.core.domain.Store.ChemistWarehouse;
 public class ChemistWarehouseProduct implements Serializable {
 
     private String name;
-
+    private String url;
     private String image;
-
     private Double price;
-
     private Double savings;
 
 
@@ -31,10 +29,15 @@ public class ChemistWarehouseProduct implements Serializable {
 
         chemistWarehouseProduct.setName(extractNameFromProductElement(productElement));
         chemistWarehouseProduct.setImage(extractImageFromProductElement(productElement));
+        chemistWarehouseProduct.setUrl(extractUrlFromProductElement(productElement));
         chemistWarehouseProduct.setPrice(extractPriceFromProductElement(productElement));
         chemistWarehouseProduct.setSavings(extractSavingsFromProductElement(productElement));
 
         return chemistWarehouseProduct;
+    }
+
+    private static String extractUrlFromProductElement(Element productElement) {
+        return "http://www.chemistwarehouse.com.au" + productElement.select("a").get(0).attr("href");
     }
 
     private static String extractNameFromProductElement(Element productElement) {
@@ -103,9 +106,18 @@ public class ChemistWarehouseProduct implements Serializable {
         this.name = name;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Product toGroceriesCoachProduct() {
         Product product = new Product();
         product.setName(name);
+        product.setUrl(url);
         product.setImageUrl(image);
         product.setPrice(price);
         product.setSaving(savings);
@@ -130,6 +142,7 @@ public class ChemistWarehouseProduct implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("name", name)
+                .append("url", url)
                 .append("image", image)
                 .append("price", price)
                 .append("savings", savings)

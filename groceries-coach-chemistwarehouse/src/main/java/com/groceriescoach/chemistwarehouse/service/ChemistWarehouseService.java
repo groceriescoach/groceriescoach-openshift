@@ -43,7 +43,7 @@ public class ChemistWarehouseService implements StoreSearchService {
         requestParams.put("sort", ChemistWarehouseSortType.Relevancy.getKey());
         requestParams.put("searchtext", keywords);
         requestParams.put("searchmode", "allwords");
-        requestParams.put("size", "24");
+        requestParams.put("size", "120");
 
         Document doc = null;
         try {

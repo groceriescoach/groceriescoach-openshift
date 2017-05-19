@@ -45,7 +45,7 @@ public class WoolworthsOfflineService implements StoreSearchService {
         WoolworthsSearchResult searchResult = null;
         try {
             searchResult = mapper.reader().forType(WoolworthsSearchResult.class).readValue(file);
-            return new AsyncResult<>(searchResult.toProducts());
+            return new AsyncResult<>(searchResult.toProducts(keywords));
         } catch (IOException e) {
             logger.error("Unable to parse file", e);
         }

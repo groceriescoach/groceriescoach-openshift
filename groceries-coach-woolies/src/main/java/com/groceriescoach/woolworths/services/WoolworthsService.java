@@ -53,7 +53,7 @@ public class WoolworthsService implements StoreSearchService {
 
         WoolworthsSearchResult searchResult = restTemplate.getForObject(builder.build().toUri(), WoolworthsSearchResult.class);
 
-        List<Product> products = searchResult.toProducts();
+        List<Product> products = searchResult.toProducts(trimmedKeywords);
         logger.info("Found {} Woolworths products for keywords[{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);

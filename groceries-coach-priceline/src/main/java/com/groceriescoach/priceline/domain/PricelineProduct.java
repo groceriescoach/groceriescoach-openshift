@@ -19,6 +19,7 @@ public class PricelineProduct {
     private String name;
     private String brand;
     private String image;
+    private String url;
     private Double price;
     private Double savings;
     private Double wasPrice;
@@ -31,12 +32,17 @@ public class PricelineProduct {
 
         pricelineProduct.setName(extractNameFromProductElement(productElement));
         pricelineProduct.setBrand(extractBrandFromProductElement(productElement));
+        pricelineProduct.setUrl(extractUrlFromProductElement(productElement));
         pricelineProduct.setImage(extractImageFromProductElement(productElement));
         pricelineProduct.setPrice(extractPriceFromProductElement(productElement));
         pricelineProduct.setWasPrice(extractWasPriceFromProductElement(productElement));
         pricelineProduct.setSavings(pricelineProduct.calculateSavings());
 
         return pricelineProduct;
+    }
+
+    private static String extractUrlFromProductElement(Element productElement) {
+        return productElement.select(".product-image-container a").get(0).attr("href");
     }
 
     private Double calculateSavings() {
@@ -140,9 +146,19 @@ public class PricelineProduct {
         this.wasPrice = wasPrice;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Product toGroceriesCoachProduct() {
         Product product = new Product();
+        product.setBrand(brand);
         product.setName(name);
+        product.setUrl(url);
         product.setImageUrl(image);
         product.setPrice(price);
         product.setSaving(savings);

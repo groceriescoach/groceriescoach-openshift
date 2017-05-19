@@ -26,7 +26,7 @@
                 </div>
             </md-content>
             <md-content layout-padding>
-                <md-input-container class="md-block">
+                <md-input-container>
                     <label>Sort by:</label>
                     <md-select id="searchCriteria" name="searchCriteria" ng-model="productSearchVm.searchCriteria.sortBy" required>
                         <md-option ng-repeat="sortType in productSearchVm.sortTypes" value="{{sortType.key}}">
@@ -38,6 +38,11 @@
                             Sort by is required.
                         </div>
                     </div>
+                </md-input-container>
+                <md-input-container>
+                    <md-checkbox ng-model="productSearchVm.searchCriteria.allKeywordsRequired" aria-label="All keywords required">
+                        Require all keywords
+                    </md-checkbox>
                 </md-input-container>
             </md-content>
             <div layout layout-sm="column">

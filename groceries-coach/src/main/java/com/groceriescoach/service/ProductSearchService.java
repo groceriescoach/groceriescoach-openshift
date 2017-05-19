@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface ProductSearchService {
 
-    List<Product> search(String keyword, List<Store> stores, GroceriesCoachSortType sortType) throws IOException;
+    List<Product> search(String keyword, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
+            throws IOException;
 }

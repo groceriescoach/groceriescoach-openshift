@@ -1,10 +1,19 @@
 package com.groceriescoach;
 
 
+import com.groceriescoach.amcal.config.AmcalConfig;
+import com.groceriescoach.babiesrus.config.BabiesRUsConfig;
+import com.groceriescoach.babyandtoddlertown.BabyAndToddlerTownConfig;
+import com.groceriescoach.babybounce.BabyBounceConfig;
+import com.groceriescoach.babybunting.BabyBuntingConfig;
+import com.groceriescoach.babykingdom.BabyKingdomConfig;
+import com.groceriescoach.bigw.BigWConfig;
 import com.groceriescoach.chemistwarehouse.ChemistWarehouseConfig;
 import com.groceriescoach.coles.config.ColesConfig;
 import com.groceriescoach.config.GroceriesCoachConfig;
+import com.groceriescoach.kmart.KmartConfig;
 import com.groceriescoach.priceline.PricelineConfig;
+import com.groceriescoach.target.TargetConfig;
 import com.groceriescoach.woolworths.config.WoolworthsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +26,12 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-@Import({GroceriesCoachConfig.class, WoolworthsConfig.class, ChemistWarehouseConfig.class, ColesConfig.class, PricelineConfig.class})
+@Import({
+        GroceriesCoachConfig.class, AmcalConfig.class, BabiesRUsConfig.class, BabyAndToddlerTownConfig.class,
+        BabyBounceConfig.class, BabyBuntingConfig.class, BabyKingdomConfig.class, BigWConfig.class,
+        ChemistWarehouseConfig.class, ColesConfig.class, KmartConfig.class, PricelineConfig.class, TargetConfig.class,
+        WoolworthsConfig.class
+})
 @SpringBootApplication
 @EnableAsync
 public class GroceriesCoachApplication {
@@ -38,7 +52,6 @@ public class GroceriesCoachApplication {
 
         groceriesCoachApp.run(args);
     }
-
 
 
     private static boolean applicationIsOnline() {

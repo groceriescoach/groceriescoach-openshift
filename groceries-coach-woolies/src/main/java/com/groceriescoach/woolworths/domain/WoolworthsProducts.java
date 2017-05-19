@@ -20,6 +20,7 @@ public class WoolworthsProducts {
         this.woolworthsProducts = woolworthsProducts;
     }
 
+/*
     public static List<Product> toProducts(WoolworthsProducts products) {
         if (products != null) {
             return products.toProducts();
@@ -27,7 +28,9 @@ public class WoolworthsProducts {
             return new ArrayList<>();
         }
     }
+*/
 
+/*
     private List<Product> toProducts() {
         if (isNotEmpty(woolworthsProducts)) {
             List<Product> products = new ArrayList<>();
@@ -40,4 +43,5 @@ public class WoolworthsProducts {
         }
         return null;
     }
+*/
 }

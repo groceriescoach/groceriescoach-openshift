@@ -46,6 +46,7 @@ public class WoolworthsProduct implements Serializable {
                 .toString();
     }
 
+/*
     public static List<Product> toProducts(WoolworthsProduct[] woolworthsProducts) {
         List<Product> products = new ArrayList<>();
 
@@ -54,21 +55,22 @@ public class WoolworthsProduct implements Serializable {
         }
         return products;
     }
+*/
 
-    public static List<Product> toProducts(List<WoolworthsProduct> woolworthsProducts) {
+    public static List<Product> toProducts(List<WoolworthsProduct> woolworthsProducts, String keywords) {
         List<Product> products = new ArrayList<>();
 
         if (!CollectionUtils.isEmpty(woolworthsProducts)) {
             for (WoolworthsProduct woolworthsProduct : woolworthsProducts) {
-                products.addAll(woolworthsProduct.toProducts());
+                products.addAll(woolworthsProduct.toProducts(keywords));
             }
         }
         return products;
     }
 
 
-    public List<Product> toProducts() {
-        return ProductDetails.toProducts(products);
+    public List<Product> toProducts(String keywords) {
+        return ProductDetails.toProducts(products, keywords);
 
     }
 }

@@ -36,7 +36,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
 
     @Override
-    public List<Product> search(String keyword, List<Store> stores, GroceriesCoachSortType sortType) throws IOException {
+    public List<Product> search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
 
         List<Store> searchStores;
 
@@ -53,13 +53,13 @@ public class GroceriesCoachProductService implements ProductSearchService {
 /*
         storeSearchServices.stream()
                 .filter(storeSearchService -> searchStores.contains(storeSearchService.getStore()))
-                .forEach(storeSearchService -> futuresMap.put(storeSearchService.getStore(), storeSearchService.search(keyword, sortType)));
+                .forEach(storeSearchService -> futuresMap.put(storeSearchService.getStore(), storeSearchService.search(keywords, sortType)));
 */
 
 
         for (StoreSearchService storeSearchService : storeSearchServices) {
             if (searchStores.contains(storeSearchService.getStore())) {
-                Future<List<Product>> listFuture = storeSearchService.search(keyword, sortType);
+                Future<List<Product>> listFuture = storeSearchService.search(keywords, sortType);
                 futuresMap.put(storeSearchService.getStore(), listFuture);
             }
         }
@@ -85,6 +85,10 @@ public class GroceriesCoachProductService implements ProductSearchService {
             } catch (InterruptedException e) {
                 logger.error("Interruption", e);
             }
+        }
+
+        if (allSearchKeywordsRequired) {
+            allProducts = Product.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
         }
 
         allProducts.sort(new ProductComparator(sortType));

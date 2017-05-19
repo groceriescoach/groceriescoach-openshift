@@ -278,6 +278,7 @@ public class ColesProduct {
         product.setUnitPriceStr(unitPriceStr);
         product.setName(name);
         product.setBrand(brand);
+        product.setUrl(productUrl);
         product.setStore(Coles);
         product.setPrice(price);
         product.setPackageSize(packageSize);

@@ -1,9 +1,12 @@
 package com.groceriescoach.core.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Product implements Serializable {
 
@@ -11,6 +14,7 @@ public class Product implements Serializable {
     private String name;
     private String brand;
     private String description;
+    private String url;
     private Double price;
     private Double saving;
     private Double wasPrice;
@@ -126,6 +130,14 @@ public class Product implements Serializable {
         this.quantityPriceList = quantityPriceList;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -144,6 +156,33 @@ public class Product implements Serializable {
                 .append("quantityPriceList", quantityPriceList)
                 .toString();
     }
+
+    public static List<Product> eliminateProductsWithoutAllSearchKeywords(List<Product> allProducts, String keywords) {
+        List<String> searchKeywords = Arrays.asList(StringUtils.split(keywords));
+        List<Product> filteredProducts =
+                allProducts.stream()
+                .filter(product -> product.containsAllSearchKeywords(searchKeywords))
+                .collect(Collectors.toList());
+        return filteredProducts;
+    }
+
+    private boolean containsAllSearchKeywords(List<String> searchKeywords) {
+        for (String keyword: searchKeywords) {
+            if (!StringUtils.containsIgnoreCase(name, keyword) && !StringUtils.containsIgnoreCase(brand, keyword)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected Double calculateSavings() {
+        if (Objects.nonNull(price) && Objects.nonNull(wasPrice)) {
+            return wasPrice - price;
+        } else {
+            return null;
+        }
+    }
+
 
     public static class QuantityPrice {
         private Integer quantity;

@@ -67,8 +67,8 @@ public class WoolworthsSearchResult implements Serializable {
     }
 
 
-    public List<Product> toProducts() {
-        return WoolworthsProduct.toProducts(products);
+    public List<Product> toProducts(String keywords) {
+        return WoolworthsProduct.toProducts(products, keywords);
     }
 
 }

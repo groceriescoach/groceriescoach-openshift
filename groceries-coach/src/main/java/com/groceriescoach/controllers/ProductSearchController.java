@@ -37,9 +37,12 @@ public class ProductSearchController {
     public ResponseEntity<List<Product>> search(
             @RequestParam(value = KEYWORDS) String keywords,
             @RequestParam(value = STORES, required = false) String[] storeKeys,
-            @RequestParam(value = SORT_BY, required = false) String sortBy) throws IOException {
+            @RequestParam(value = SORT_BY, required = false) String sortBy,
+            @RequestParam(value = ALL_SEARCH_KEYWORDS_REQUIRED, required = false) boolean allSearchKeywordsRequired)
+            throws IOException {
 
-        logger.info("Received search request: keywords = [{}], stores = [{}], sortBy = [{}].", keywords, storeKeys, sortBy);
+        logger.info("Received search request: keywords = [{}], stores = [{}], sortBy = [{}], allSearchKeywordsRequired = [{}].",
+                keywords, storeKeys, sortBy, allSearchKeywordsRequired);
 
         GroceriesCoachSortType sortType = GroceriesCoachSortType.fromKey(sortBy);
         List<Store> stores = new ArrayList<>();
@@ -47,7 +50,7 @@ public class ProductSearchController {
             stores.addAll(Store.fromStoreKeys(storeKeys));
         }
 
-        List<Product> products = productSearchService.search(keywords, stores, sortType);
+        List<Product> products = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
         logger.info("Returning {} results.", products.size());
         return ResponseEntity.ok(products);
     }

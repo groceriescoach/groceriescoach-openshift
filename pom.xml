@@ -19,12 +19,22 @@
     </parent>
     <modules>
         <module>groceries-coach-core</module>
-        <module>groceries-coach-woolies</module>
-        <module>groceries-coach</module>
-        <module>groceries-coach-chemistwarehouse</module>
         <module>groceries-coach-web</module>
+        <module>groceries-coach</module>
+        <module>groceries-coach-amcal</module>
+        <module>groceries-coach-babiesrus</module>
+        <module>groceries-coach-babyandtoddlertown</module>
+        <module>groceries-coach-babybounce</module>
+        <module>groceries-coach-babybunting</module>
+        <module>groceries-coach-babykingdom</module>
+        <module>groceries-coach-babyvillage</module>
+        <module>groceries-coach-bigw</module>
+        <module>groceries-coach-chemistwarehouse</module>
         <module>groceries-coach-coles</module>
+        <module>groceries-coach-kmart</module>
         <module>groceries-coach-priceline</module>
+        <module>groceries-coach-target</module>
+        <module>groceries-coach-woolies</module>
     </modules>
 
     <properties>
@@ -57,12 +67,42 @@
             </dependency>
             <dependency>
                 <groupId>com.groceriescoach</groupId>
-                <artifactId>groceries-coach-woolies</artifactId>
+                <artifactId>groceries-coach-amcal</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.groceriescoach</groupId>
-                <artifactId>groceries-coach-coles</artifactId>
+                <artifactId>groceries-coach-babiesrus</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-babyandtoddlertown</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-babybounce</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-babybunting</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-babykingdom</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-babyvillage</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-bigw</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -72,7 +112,27 @@
             </dependency>
             <dependency>
                 <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-coles</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-kmart</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-priceline</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-target</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-woolies</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
