@@ -11,6 +11,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return str == null ? EMPTY : trimToEmpty(str.replaceAll("\\$", ""));
     }
 
+    public static String removeThousandSeparators(final String str) {
+        return str == null ? EMPTY : trimToEmpty(str.replaceAll(",", ""));
+    }
+
     public static String replaceEncodedCharacters(final String str) {
         if (isNotBlank(str)) {
             String processedStr = str.replaceAll("&nbsp;", " ").replaceAll("&amp;", "&");

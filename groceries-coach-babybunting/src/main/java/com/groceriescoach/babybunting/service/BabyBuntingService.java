@@ -6,6 +6,7 @@ import com.groceriescoach.babybunting.domain.BabyBuntingSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -39,16 +40,19 @@ public class BabyBuntingService implements StoreSearchService<BabyBuntingProduct
 
         Map<String, String> requestParams = new HashMap<>();
 
-//        requestParams.put("limit", "120");
-//        requestParams.put("order", "relevance");
         requestParams.put("q", keywords);
+        requestParams.put("limit", "120");
 
         Document doc = null;
         try {
-            doc = Jsoup.connect("https://www.babybunting.com.au/catalogsearch/result/index")
+            Connection.Response response = Jsoup.connect("https://www.babybunting.com.au/catalogsearch/result/index")
                     .data(requestParams)
-                    .timeout(10*1000)
-                    .get();
+                    .timeout(10 * 1000)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
+                    .execute();
+            doc = response.parse();
+
+            logger.debug("URL: {}", response.url());
 
             BabyBuntingSearchResult searchResult = new BabyBuntingSearchResult(doc);
 

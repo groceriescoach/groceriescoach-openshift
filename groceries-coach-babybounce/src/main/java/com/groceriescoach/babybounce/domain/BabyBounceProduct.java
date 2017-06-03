@@ -2,7 +2,6 @@ package com.groceriescoach.babybounce.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.Product;
-import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -51,7 +50,7 @@ public class BabyBounceProduct extends Product implements Serializable {
         price = specialPriceElements.get(0).text();
 
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(price.substring(1)));
+            return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
         }
         return 0D;
     }
@@ -63,7 +62,7 @@ public class BabyBounceProduct extends Product implements Serializable {
             if (oldPriceElement != null) {
                 String price = oldPriceElement.text();
                 if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price.substring(1)));
+                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
                 }
                 return 0D;
             }

@@ -55,7 +55,6 @@ public class WoolworthsSearchResult implements Serializable {
         this.visualShoppingAisleResponse = visualShoppingAisleResponse;
     }
 
-
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -65,7 +64,6 @@ public class WoolworthsSearchResult implements Serializable {
                 .append("visualShoppingAisleResponse", visualShoppingAisleResponse)
                 .toString();
     }
-
 
     public List<Product> toProducts(String keywords) {
         return WoolworthsProduct.toProducts(products, keywords);

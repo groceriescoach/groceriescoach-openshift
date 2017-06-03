@@ -9,7 +9,7 @@ import java.util.Map;
 public enum Store {
 
     Amcal("A", "Amcal"),
-    BabiesRUs("BRU", "Babies R Us"),
+//    BabiesRUs("BRU", "Babies R Us"),
     BabyAndToddlerTown("BTT", "Baby & Toddler Town"),
     BabyBounce("BB1", "Baby Bounce"),
     BabyBunting("BB2", "Baby Bunting"),
@@ -18,7 +18,9 @@ public enum Store {
     BigW("BW", "Big W"),
     ChemistWarehouse("CW", "Chemist Warehouse"),
     Coles("C", "Coles"),
-    Kmart("K", "Kmart"),
+//    Kmart("K", "Kmart"),
+    NursingAngel("N", "Nursing Angel"),
+    Pharmacy4Less("P4L", "Pharmacy 4 Less"),
     Priceline("P", "Priceline"),
     Target("T", "Target"),
     Woolworths("W", "Woolworths");
@@ -27,7 +29,7 @@ public enum Store {
     private final String storeKey;
     private final String storeName;
 
-    private Store(String storeKey, String storeName) {
+    Store(String storeKey, String storeName) {
         this.storeKey = storeKey;
         this.storeName = storeName;
     }

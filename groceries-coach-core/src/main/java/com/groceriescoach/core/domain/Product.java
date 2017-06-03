@@ -1,11 +1,12 @@
 package com.groceriescoach.core.domain;
 
-import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Product implements Serializable {
@@ -233,6 +234,11 @@ public class Product implements Serializable {
         }
 
 
+        private void calculateUnitPrice() {
+
+        }
+
+
         @Override
         public String toString() {
             return new ToStringBuilder(this)
@@ -244,7 +250,5 @@ public class Product implements Serializable {
                     .toString();
         }
     }
-
-
 
 }

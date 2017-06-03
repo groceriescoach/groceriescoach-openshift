@@ -61,7 +61,7 @@ public class AmcalProduct implements Serializable {
     private static Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".price").get(0).text();
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(price.substring(1)));
+            return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
         }
         return 0D;
     }
@@ -73,7 +73,7 @@ public class AmcalProduct implements Serializable {
             if (oldPriceElement != null) {
                 String price = oldPriceElement.text();
                 if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price.substring(1)));
+                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
                 }
                 return 0D;
             }

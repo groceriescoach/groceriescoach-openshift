@@ -31,10 +31,12 @@
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-amcal</artifactId>
         </dependency>
+<!--
         <dependency>
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-babiesrus</artifactId>
         </dependency>
+-->
         <dependency>
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-babyandtoddlertown</artifactId>
@@ -67,9 +69,19 @@
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-coles</artifactId>
         </dependency>
+<!--
         <dependency>
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-kmart</artifactId>
+        </dependency>
+-->
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-nursingangel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-pharmacy4less</artifactId>
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>

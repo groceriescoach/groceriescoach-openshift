@@ -18,11 +18,11 @@ public class TargetSearchResult extends GroceriesCoachSearchResult<TargetProduct
 
     @Override
     protected String getCssQuery() {
-        return null;
+        return ".product";
     }
 
     @Override
     protected TargetProduct fromProductElement(Element productElement) {
-        return null;
+        return TargetProduct.fromProductElement(productElement);
     }
 }

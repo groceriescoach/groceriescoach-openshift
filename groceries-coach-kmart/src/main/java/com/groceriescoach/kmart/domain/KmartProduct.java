@@ -2,16 +2,8 @@ package com.groceriescoach.kmart.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.Product;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import static com.groceriescoach.core.domain.Store.Amcal;
 
 public class KmartProduct extends Product {
 
@@ -34,7 +26,7 @@ public class KmartProduct extends Product {
     }
 
     private static String extractNameFromProductElement(Element productElement) {
-        return productElement.select(".product_name a").get(0).text();
+        return productElement.select(".product_name").get(0).text();
     }
 
     private static String extractImageFromProductElement(Element productElement) {
@@ -44,7 +36,7 @@ public class KmartProduct extends Product {
     private static Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".price").get(0).text();
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(price.substring(1)));
+            return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
         }
         return 0D;
     }
@@ -56,7 +48,7 @@ public class KmartProduct extends Product {
             if (oldPriceElement != null) {
                 String price = oldPriceElement.text();
                 if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price.substring(1)));
+                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
                 }
                 return 0D;
             }

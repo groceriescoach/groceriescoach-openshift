@@ -2,7 +2,6 @@ package com.groceriescoach.target.service;
 
 
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import com.groceriescoach.target.domain.TargetProduct;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
-import static com.groceriescoach.core.domain.Store.Amcal;
 import static com.groceriescoach.core.domain.Store.Target;
 
 @Profile("online")
@@ -41,18 +39,14 @@ public class TargetService implements StoreSearchService<TargetProduct> {
 
         Map<String, String> requestParams = new HashMap<>();
 
-        requestParams.put("storeId", "10301");
-        requestParams.put("catalogId", "10502");
-        requestParams.put("sType", "SimpleSearch");
-        requestParams.put("beginIndex", "0");
-        requestParams.put("pageSize", "50");
+        requestParams.put("Nrpp", "90");
 
-        requestParams.put("searchTerm", keywords);
+        requestParams.put("text", keywords);
 
         Document doc = null;
         try {
 
-            doc = Jsoup.connect("https://www.amcal.com.au/SearchDisplay")
+            doc = Jsoup.connect("https://www.target.com.au/search")
                     .data(requestParams)
                     .timeout(10*1000)
                     .get();

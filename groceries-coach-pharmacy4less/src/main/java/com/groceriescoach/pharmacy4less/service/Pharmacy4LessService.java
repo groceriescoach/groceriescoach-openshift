@@ -1,11 +1,11 @@
-package com.groceriescoach.babyandtoddlertown.service;
+package com.groceriescoach.pharmacy4less.service;
 
 
-import com.groceriescoach.babyandtoddlertown.domain.BabyAndToddlerTownProduct;
-import com.groceriescoach.babyandtoddlertown.domain.BabyAndToddlerTownSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
+import com.groceriescoach.pharmacy4less.domain.Pharmacy4LessProduct;
+import com.groceriescoach.pharmacy4less.domain.Pharmacy4LessSearchResult;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,30 +23,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
-import static com.groceriescoach.core.domain.Store.BabyAndToddlerTown;
+import static com.groceriescoach.core.domain.Store.Pharmacy4Less;
 
 @Profile("online")
 @Service
-public class BabyAndToddlerTownService implements StoreSearchService<BabyAndToddlerTownProduct> {
+public class Pharmacy4LessService implements StoreSearchService<Pharmacy4LessProduct> {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(BabyAndToddlerTownService.class);
+    private static final Logger logger = LoggerFactory.getLogger(Pharmacy4LessService.class);
 
     @Async
     @Override
-    public Future<List<BabyAndToddlerTownProduct>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<Pharmacy4LessProduct>> search(String keywords, GroceriesCoachSortType sortType) {
 
-        logger.debug("Searching Baby and Toddler Town for {}.", keywords);
+        logger.debug("Searching Pharmacy 4 Less for {}.", keywords);
 
         Map<String, String> requestParams = new HashMap<>();
 
-        requestParams.put("q", keywords);
+        requestParams.put("w", keywords);
 
         Document doc = null;
         try {
 
 
-            Connection.Response response = Jsoup.connect("https://www.babyandtoddlertown.com.au/search/show/all")
+            Connection.Response response = Jsoup.connect("http://www.pharmacy4less.com.au/search/go")
                     .data(requestParams)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
                     .header("Accept", "*/*")
@@ -58,21 +58,21 @@ public class BabyAndToddlerTownService implements StoreSearchService<BabyAndTodd
 
             doc = response.parse();
 
-            BabyAndToddlerTownSearchResult searchResult = new BabyAndToddlerTownSearchResult(doc);
-            List<BabyAndToddlerTownProduct> products = searchResult.getProducts();
+            Pharmacy4LessSearchResult searchResult = new Pharmacy4LessSearchResult(doc);
+            List<Pharmacy4LessProduct> products = searchResult.getProducts();
 
-            logger.info("Found {} Baby and Toddler Town products for keywords[{}].", products.size(), keywords);
+            logger.info("Found {} Pharmacy 4 Less products for keywords[{}].", products.size(), keywords);
 
             return new AsyncResult<>(products);
         } catch (IOException e) {
-            logger.error("Unable to search for Baby and Toddler Town products", e);
+            logger.error("Unable to search for Pharmacy 4 Less products", e);
             return new AsyncResult<>(new ArrayList<>());
         }
     }
 
     @Override
     public Store getStore() {
-        return BabyAndToddlerTown;
+        return Pharmacy4Less;
     }
 
 }

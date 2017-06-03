@@ -18,7 +18,7 @@ public class BabyAndToddlerTownSearchResult extends GroceriesCoachSearchResult<B
 
     @Override
     protected String getCssQuery() {
-        return ".item";
+        return ".grid-item";
     }
 
     @Override

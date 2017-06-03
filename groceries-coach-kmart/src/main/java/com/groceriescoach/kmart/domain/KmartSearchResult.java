@@ -18,11 +18,11 @@ public class KmartSearchResult extends GroceriesCoachSearchResult<KmartProduct> 
 
     @Override
     protected String getCssQuery() {
-        return null;
+        return ".product";
     }
 
     @Override
     protected KmartProduct fromProductElement(Element productElement) {
-        return null;
+        return KmartProduct.fromProductElement(productElement);
     }
 }

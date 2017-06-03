@@ -4,7 +4,6 @@ package com.groceriescoach.bigw.service;
 import com.groceriescoach.bigw.domain.BigWProduct;
 import com.groceriescoach.bigw.domain.BigWSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.jsoup.Jsoup;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
-import static com.groceriescoach.core.domain.Store.Amcal;
 import static com.groceriescoach.core.domain.Store.BigW;
 
 @Profile("online")
@@ -54,6 +52,7 @@ public class BigWService implements StoreSearchService<BigWProduct> {
             doc = Jsoup.connect("https://www.bigw.com.au/search")
                     .data(requestParams)
                     .timeout(10*1000)
+                    .maxBodySize(0)
                     .get();
 
             BigWSearchResult searchResult = new BigWSearchResult(doc);

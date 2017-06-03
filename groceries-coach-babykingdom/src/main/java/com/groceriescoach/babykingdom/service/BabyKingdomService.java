@@ -39,21 +39,27 @@ public class BabyKingdomService implements StoreSearchService {
 
         Map<String, String> requestParams = new HashMap<>();
 
-        requestParams.put("storeId", "10301");
-        requestParams.put("catalogId", "10502");
-        requestParams.put("sType", "SimpleSearch");
-        requestParams.put("beginIndex", "0");
-        requestParams.put("pageSize", "50");
+        requestParams.put("b1", "search");
 
-        requestParams.put("searchTerm", keywords);
+        requestParams.put("keyword", keywords);
 
         Document doc = null;
         try {
 
-            doc = Jsoup.connect("https://www.amcal.com.au/SearchDisplay")
+            doc = Jsoup.connect("https://www.babykingdom.com.au/shopsearch.asp?search=Yes")
                     .data(requestParams)
+                    .header("Content-Type", "application/x-www-form-urlencoded")
                     .timeout(10*1000)
+                    .maxBodySize(0)
+                    .post();
+
+
+/*
+            doc = Jsoup.connect("https://www.babykingdom.com.au/shopdisplayproducts.asp?Search=Yes&sppp=all")
+                    .timeout(10*1000)
+                    .maxBodySize(0)
                     .get();
+*/
 
             BabyKingdomSearchResult searchResult = new BabyKingdomSearchResult(doc);
             List<BabyKingdomProduct> products = searchResult.getProducts();

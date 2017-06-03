@@ -22,7 +22,6 @@
         <module>groceries-coach-web</module>
         <module>groceries-coach</module>
         <module>groceries-coach-amcal</module>
-        <module>groceries-coach-babiesrus</module>
         <module>groceries-coach-babyandtoddlertown</module>
         <module>groceries-coach-babybounce</module>
         <module>groceries-coach-babybunting</module>
@@ -31,7 +30,9 @@
         <module>groceries-coach-bigw</module>
         <module>groceries-coach-chemistwarehouse</module>
         <module>groceries-coach-coles</module>
-        <module>groceries-coach-kmart</module>
+        <!--<module>groceries-coach-kmart</module>-->
+        <module>groceries-coach-nursingangel</module>
+        <module>groceries-coach-pharmacy4less</module>
         <module>groceries-coach-priceline</module>
         <module>groceries-coach-target</module>
         <module>groceries-coach-woolies</module>
@@ -70,11 +71,13 @@
                 <artifactId>groceries-coach-amcal</artifactId>
                 <version>${project.version}</version>
             </dependency>
+<!--
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-babiesrus</artifactId>
                 <version>${project.version}</version>
             </dependency>
+-->
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-babyandtoddlertown</artifactId>
@@ -115,9 +118,21 @@
                 <artifactId>groceries-coach-coles</artifactId>
                 <version>${project.version}</version>
             </dependency>
+<!--
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-kmart</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+-->
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-nursingangel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-pharmacy4less</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -142,8 +157,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
 
     <repositories>
         <repository>
