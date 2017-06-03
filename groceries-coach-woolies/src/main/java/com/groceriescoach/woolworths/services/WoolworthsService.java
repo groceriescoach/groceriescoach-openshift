@@ -6,7 +6,6 @@ import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import com.groceriescoach.woolworths.domain.WoolworthsSearchResult;
-import com.groceriescoach.woolworths.domain.WoolworthsSortType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class WoolworthsService implements StoreSearchService {
                     .queryParam("PageNumber", i)
                     .queryParam("PageSize", "36")
                     .queryParam("SearchTerm", keywords)
-                    .queryParam("SortType", WoolworthsSortType.Personalised.getKey());
+                    .queryParam("SortType", "Personalised");
 
             WoolworthsSearchResult searchResult = restTemplate.getForObject(builder.build().toUri(), WoolworthsSearchResult.class);
             products.addAll(searchResult.toProducts(keywords));

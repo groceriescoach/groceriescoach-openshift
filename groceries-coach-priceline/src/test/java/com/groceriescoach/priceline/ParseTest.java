@@ -1,9 +1,9 @@
 package com.groceriescoach.priceline;
 
 
-import com.groceriescoach.priceline.service.PricelineOfflineService;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.priceline.service.PricelineOfflineService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +27,10 @@ public class ParseTest {
 
     @Test
     public void parsePricelineHtml() throws IOException, InterruptedException, TimeoutException, ExecutionException {
-        Future<List<Product>> listFuture = pricelineService.search("ibuprofen", GroceriesCoachSortType.PriceLowToHigh);
+        Future<List<Product>> listFuture = pricelineService.search("ibuprofen", GroceriesCoachSortType.Price);
         List<Product> products = listFuture.get(10, TimeUnit.SECONDS);
         assertNotNull(products);
-        listFuture = pricelineService.search("olay moisturising cream", GroceriesCoachSortType.PriceLowToHigh);
+        listFuture = pricelineService.search("olay moisturising cream", GroceriesCoachSortType.Price);
         products = listFuture.get(10, TimeUnit.SECONDS);
         assertNotNull(products);
 
@@ -41,7 +41,7 @@ public class ParseTest {
     @Test
     public void parse() throws IOException, InterruptedException, ExecutionException, TimeoutException {
         PricelineOfflineService pricelineOfflineService = new PricelineOfflineService();
-        Future<List<Product>> listFuture = pricelineOfflineService.search("ibuprofen", GroceriesCoachSortType.A_TO_Z_ProductName);
+        Future<List<Product>> listFuture = pricelineOfflineService.search("ibuprofen", GroceriesCoachSortType.ProductName);
         List<Product> products = listFuture.get(10, TimeUnit.SECONDS);
         assertNotNull(products);
         logger.debug("{}", products);

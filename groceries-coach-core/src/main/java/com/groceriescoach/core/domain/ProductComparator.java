@@ -22,11 +22,11 @@ public class ProductComparator implements Comparator<Product> {
         logger.debug("Comparing {} and {}", product1, product2);
 
         switch (sortType) {
-            case A_TO_Z_ProductName:
+            case ProductName:
                 return product1.getName().compareTo(product2.getName());
-            case PriceLowToHigh:
+            case Price:
                 return product1.getPrice().compareTo(product2.getPrice());
-            case UnitPriceLowToHigh:
+            case UnitPrice:
                 Double product1UnitPrice = product1.getUnitPrice();
                 Double product2UnitPrice = product2.getUnitPrice();
                 if (product1UnitPrice == null && product2UnitPrice == null) {

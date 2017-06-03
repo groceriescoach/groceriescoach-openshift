@@ -53,7 +53,7 @@ public class ParseTest {
     public void parse() throws IOException, InterruptedException, ExecutionException, TimeoutException {
 
         ColesService colesService = new ColesService();
-        List<Product> colesProducts = colesService.search("milk", GroceriesCoachSortType.A_TO_Z_ProductName).get(10, TimeUnit.SECONDS);
+        List<Product> colesProducts = colesService.search("milk", GroceriesCoachSortType.ProductName).get(10, TimeUnit.SECONDS);
         assertNotNull(colesProducts);
         logger.debug("{}", colesProducts);
     }

@@ -2,7 +2,6 @@ package com.groceriescoach.chemistwarehouse.service;
 
 
 import com.groceriescoach.chemistwarehouse.domain.ChemistWarehouseSearchResult;
-import com.groceriescoach.chemistwarehouse.domain.ChemistWarehouseSortType;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
@@ -40,7 +39,7 @@ public class ChemistWarehouseService implements StoreSearchService {
 
         Map<String, String> requestParams = new HashMap<>();
 
-        requestParams.put("sort", ChemistWarehouseSortType.Relevancy.getKey());
+        requestParams.put("sort", "rank");
         requestParams.put("searchtext", keywords);
         requestParams.put("searchmode", "allwords");
         requestParams.put("size", "120");

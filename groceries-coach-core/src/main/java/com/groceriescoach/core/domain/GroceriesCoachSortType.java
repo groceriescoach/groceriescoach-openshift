@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum GroceriesCoachSortType {
-//    Relevance("Relevance", "Relevance"),
-    A_TO_Z_ProductName("Name", "A to Z (Product Name)"),
-//    Special("Special", "Special"),
-    PriceLowToHigh("PriceAsc", "Price Low to High"),
-    UnitPriceLowToHigh("UnitAsc", "Unit Price Low to High");
+    ProductName("Name", "Product Name"),
+    Price("Price", "Price"),
+    UnitPrice("UnitPrice", "Unit Price");
 
     private final String key;
     private final String value;
@@ -33,7 +31,6 @@ public enum GroceriesCoachSortType {
         }
         return map;
     }
-
 
     public static GroceriesCoachSortType fromKey(String key) {
         for (GroceriesCoachSortType sortType : GroceriesCoachSortType.values()) {

@@ -2,7 +2,6 @@ package com.groceriescoach.coles.service;
 
 
 import com.groceriescoach.coles.domain.ColesSearchResult;
-import com.groceriescoach.coles.domain.ColesSortType;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
@@ -44,7 +43,7 @@ public class ColesService implements StoreSearchService {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.putAll(getDefaultRequestParams());
 
-        requestParams.put("orderBy", ColesSortType.Relevancy.getKey());
+        requestParams.put("orderBy", "");
         requestParams.put("searchTerm", keywords);
 
         Document doc = null;

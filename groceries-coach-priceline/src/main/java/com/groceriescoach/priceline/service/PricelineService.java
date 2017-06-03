@@ -5,7 +5,6 @@ import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import com.groceriescoach.priceline.domain.PricelineSearchResult;
-import com.groceriescoach.priceline.domain.PricelineSortType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -40,7 +39,6 @@ public class PricelineService implements StoreSearchService {
 
         Map<String, String> requestParams = new HashMap<>();
 
-        requestParams.put("order", PricelineSortType.Relevancy.getKey());
         requestParams.put("q", keywords);
         requestParams.put("limit", "40");
 
