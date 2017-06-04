@@ -18,7 +18,7 @@ public class BabyKingdomSearchResult extends GroceriesCoachSearchResult<BabyKing
 
     @Override
     protected String getCssQuery() {
-        return null;
+        return ".prodformat_box";
     }
 
     @Override

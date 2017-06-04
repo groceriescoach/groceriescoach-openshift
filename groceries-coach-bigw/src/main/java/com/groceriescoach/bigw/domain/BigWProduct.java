@@ -20,6 +20,7 @@ public class BigWProduct extends Product {
         if (product.getSaving() != null && product.getSaving() != 0D) {
             product.setWasPrice(product.getPrice() + product.getSaving());
         }
+        product.calculateUnitPrice();
         product.setStore(BigW);
         return product;
     }

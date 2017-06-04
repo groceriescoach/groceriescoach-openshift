@@ -19,7 +19,8 @@ public class BabyAndToddlerTownProduct extends Product {
         product.setUrl(extractUrlFromProductElement(productElement));
         product.setPrice(extractPriceFromProductElement(productElement));
         product.setWasPrice(extractOldPriceFromProductElement(productElement));
-        product.setSaving(product.calculateSavings());
+        product.calculateSavings();
+        product.calculateUnitPrice();
         product.setStore(BabyAndToddlerTown);
         return product;
     }

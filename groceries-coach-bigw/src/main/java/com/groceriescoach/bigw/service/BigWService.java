@@ -47,8 +47,6 @@ public class BigWService implements StoreSearchService<BigWProduct> {
         Document doc = null;
         try {
 
-            //  https://www.bigw.com.au/search/?pageSize=144&q=random&sort=relevance
-
             doc = Jsoup.connect("https://www.bigw.com.au/search")
                     .data(requestParams)
                     .timeout(10*1000)

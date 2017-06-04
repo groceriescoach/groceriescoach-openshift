@@ -21,7 +21,7 @@ public class BabyVillageProduct extends Product {
         product.setUrl(extractUrlFromProductElement(productElement));
         product.setWasPrice(extractWasPriceFromProductElement(productElement));
         product.setPrice(extractPriceFromProductElement(productElement));
-        product.setSaving(product.calculateSavings());
+        product.calculateSavings();
         product.setStore(BabyVillage);
 
         return product;

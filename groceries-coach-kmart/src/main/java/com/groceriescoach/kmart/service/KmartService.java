@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
-import static com.groceriescoach.core.domain.Store.Kmart;
-
 @Profile("online")
 @Service
 public class KmartService implements StoreSearchService {
@@ -81,7 +79,7 @@ public class KmartService implements StoreSearchService {
 
     @Override
     public Store getStore() {
-        return Kmart;
+        return null;
     }
 
 }

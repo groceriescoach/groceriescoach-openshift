@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.roundToTwoDecimalPlaces;
+
 public class Product implements Serializable {
 
 
@@ -160,11 +162,9 @@ public class Product implements Serializable {
 
     public static List<Product> eliminateProductsWithoutAllSearchKeywords(List<Product> allProducts, String keywords) {
         List<String> searchKeywords = Arrays.asList(StringUtils.split(keywords));
-        List<Product> filteredProducts =
-                allProducts.stream()
-                .filter(product -> product.containsAllSearchKeywords(searchKeywords))
-                .collect(Collectors.toList());
-        return filteredProducts;
+        return allProducts.stream()
+        .filter(product -> product.containsAllSearchKeywords(searchKeywords))
+        .collect(Collectors.toList());
     }
 
     private boolean containsAllSearchKeywords(List<String> searchKeywords) {
@@ -176,11 +176,28 @@ public class Product implements Serializable {
         return true;
     }
 
-    protected Double calculateSavings() {
+    protected void calculateSavings() {
         if (Objects.nonNull(price) && Objects.nonNull(wasPrice)) {
-            return wasPrice - price;
-        } else {
-            return null;
+            saving = wasPrice - price;
+        }
+    }
+
+    protected void calculateUnitPrice() {
+        if (StringUtils.containsIgnoreCase(name,"pack")) {
+            final String[] tokens = StringUtils.split(name);
+            for (int i = 0; i < tokens.length -1; i++) {
+                if (StringUtils.equalsIgnoreCase("pack", tokens[i+1])) {
+                    try {
+                        final Double packSize = Double.parseDouble(tokens[i]);
+                        unitPrice = roundToTwoDecimalPlaces(price / packSize);
+                        unitPriceStr = "$" + unitPrice + " each";
+                        unitSize = "Each";
+                        break;
+                    } catch (Exception ignored) {
+
+                    }
+                }
+            }
         }
     }
 
@@ -232,12 +249,6 @@ public class Product implements Serializable {
         public void setUnitPriceStr(String unitPriceStr) {
             this.unitPriceStr = unitPriceStr;
         }
-
-
-        private void calculateUnitPrice() {
-
-        }
-
 
         @Override
         public String toString() {

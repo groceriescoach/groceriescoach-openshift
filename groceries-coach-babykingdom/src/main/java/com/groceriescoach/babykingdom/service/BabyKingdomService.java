@@ -38,9 +38,7 @@ public class BabyKingdomService implements StoreSearchService {
         logger.debug("Searching Baby Kingdom for {}.", keywords);
 
         Map<String, String> requestParams = new HashMap<>();
-
         requestParams.put("b1", "search");
-
         requestParams.put("keyword", keywords);
 
         Document doc = null;
@@ -48,18 +46,9 @@ public class BabyKingdomService implements StoreSearchService {
 
             doc = Jsoup.connect("https://www.babykingdom.com.au/shopsearch.asp?search=Yes")
                     .data(requestParams)
-                    .header("Content-Type", "application/x-www-form-urlencoded")
                     .timeout(10*1000)
                     .maxBodySize(0)
                     .post();
-
-
-/*
-            doc = Jsoup.connect("https://www.babykingdom.com.au/shopdisplayproducts.asp?Search=Yes&sppp=all")
-                    .timeout(10*1000)
-                    .maxBodySize(0)
-                    .get();
-*/
 
             BabyKingdomSearchResult searchResult = new BabyKingdomSearchResult(doc);
             List<BabyKingdomProduct> products = searchResult.getProducts();

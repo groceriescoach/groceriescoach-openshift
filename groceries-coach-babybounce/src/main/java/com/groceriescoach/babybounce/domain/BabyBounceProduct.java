@@ -20,7 +20,7 @@ public class BabyBounceProduct extends Product implements Serializable {
         product.setUrl(extractUrlFromProductElement(productElement));
         product.setPrice(extractPriceFromProductElement(productElement));
         product.setWasPrice(extractOldPriceFromProductElement(productElement));
-        product.setSaving(product.calculateSavings());
+        product.calculateSavings();
         product.setStore(BabyBounce);
         return product;
     }
