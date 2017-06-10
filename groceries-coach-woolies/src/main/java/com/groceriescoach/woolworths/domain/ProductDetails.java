@@ -15,7 +15,6 @@ import java.util.List;
 
 import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.roundToTwoDecimalPlaces;
 import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeHtml;
-import static com.groceriescoach.core.domain.Store.Woolworths;
 
 public class ProductDetails implements Serializable {
 
@@ -491,7 +490,7 @@ public class ProductDetails implements Serializable {
     }
 
     private Product toGroceriesCoachProduct(String keywords) {
-        Product product = new Product();
+        Product product = new WoolworthsProduct();
         product.setName(removeHtml(name));
         product.setDescription(removeHtml(description));
         product.setImageUrl(largeImageFile);
@@ -500,7 +499,6 @@ public class ProductDetails implements Serializable {
         product.setWasPrice(wasPrice);
         product.setPackageSize(packageSize);
         product.setSaving(savingsAmount);
-        product.setStore(Woolworths);
         product.setUnitPrice(cupPrice);
         product.setUnitSize(cupMeasure);
         product.setUnitPriceStr(cupString);

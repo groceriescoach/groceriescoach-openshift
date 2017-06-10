@@ -51,7 +51,12 @@ public class ProductComparator implements Comparator<Product> {
                         }
                     }
 
-                    return product1UnitPrice.compareTo(product2UnitPrice);
+                    final int unitPriceComparison = product1UnitPrice.compareTo(product2UnitPrice);
+                    if (unitPriceComparison != 0) {
+                        return unitPriceComparison;
+                    } else {
+                        return product1.getPrice().compareTo(product2.getPrice());
+                    }
                 }
             default:
                 return product1.getPrice().compareTo(product2.getPrice());

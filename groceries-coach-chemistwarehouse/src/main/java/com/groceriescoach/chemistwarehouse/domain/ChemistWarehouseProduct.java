@@ -2,38 +2,22 @@ package com.groceriescoach.chemistwarehouse.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.groceriescoach.core.domain.Store.ChemistWarehouse;
 
-public class ChemistWarehouseProduct implements Serializable {
+public class ChemistWarehouseProduct extends Product {
 
-    private String name;
-    private String url;
-    private String image;
-    private Double price;
-    private Double savings;
-
-
-    public static ChemistWarehouseProduct fromProductElement(Element productElement) {
-
-        ChemistWarehouseProduct chemistWarehouseProduct = new ChemistWarehouseProduct();
-
-        chemistWarehouseProduct.setName(extractNameFromProductElement(productElement));
-        chemistWarehouseProduct.setImage(extractImageFromProductElement(productElement));
-        chemistWarehouseProduct.setUrl(extractUrlFromProductElement(productElement));
-        chemistWarehouseProduct.setPrice(extractPriceFromProductElement(productElement));
-        chemistWarehouseProduct.setSavings(extractSavingsFromProductElement(productElement));
-
-        return chemistWarehouseProduct;
+    ChemistWarehouseProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
     }
 
     private static String extractUrlFromProductElement(Element productElement) {
@@ -73,79 +57,18 @@ public class ChemistWarehouseProduct implements Serializable {
         return 0D;
     }
 
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Double getSavings() {
-        return savings;
-    }
-
-    public void setSavings(Double savings) {
-        this.savings = savings;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Product toGroceriesCoachProduct() {
-        Product product = new Product();
-        product.setName(name);
-        product.setUrl(url);
-        product.setImageUrl(image);
-        product.setPrice(price);
-        product.setSaving(savings);
-        product.setStore(ChemistWarehouse);
-        return product;
-    }
-
-
-    public static List<Product> toProducts(ChemistWarehouseProduct[] chemistWarehouseProducts) {
-
-        List<Product> products = new ArrayList<>();
-        for (ChemistWarehouseProduct chemistWarehouseProduct : chemistWarehouseProducts) {
-            Product product = chemistWarehouseProduct.toGroceriesCoachProduct();
-            if (product != null) {
-                products.add(product);
-            }
-        }
-        return products;
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setSaving(extractSavingsFromProductElement(productElement));
     }
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("name", name)
-                .append("url", url)
-                .append("image", image)
-                .append("price", price)
-                .append("savings", savings)
-                .toString();
+    public Store getStore() {
+        return ChemistWarehouse;
     }
+
 }

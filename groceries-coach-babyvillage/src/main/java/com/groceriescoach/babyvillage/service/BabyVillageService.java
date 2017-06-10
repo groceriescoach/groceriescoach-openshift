@@ -43,14 +43,14 @@ public class BabyVillageService implements StoreSearchService<BabyVillageProduct
 
         logger.debug("Searching Baby Village for {}.", keywords);
 
-        List<BabyVillageProduct> products = getProductsForPage(keywords, 1);
+        List<BabyVillageProduct> products = getProductsForPage(keywords, 1, sortType);
 
         logger.info("Found {} Baby Village products for keywords[{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }
 
-    private List<BabyVillageProduct> getProductsForPage(String keywords, int pages) {
+    private List<BabyVillageProduct> getProductsForPage(String keywords, int pages, GroceriesCoachSortType sortType) {
         List<Product> products = new ArrayList<>();
 
         BabyVillageSearchResult searchResult = restTemplate.postForObject(
@@ -58,7 +58,7 @@ public class BabyVillageService implements StoreSearchService<BabyVillageProduct
                 BabyVillageRequestParameters.createParameters(keywords),
                 BabyVillageSearchResult.class);
 
-        return searchResult.toProducts();
+        return searchResult.toProducts(sortType);
     }
 
 

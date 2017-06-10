@@ -6,7 +6,12 @@ import java.util.Map;
 public enum GroceriesCoachSortType {
     ProductName("Name", "Product Name"),
     Price("Price", "Price"),
-    UnitPrice("UnitPrice", "Unit Price");
+    UnitPrice("UnitPrice", "Unit Price") {
+        @Override
+        protected boolean isUnitPriceRequired() {
+            return true;
+        }
+    };
 
     private final String key;
     private final String value;
@@ -40,4 +45,9 @@ public enum GroceriesCoachSortType {
         }
         throw new IllegalArgumentException(key + " is not a valid GroceryCoachSortType key");
     }
+
+    protected boolean isUnitPriceRequired() {
+        return false;
+    }
+
 }

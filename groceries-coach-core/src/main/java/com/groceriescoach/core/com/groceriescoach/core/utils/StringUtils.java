@@ -8,7 +8,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     public static String removeCurrencySymbols(final String str) {
-        return str == null ? EMPTY : trimToEmpty(str.replaceAll("\\$", ""));
+        return str == null ? EMPTY : trimToEmpty(str.replaceAll("\\$", "").replaceAll(",", ""));
     }
 
     public static String removeThousandSeparators(final String str) {

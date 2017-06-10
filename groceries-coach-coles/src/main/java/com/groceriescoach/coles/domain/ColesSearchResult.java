@@ -1,68 +1,31 @@
 package com.groceriescoach.coles.domain;
 
-import com.groceriescoach.core.domain.Product;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-public class ColesSearchResult implements Serializable {
+public class ColesSearchResult extends GroceriesCoachSearchResult<ColesProduct> {
 
     private static final long serialVersionUID = -7704062795180569959L;
 
-    private List<ColesProduct> colesProducts;
-
-
     private static final Logger logger = LoggerFactory.getLogger(ColesSearchResult.class);
 
-    public ColesSearchResult(Document document) {
-
-        colesProducts = new ArrayList<>();
-
-//        Elements searchResults = document.select(".outer-prod.prodtile .wrapper.clearfix");
-        Elements searchResults = document.select(".wrapper.clearfix");
-
-        for (Element productElement : searchResults) {
-            try {
-                ColesProduct colesProduct = ColesProduct.fromProductElement(productElement);
-                colesProducts.add(colesProduct);
-            } catch (Exception e) {
-                logger.error("Unable to extract product from: " + productElement, e);
-            }
-        }
+    public ColesSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
-
-
-    public List<ColesProduct> getColesProducts() {
-        return colesProducts;
-    }
-
-    public void setColesProducts(List<ColesProduct> colesProducts) {
-        this.colesProducts = colesProducts;
-    }
-
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("colesProducts", colesProducts)
-                .toString();
+    protected String getCssQuery() {
+        return ".wrapper.clearfix";
     }
 
-    public List<Product> toProducts() {
-
-        List<Product> products = new ArrayList<>();
-
-        for (ColesProduct colesProduct : colesProducts) {
-            products.add(colesProduct.toGroceriesCoachProduct());
-        }
-
-        return products;
+    @Override
+    protected ColesProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new ColesProduct(productElement, sortType);
     }
+
 }

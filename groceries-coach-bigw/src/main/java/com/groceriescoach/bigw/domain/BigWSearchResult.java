@@ -1,5 +1,7 @@
 package com.groceriescoach.bigw.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +14,8 @@ public class BigWSearchResult extends GroceriesCoachSearchResult<BigWProduct> {
 
     private static final Logger logger = LoggerFactory.getLogger(BigWSearchResult.class);
 
-    public BigWSearchResult(Document document) {
-        super(document);
+    public BigWSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class BigWSearchResult extends GroceriesCoachSearchResult<BigWProduct> {
     }
 
     @Override
-    protected BigWProduct fromProductElement(Element productElement) {
-        return BigWProduct.fromProductElement(productElement);
+    protected BigWProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new BigWProduct(productElement, sortType);
     }
 }

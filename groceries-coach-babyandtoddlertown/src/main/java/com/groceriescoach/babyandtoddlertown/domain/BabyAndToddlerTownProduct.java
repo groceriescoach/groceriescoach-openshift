@@ -1,7 +1,10 @@
 package com.groceriescoach.babyandtoddlertown.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -10,19 +13,8 @@ import static com.groceriescoach.core.domain.Store.BabyAndToddlerTown;
 public class BabyAndToddlerTownProduct extends Product {
 
 
-    public static BabyAndToddlerTownProduct fromProductElement(Element productElement) {
-
-        BabyAndToddlerTownProduct product = null;
-        product = new BabyAndToddlerTownProduct();
-        product.setName(extractNameFromProductElement(productElement));
-        product.setImageUrl(extractImageFromProductElement(productElement));
-        product.setUrl(extractUrlFromProductElement(productElement));
-        product.setPrice(extractPriceFromProductElement(productElement));
-        product.setWasPrice(extractOldPriceFromProductElement(productElement));
-        product.calculateSavings();
-        product.calculateUnitPrice();
-        product.setStore(BabyAndToddlerTown);
-        return product;
+    BabyAndToddlerTownProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
     }
 
     private static String extractUrlFromProductElement(Element productElement) {
@@ -61,5 +53,19 @@ public class BabyAndToddlerTownProduct extends Product {
         return null;
     }
 
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setWasPrice(extractOldPriceFromProductElement(productElement));
+        calculateSavings();
+    }
+
+    @Override
+    public Store getStore() {
+        return BabyAndToddlerTown;
+    }
 }
 

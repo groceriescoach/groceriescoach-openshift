@@ -1,5 +1,7 @@
 package com.groceriescoach.target.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +14,8 @@ public class TargetSearchResult extends GroceriesCoachSearchResult<TargetProduct
 
     private static final Logger logger = LoggerFactory.getLogger(TargetSearchResult.class);
 
-    public TargetSearchResult(Document document) {
-        super(document);
+    public TargetSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class TargetSearchResult extends GroceriesCoachSearchResult<TargetProduct
     }
 
     @Override
-    protected TargetProduct fromProductElement(Element productElement) {
-        return TargetProduct.fromProductElement(productElement);
+    protected TargetProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new TargetProduct(productElement, sortType);
     }
 }

@@ -1,5 +1,7 @@
 package com.groceriescoach.pharmacy4less.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +14,8 @@ public class Pharmacy4LessSearchResult extends GroceriesCoachSearchResult<Pharma
 
     private static final Logger logger = LoggerFactory.getLogger(Pharmacy4LessSearchResult.class);
 
-    public Pharmacy4LessSearchResult(Document document) {
-        super(document);
+    public Pharmacy4LessSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class Pharmacy4LessSearchResult extends GroceriesCoachSearchResult<Pharma
     }
 
     @Override
-    protected Pharmacy4LessProduct fromProductElement(Element productElement) {
-        return Pharmacy4LessProduct.fromProductElement(productElement);
+    protected Pharmacy4LessProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new Pharmacy4LessProduct(productElement, sortType);
     }
 }

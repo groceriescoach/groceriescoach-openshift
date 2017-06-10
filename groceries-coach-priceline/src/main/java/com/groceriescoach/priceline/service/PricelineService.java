@@ -1,9 +1,9 @@
 package com.groceriescoach.priceline.service;
 
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
+import com.groceriescoach.priceline.domain.PricelineProduct;
 import com.groceriescoach.priceline.domain.PricelineSearchResult;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,7 +33,7 @@ public class PricelineService implements StoreSearchService {
 
     @Async
     @Override
-    public Future<List<Product>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<PricelineProduct>> search(String keywords, GroceriesCoachSortType sortType) {
 
         logger.debug("Searching Priceline for {}.", keywords);
 
@@ -50,8 +50,8 @@ public class PricelineService implements StoreSearchService {
                     .timeout(5*1000)
                     .get();
 
-            PricelineSearchResult chemistWarehouseSearchResult = new PricelineSearchResult(doc);
-            List<Product> products = chemistWarehouseSearchResult.toProducts();
+            PricelineSearchResult searchResult = new PricelineSearchResult(doc, sortType);
+            List<PricelineProduct> products = searchResult.getProducts();
             logger.info("Found {} Priceline products for keywords[{}].", products.size(), keywords);
             return new AsyncResult<>(products);
         } catch (IOException e) {
@@ -64,9 +64,5 @@ public class PricelineService implements StoreSearchService {
     public Store getStore() {
         return Priceline;
     }
-
-
-
-
 
 }

@@ -51,7 +51,7 @@ public class TargetService implements StoreSearchService<TargetProduct> {
                     .timeout(10*1000)
                     .get();
 
-            TargetSearchResult searchResult = new TargetSearchResult(doc);
+            TargetSearchResult searchResult = new TargetSearchResult(doc, sortType);
             List<TargetProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Target products for keywords[{}].", products.size(), keywords);

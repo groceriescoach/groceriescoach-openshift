@@ -1,5 +1,7 @@
 package com.groceriescoach.nursingangel.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +14,8 @@ public class NursingAngelSearchResult extends GroceriesCoachSearchResult<Nursing
 
     private static final Logger logger = LoggerFactory.getLogger(NursingAngelSearchResult.class);
 
-    public NursingAngelSearchResult(Document document) {
-        super(document);
+    public NursingAngelSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class NursingAngelSearchResult extends GroceriesCoachSearchResult<Nursing
     }
 
     @Override
-    protected NursingAngelProduct fromProductElement(Element productElement) {
-        return NursingAngelProduct.fromProductElement(productElement);
+    protected NursingAngelProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new NursingAngelProduct(productElement, sortType);
     }
 }

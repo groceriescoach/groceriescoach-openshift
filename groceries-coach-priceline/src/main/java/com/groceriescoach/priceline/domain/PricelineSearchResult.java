@@ -1,71 +1,32 @@
 package com.groceriescoach.priceline.domain;
 
 
-import com.groceriescoach.core.domain.Product;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-public class PricelineSearchResult implements Serializable{
-
+public class PricelineSearchResult extends GroceriesCoachSearchResult<PricelineProduct> {
 
     private static final long serialVersionUID = 2751225604575303422L;
 
-    private List<PricelineProduct> pricelineProducts;
-
-
     private static final Logger logger = LoggerFactory.getLogger(PricelineSearchResult.class);
 
-    public PricelineSearchResult(Document document) {
-
-        pricelineProducts = new ArrayList<>();
-
-        Elements searchResults = document.select(".item.type-simple");
-
-        for (Element productElement : searchResults) {
-            try {
-                PricelineProduct pricelineProduct = PricelineProduct.fromProductElement(productElement);
-                pricelineProducts.add(pricelineProduct);
-            } catch (Exception e) {
-                logger.error("Unable to extract product from: " + productElement, e);
-            }
-        }
+    public PricelineSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
-
-
-    public List<PricelineProduct> getPricelineProducts() {
-        return pricelineProducts;
-    }
-
-    public void setPricelineProducts(List<PricelineProduct> pricelineProducts) {
-        this.pricelineProducts = pricelineProducts;
-    }
-
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("pricelineProducts", pricelineProducts)
-                .toString();
+    protected String getCssQuery() {
+        return ".item";
     }
 
-    public List<Product> toProducts() {
-
-        List<Product> products = new ArrayList<>();
-
-        for (PricelineProduct pricelineProduct : pricelineProducts) {
-            products.add(pricelineProduct.toGroceriesCoachProduct());
-        }
-
-        return products;
+    @Override
+    protected PricelineProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new PricelineProduct(productElement, sortType);
     }
-
 
 }

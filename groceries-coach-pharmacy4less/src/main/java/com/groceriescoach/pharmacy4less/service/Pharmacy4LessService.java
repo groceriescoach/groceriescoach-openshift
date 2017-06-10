@@ -44,8 +44,6 @@ public class Pharmacy4LessService implements StoreSearchService<Pharmacy4LessPro
 
         Document doc = null;
         try {
-
-
             Connection.Response response = Jsoup.connect("http://www.pharmacy4less.com.au/search/go")
                     .data(requestParams)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
@@ -58,7 +56,7 @@ public class Pharmacy4LessService implements StoreSearchService<Pharmacy4LessPro
 
             doc = response.parse();
 
-            Pharmacy4LessSearchResult searchResult = new Pharmacy4LessSearchResult(doc);
+            Pharmacy4LessSearchResult searchResult = new Pharmacy4LessSearchResult(doc, sortType);
             List<Pharmacy4LessProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Pharmacy 4 Less products for keywords[{}].", products.size(), keywords);

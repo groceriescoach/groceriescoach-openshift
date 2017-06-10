@@ -1,6 +1,9 @@
 package com.groceriescoach.babyvillage.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
@@ -13,21 +16,11 @@ import static com.groceriescoach.core.domain.Store.BabyVillage;
 public class BabyVillageProduct extends Product {
 
 
-    static BabyVillageProduct fromProductElement(Document productElement) {
-        BabyVillageProduct product = new BabyVillageProduct();
-
-        product.setName(extractNameFromProductElement(productElement));
-        product.setImageUrl(extractImageUrlFromProductElement(productElement));
-        product.setUrl(extractUrlFromProductElement(productElement));
-        product.setWasPrice(extractWasPriceFromProductElement(productElement));
-        product.setPrice(extractPriceFromProductElement(productElement));
-        product.calculateSavings();
-        product.setStore(BabyVillage);
-
-        return product;
+    BabyVillageProduct(Document productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
     }
 
-    private static Double extractPriceFromProductElement(Document productElement) {
+    private static Double extractPriceFromProductElement(Element productElement) {
         final Elements priceElements = productElement.select(".price");
         if (priceElements != null && !priceElements.isEmpty()) {
             final Element priceElement = priceElements.get(0);
@@ -43,7 +36,7 @@ public class BabyVillageProduct extends Product {
         return null;
     }
 
-    private static Double extractWasPriceFromProductElement(Document productElement) {
+    private static Double extractWasPriceFromProductElement(Element productElement) {
         final Elements rrpElements = productElement.select(".rrp");
         if (rrpElements != null && !rrpElements.isEmpty()) {
             return Double.parseDouble(removeThousandSeparators(removeCurrencySymbols(rrpElements.get(0).text())));
@@ -52,7 +45,7 @@ public class BabyVillageProduct extends Product {
         }
     }
 
-    private static String extractImageUrlFromProductElement(Document productElement) {
+    private static String extractImageUrlFromProductElement(Element productElement) {
         final Elements imageProductElements = productElement.select(".image");
         if (imageProductElements != null && !imageProductElements.isEmpty()) {
             final String style = imageProductElements.get(0).attr("style");
@@ -61,7 +54,7 @@ public class BabyVillageProduct extends Product {
         return null;
     }
 
-    private static String extractUrlFromProductElement(Document productElement) {
+    private static String extractUrlFromProductElement(Element productElement) {
         Elements productLinkElements = productElement.select("a");
         if (productLinkElements != null && !productLinkElements.isEmpty()) {
             return "https://www.babyvillage.com.au" + productLinkElements.get(0).attr("href");
@@ -70,8 +63,24 @@ public class BabyVillageProduct extends Product {
         }
     }
 
-    private static String extractNameFromProductElement(Document productElement) {
+    private static String extractNameFromProductElement(Element productElement) {
         return productElement.select(".name").text();
+    }
+
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageUrlFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setWasPrice(extractWasPriceFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        calculateSavings();
+
+    }
+
+    @Override
+    public Store getStore() {
+        return BabyVillage;
     }
 }
 

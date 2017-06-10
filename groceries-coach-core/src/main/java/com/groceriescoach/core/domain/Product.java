@@ -2,8 +2,10 @@ package com.groceriescoach.core.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.jsoup.nodes.Element;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.roundToTwoDecimalPlaces;
 
-public class Product implements Serializable {
+public abstract class Product implements Serializable {
 
 
     private String name;
@@ -22,12 +24,78 @@ public class Product implements Serializable {
     private Double saving;
     private Double wasPrice;
     private String imageUrl;
-    private Store store;
     private String packageSize;
     private Double unitPrice;
     private String unitSize;
     private String unitPriceStr;
-    private List<QuantityPrice> quantityPriceList;
+    private List<QuantityPrice> quantityPriceList = new ArrayList<>();
+
+    public Product() {}
+
+    public Product (Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        preProductElementExtraction(productElement, sortType);
+        extractFromProductElement(productElement, sortType);
+        postProductElementExtraction(productElement, sortType);
+    }
+
+
+    protected void preProductElementExtraction(Element productElement, GroceriesCoachSortType sortType) {
+
+    }
+
+    protected abstract void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException;
+
+
+    public abstract Store getStore();
+
+    protected void postProductElementExtraction(Element productElement, GroceriesCoachSortType sortType) {
+        if (sortType.isUnitPriceRequired()) {
+            calculateUnitPrice();
+        }
+        calculateSavings();
+    }
+
+
+    public static List<Product> eliminateProductsWithoutAllSearchKeywords(List<Product> allProducts, String keywords) {
+        List<String> searchKeywords = Arrays.asList(StringUtils.split(keywords));
+        return allProducts.stream()
+        .filter(product -> product.containsAllSearchKeywords(searchKeywords))
+        .collect(Collectors.toList());
+    }
+
+    private boolean containsAllSearchKeywords(List<String> searchKeywords) {
+        for (String keyword: searchKeywords) {
+            if (!StringUtils.containsIgnoreCase(name, keyword) && !StringUtils.containsIgnoreCase(brand, keyword)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected void calculateSavings() {
+        if (Objects.nonNull(price) && Objects.nonNull(wasPrice) && Objects.isNull(saving)) {
+            saving = wasPrice - price;
+        }
+    }
+
+    protected void calculateUnitPrice() {
+        if (StringUtils.containsIgnoreCase(name,"pack")) {
+            final String[] tokens = StringUtils.split(name);
+            for (int i = 0; i < tokens.length -1; i++) {
+                if (StringUtils.equalsIgnoreCase("pack", tokens[i+1])) {
+                    try {
+                        final Double packSize = Double.parseDouble(tokens[i]);
+                        unitPrice = roundToTwoDecimalPlaces(price / packSize);
+                        unitPriceStr = "$" + unitPrice + " each";
+                        unitSize = "Each";
+                        break;
+                    } catch (Exception ignored) {
+
+                    }
+                }
+            }
+        }
+    }
 
     public String getName() {
         return name;
@@ -67,14 +135,6 @@ public class Product implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
     }
 
     public void setPackageSize(String packageSize) {
@@ -151,54 +211,12 @@ public class Product implements Serializable {
                 .append("saving", saving)
                 .append("wasPrice", wasPrice)
                 .append("imageUrl", imageUrl)
-                .append("store", store)
                 .append("packageSize", packageSize)
                 .append("unitPrice", unitPrice)
                 .append("unitSize", unitSize)
                 .append("unitPriceStr", unitPriceStr)
                 .append("quantityPriceList", quantityPriceList)
                 .toString();
-    }
-
-    public static List<Product> eliminateProductsWithoutAllSearchKeywords(List<Product> allProducts, String keywords) {
-        List<String> searchKeywords = Arrays.asList(StringUtils.split(keywords));
-        return allProducts.stream()
-        .filter(product -> product.containsAllSearchKeywords(searchKeywords))
-        .collect(Collectors.toList());
-    }
-
-    private boolean containsAllSearchKeywords(List<String> searchKeywords) {
-        for (String keyword: searchKeywords) {
-            if (!StringUtils.containsIgnoreCase(name, keyword) && !StringUtils.containsIgnoreCase(brand, keyword)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    protected void calculateSavings() {
-        if (Objects.nonNull(price) && Objects.nonNull(wasPrice)) {
-            saving = wasPrice - price;
-        }
-    }
-
-    protected void calculateUnitPrice() {
-        if (StringUtils.containsIgnoreCase(name,"pack")) {
-            final String[] tokens = StringUtils.split(name);
-            for (int i = 0; i < tokens.length -1; i++) {
-                if (StringUtils.equalsIgnoreCase("pack", tokens[i+1])) {
-                    try {
-                        final Double packSize = Double.parseDouble(tokens[i]);
-                        unitPrice = roundToTwoDecimalPlaces(price / packSize);
-                        unitPriceStr = "$" + unitPrice + " each";
-                        unitSize = "Each";
-                        break;
-                    } catch (Exception ignored) {
-
-                    }
-                }
-            }
-        }
     }
 
 

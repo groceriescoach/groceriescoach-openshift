@@ -53,7 +53,7 @@ public class BigWService implements StoreSearchService<BigWProduct> {
                     .maxBodySize(0)
                     .get();
 
-            BigWSearchResult searchResult = new BigWSearchResult(doc);
+            BigWSearchResult searchResult = new BigWSearchResult(doc, sortType);
             List<BigWProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Big W products for keywords[{}].", products.size(), keywords);

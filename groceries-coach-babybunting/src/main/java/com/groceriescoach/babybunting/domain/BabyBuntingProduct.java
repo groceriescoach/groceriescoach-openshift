@@ -1,7 +1,10 @@
 package com.groceriescoach.babybunting.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -10,18 +13,8 @@ import static com.groceriescoach.core.domain.Store.BabyBunting;
 public class BabyBuntingProduct extends Product {
 
 
-    public static BabyBuntingProduct fromProductElement(Element productElement) {
-        BabyBuntingProduct product = null;
-        product = new BabyBuntingProduct();
-        product.setName(extractNameFromProductElement(productElement));
-        product.setImageUrl(extractImageFromProductElement(productElement));
-        product.setUrl(extractUrlFromProductElement(productElement));
-        product.setPrice(extractPriceFromProductElement(productElement));
-        product.setWasPrice(extractOldPriceFromProductElement(productElement));
-        product.calculateSavings();
-        product.calculateUnitPrice();
-        product.setStore(BabyBunting);
-        return product;
+    BabyBuntingProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
     }
 
     private static String extractUrlFromProductElement(Element productElement) {
@@ -63,5 +56,18 @@ public class BabyBuntingProduct extends Product {
         return null;
     }
 
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setWasPrice(extractOldPriceFromProductElement(productElement));
+    }
+
+    @Override
+    public Store getStore() {
+        return BabyBunting;
+    }
 }
 

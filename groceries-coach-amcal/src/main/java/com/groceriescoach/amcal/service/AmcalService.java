@@ -1,9 +1,9 @@
 package com.groceriescoach.amcal.service;
 
 
+import com.groceriescoach.amcal.domain.AmcalProduct;
 import com.groceriescoach.amcal.domain.AmcalSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.jsoup.Jsoup;
@@ -33,7 +33,7 @@ public class AmcalService implements StoreSearchService {
 
     @Async
     @Override
-    public Future<List<Product>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<AmcalProduct>> search(String keywords, GroceriesCoachSortType sortType) {
 
         logger.debug("Searching Amcal for {}.", keywords);
 
@@ -55,8 +55,8 @@ public class AmcalService implements StoreSearchService {
                     .timeout(10*1000)
                     .get();
 
-            AmcalSearchResult searchResult = new AmcalSearchResult(doc);
-            List<Product> products = searchResult.toProducts();
+            AmcalSearchResult searchResult = new AmcalSearchResult(doc, sortType);
+            List<AmcalProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Amcal products for keywords[{}].", products.size(), keywords);
 

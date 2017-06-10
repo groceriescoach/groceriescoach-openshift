@@ -58,7 +58,7 @@ public class BabyAndToddlerTownService implements StoreSearchService<BabyAndTodd
 
             doc = response.parse();
 
-            BabyAndToddlerTownSearchResult searchResult = new BabyAndToddlerTownSearchResult(doc);
+            BabyAndToddlerTownSearchResult searchResult = new BabyAndToddlerTownSearchResult(doc, sortType);
             List<BabyAndToddlerTownProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Baby and Toddler Town products for keywords[{}].", products.size(), keywords);

@@ -1,9 +1,9 @@
 package com.groceriescoach.chemistwarehouse.service;
 
 
+import com.groceriescoach.chemistwarehouse.domain.ChemistWarehouseProduct;
 import com.groceriescoach.chemistwarehouse.domain.ChemistWarehouseSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.jsoup.Jsoup;
@@ -26,14 +26,14 @@ import static com.groceriescoach.core.domain.Store.ChemistWarehouse;
 
 @Profile("online")
 @Service
-public class ChemistWarehouseService implements StoreSearchService {
+public class ChemistWarehouseService implements StoreSearchService<ChemistWarehouseProduct> {
 
 
     private static final Logger logger = LoggerFactory.getLogger(ChemistWarehouseService.class);
 
     @Async
     @Override
-    public Future<List<Product>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<ChemistWarehouseProduct>> search(String keywords, GroceriesCoachSortType sortType) {
 
         logger.debug("Searching Chemist Warehouse for {}.", keywords);
 
@@ -52,8 +52,8 @@ public class ChemistWarehouseService implements StoreSearchService {
                     .timeout(10*1000)
                     .get();
 
-            ChemistWarehouseSearchResult chemistWarehouseSearchResult = new ChemistWarehouseSearchResult(doc);
-            List<Product> products = chemistWarehouseSearchResult.toProducts();
+            ChemistWarehouseSearchResult chemistWarehouseSearchResult = new ChemistWarehouseSearchResult(doc, sortType);
+            final List<ChemistWarehouseProduct> products = chemistWarehouseSearchResult.getProducts();
 
             logger.info("Found {} Chemist Warehouse products for keywords[{}].", products.size(), keywords);
 
@@ -68,6 +68,5 @@ public class ChemistWarehouseService implements StoreSearchService {
     public Store getStore() {
         return ChemistWarehouse;
     }
-
 
 }

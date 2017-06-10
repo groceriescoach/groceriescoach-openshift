@@ -69,12 +69,6 @@
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-coles</artifactId>
         </dependency>
-<!--
-        <dependency>
-            <groupId>com.groceriescoach</groupId>
-            <artifactId>groceries-coach-kmart</artifactId>
-        </dependency>
--->
         <dependency>
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-nursingangel</artifactId>

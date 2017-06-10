@@ -30,7 +30,6 @@
         <module>groceries-coach-bigw</module>
         <module>groceries-coach-chemistwarehouse</module>
         <module>groceries-coach-coles</module>
-        <!--<module>groceries-coach-kmart</module>-->
         <module>groceries-coach-nursingangel</module>
         <module>groceries-coach-pharmacy4less</module>
         <module>groceries-coach-priceline</module>
@@ -118,13 +117,6 @@
                 <artifactId>groceries-coach-coles</artifactId>
                 <version>${project.version}</version>
             </dependency>
-<!--
-            <dependency>
-                <groupId>com.groceriescoach</groupId>
-                <artifactId>groceries-coach-kmart</artifactId>
-                <version>${project.version}</version>
-            </dependency>
--->
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-nursingangel</artifactId>

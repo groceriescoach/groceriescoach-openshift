@@ -1,7 +1,10 @@
 package com.groceriescoach.babybounce.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -12,18 +15,24 @@ import static com.groceriescoach.core.domain.Store.BabyBounce;
 public class BabyBounceProduct extends Product implements Serializable {
 
 
-    public static BabyBounceProduct fromProductElement(Element productElement) {
-        BabyBounceProduct product = null;
-        product = new BabyBounceProduct();
-        product.setName(extractNameFromProductElement(productElement));
-        product.setImageUrl(extractImageFromProductElement(productElement));
-        product.setUrl(extractUrlFromProductElement(productElement));
-        product.setPrice(extractPriceFromProductElement(productElement));
-        product.setWasPrice(extractOldPriceFromProductElement(productElement));
-        product.calculateSavings();
-        product.setStore(BabyBounce);
-        return product;
+    BabyBounceProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
     }
+
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setWasPrice(extractOldPriceFromProductElement(productElement));
+    }
+
+    @Override
+    public Store getStore() {
+        return BabyBounce;
+    }
+
 
     private static String extractUrlFromProductElement(Element productElement) {
         return productElement.select(".product-name").get(0).attr("href");

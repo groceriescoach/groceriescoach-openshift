@@ -1,7 +1,10 @@
 package com.groceriescoach.nursingangel.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -9,31 +12,8 @@ import static com.groceriescoach.core.domain.Store.NursingAngel;
 
 public class NursingAngelProduct extends Product {
 
-    public static NursingAngelProduct fromProductElement(Element productElement) {
-        NursingAngelProduct product = null;
-        product = new NursingAngelProduct();
-        product.setName(extractNameFromProductElement(productElement));
-        product.setImageUrl(extractImageFromProductElement(productElement));
-        product.setUrl(extractUrlFromProductElement(productElement));
-        product.setPrice(extractPriceFromProductElement(productElement));
-        product.setWasPrice(extractOldPriceFromProductElement(productElement));
-        product.calculateSavings();
-        product.setStore(NursingAngel);
-        return product;
-    }
-
-    private static Double extractSavingsFromProductElement(Element productElement) {
-        Elements saveElements = productElement.select(".save");
-        if (saveElements != null && !saveElements.isEmpty()) {
-            Element saveElement = saveElements.get(0);
-            String savingText = saveElement.text();
-            if (StringUtils.isNotBlank(savingText)) {
-                savingText = savingText.replaceAll("Save ", "");
-                savingText = StringUtils.removeCurrencySymbols(savingText);
-                return Double.parseDouble(savingText);
-            }
-        }
-        return 0D;
+    NursingAngelProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
     }
 
     private static String extractUrlFromProductElement(Element productElement) {
@@ -60,7 +40,7 @@ public class NursingAngelProduct extends Product {
         return 0D;
     }
 
-    public static Double extractOldPriceFromProductElement(Element productElement) {
+    private static Double extractOldPriceFromProductElement(Element productElement) {
         Elements oldPriceElements = productElement.select(".rrp-wrap");
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             Element oldPriceElement = oldPriceElements.get(0);
@@ -78,5 +58,18 @@ public class NursingAngelProduct extends Product {
         return null;
     }
 
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setWasPrice(extractOldPriceFromProductElement(productElement));
+    }
+
+    @Override
+    public Store getStore() {
+        return NursingAngel;
+    }
 }
 

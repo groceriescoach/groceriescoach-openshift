@@ -50,7 +50,7 @@ public class BabyKingdomService implements StoreSearchService {
                     .maxBodySize(0)
                     .post();
 
-            BabyKingdomSearchResult searchResult = new BabyKingdomSearchResult(doc);
+            BabyKingdomSearchResult searchResult = new BabyKingdomSearchResult(doc, sortType);
             List<BabyKingdomProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Baby Kingdom products for keywords[{}].", products.size(), keywords);

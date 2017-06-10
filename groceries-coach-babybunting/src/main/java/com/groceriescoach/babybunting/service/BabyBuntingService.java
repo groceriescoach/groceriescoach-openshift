@@ -54,7 +54,7 @@ public class BabyBuntingService implements StoreSearchService<BabyBuntingProduct
 
             logger.debug("URL: {}", response.url());
 
-            BabyBuntingSearchResult searchResult = new BabyBuntingSearchResult(doc);
+            BabyBuntingSearchResult searchResult = new BabyBuntingSearchResult(doc, sortType);
 
             List<BabyBuntingProduct> products = searchResult.getProducts();
 

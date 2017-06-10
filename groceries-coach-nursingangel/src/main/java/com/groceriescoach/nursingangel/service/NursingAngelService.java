@@ -48,13 +48,12 @@ public class NursingAngelService implements StoreSearchService<NursingAngelProdu
 
         Document doc = null;
         try {
-
             doc = Jsoup.connect("http://www.nursingangel.com.au")
                     .data(requestParams)
                     .timeout(10*1000)
                     .get();
 
-            NursingAngelSearchResult searchResult = new NursingAngelSearchResult(doc);
+            NursingAngelSearchResult searchResult = new NursingAngelSearchResult(doc, sortType);
             List<NursingAngelProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Nursing Angel products for keywords[{}].", products.size(), keywords);

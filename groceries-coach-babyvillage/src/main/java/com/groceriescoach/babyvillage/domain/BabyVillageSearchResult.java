@@ -1,6 +1,7 @@
 package com.groceriescoach.babyvillage.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -83,14 +84,14 @@ public class BabyVillageSearchResult {
         this.dataLayer = dataLayer;
     }
 
-    public List<BabyVillageProduct> toProducts() {
+    public List<BabyVillageProduct> toProducts(GroceriesCoachSortType sortType) {
 
         List<BabyVillageProduct> products = new ArrayList<>();
 
         for (String result : results) {
             Document productElement = Jsoup.parse(result);
             try {
-                products.add(BabyVillageProduct.fromProductElement(productElement));
+                products.add(new BabyVillageProduct(productElement, sortType));
             } catch (Exception e) {
                 logger.error("Unable to extract product from: " + productElement, e);
             }

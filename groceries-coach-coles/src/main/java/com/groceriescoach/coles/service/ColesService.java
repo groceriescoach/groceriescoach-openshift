@@ -1,9 +1,9 @@
 package com.groceriescoach.coles.service;
 
 
+import com.groceriescoach.coles.domain.ColesProduct;
 import com.groceriescoach.coles.domain.ColesSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.jsoup.Jsoup;
@@ -36,7 +36,7 @@ public class ColesService implements StoreSearchService {
 
     @Async
     @Override
-    public Future<List<Product>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<ColesProduct>> search(String keywords, GroceriesCoachSortType sortType) {
 
         logger.debug("Searching Coles for {}.", keywords);
 
@@ -55,9 +55,9 @@ public class ColesService implements StoreSearchService {
                     .timeout(10*1000)
                     .get();
 
-            ColesSearchResult colesSearchResult = new ColesSearchResult(doc);
+            ColesSearchResult colesSearchResult = new ColesSearchResult(doc, sortType);
 
-            List<Product> products = colesSearchResult.toProducts();
+            List<ColesProduct> products = colesSearchResult.getProducts();
             logger.info("Found {} Coles products for keywords[{}].", products.size(), keywords);
 
             return new AsyncResult<>(products);

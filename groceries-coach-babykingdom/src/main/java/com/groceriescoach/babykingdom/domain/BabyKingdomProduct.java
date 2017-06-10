@@ -1,7 +1,10 @@
 package com.groceriescoach.babykingdom.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
@@ -12,18 +15,8 @@ import static com.groceriescoach.core.domain.Store.BabyKingdom;
 public class BabyKingdomProduct extends Product {
 
 
-    public static BabyKingdomProduct fromProductElement(Element productElement) {
-        BabyKingdomProduct babyKingdomProduct = null;
-        babyKingdomProduct = new BabyKingdomProduct();
-        babyKingdomProduct.setName(extractNameFromProductElement(productElement));
-        babyKingdomProduct.setImageUrl(extractImageFromProductElement(productElement));
-        babyKingdomProduct.setUrl(extractUrlFromProductElement(productElement));
-        babyKingdomProduct.setPrice(extractPriceFromProductElement(productElement));
-        babyKingdomProduct.setWasPrice(extractOldPriceFromProductElement(productElement));
-        babyKingdomProduct.calculateSavings();
-        babyKingdomProduct.calculateUnitPrice();
-        babyKingdomProduct.setStore(BabyKingdom);
-        return babyKingdomProduct;
+    BabyKingdomProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
     }
 
     private static String extractUrlFromProductElement(Element productElement) {
@@ -64,7 +57,7 @@ public class BabyKingdomProduct extends Product {
         return 0D;
     }
 
-    public static Double extractOldPriceFromProductElement(Element productElement) {
+    private static Double extractOldPriceFromProductElement(Element productElement) {
         Elements oldPriceElements = productElement.select(".prodrrpprice");
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             Element oldPriceElement = oldPriceElements.get(0);
@@ -85,5 +78,18 @@ public class BabyKingdomProduct extends Product {
         return null;
     }
 
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setWasPrice(extractOldPriceFromProductElement(productElement));
+    }
+
+    @Override
+    public Store getStore() {
+        return BabyKingdom;
+    }
 }
 

@@ -3,7 +3,6 @@ package com.groceriescoach.babybounce.service;
 import com.groceriescoach.babybounce.domain.BabyBounceProduct;
 import com.groceriescoach.babybounce.domain.BabyBounceSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.jsoup.Jsoup;
@@ -52,7 +51,7 @@ public class BabyBounceService implements StoreSearchService<BabyBounceProduct> 
                     .timeout(10*1000)
                     .get();
 
-            BabyBounceSearchResult searchResult = new BabyBounceSearchResult(doc);
+            BabyBounceSearchResult searchResult = new BabyBounceSearchResult(doc, sortType);
             List<BabyBounceProduct> products = searchResult.getProducts();
 
             logger.info("Found {} Baby Bounce products for keywords[{}].", products.size(), keywords);

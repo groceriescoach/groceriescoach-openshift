@@ -1,7 +1,10 @@
 package com.groceriescoach.bigw.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -9,20 +12,25 @@ import static com.groceriescoach.core.domain.Store.BigW;
 
 public class BigWProduct extends Product {
 
-    public static BigWProduct fromProductElement(Element productElement) {
-        BigWProduct product = null;
-        product = new BigWProduct();
-        product.setName(extractNameFromProductElement(productElement));
-        product.setImageUrl(extractImageFromProductElement(productElement));
-        product.setUrl(extractUrlFromProductElement(productElement));
-        product.setPrice(extractPriceFromProductElement(productElement));
-        product.setSaving(extractSavingsFromProductElement(productElement));
-        if (product.getSaving() != null && product.getSaving() != 0D) {
-            product.setWasPrice(product.getPrice() + product.getSaving());
+    BigWProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
+    }
+
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setSaving(extractSavingsFromProductElement(productElement));
+        if (getSaving() != null && getSaving() != 0D) {
+            setWasPrice(getPrice() + getSaving());
         }
-        product.calculateUnitPrice();
-        product.setStore(BigW);
-        return product;
+    }
+
+    @Override
+    public Store getStore() {
+        return BigW;
     }
 
     private static Double extractSavingsFromProductElement(Element productElement) {
@@ -57,21 +65,6 @@ public class BigWProduct extends Product {
             return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
         }
         return 0D;
-    }
-
-    public static Double extractOldPriceFromProductElement(Element productElement) {
-        Elements oldPriceElements = productElement.select(".old_price");
-        if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
-            Element oldPriceElement = oldPriceElements.get(0);
-            if (oldPriceElement != null) {
-                String price = oldPriceElement.text();
-                if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
-                }
-                return 0D;
-            }
-        }
-        return null;
     }
 
 }

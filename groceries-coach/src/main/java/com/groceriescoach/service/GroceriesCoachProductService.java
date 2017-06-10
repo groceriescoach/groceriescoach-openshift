@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 @Service
 public class GroceriesCoachProductService implements ProductSearchService {
@@ -47,7 +45,6 @@ public class GroceriesCoachProductService implements ProductSearchService {
         }
 
         List<Product> allProducts = new ArrayList<>();
-        List<Future<List<Product>>> futures = new ArrayList<>();
         Map<Store, Future<List<Product>>> futuresMap = new HashMap<>();
 
 /*

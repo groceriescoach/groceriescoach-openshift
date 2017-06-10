@@ -1,5 +1,7 @@
 package com.groceriescoach.babyandtoddlertown.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +14,8 @@ public class BabyAndToddlerTownSearchResult extends GroceriesCoachSearchResult<B
 
     private static final Logger logger = LoggerFactory.getLogger(BabyAndToddlerTownSearchResult.class);
 
-    public BabyAndToddlerTownSearchResult(Document document) {
-        super(document);
+    public BabyAndToddlerTownSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class BabyAndToddlerTownSearchResult extends GroceriesCoachSearchResult<B
     }
 
     @Override
-    protected BabyAndToddlerTownProduct fromProductElement(Element productElement) {
-        return BabyAndToddlerTownProduct.fromProductElement(productElement);
+    protected BabyAndToddlerTownProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new BabyAndToddlerTownProduct(productElement, sortType);
     }
 }

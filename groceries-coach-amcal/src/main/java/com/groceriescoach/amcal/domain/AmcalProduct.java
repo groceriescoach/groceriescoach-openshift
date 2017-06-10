@@ -1,53 +1,42 @@
 package com.groceriescoach.amcal.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 import static com.groceriescoach.core.domain.Store.Amcal;
 
-public class AmcalProduct implements Serializable {
+public class AmcalProduct extends Product {
 
-    private String name;
-    private String image;
-    private String url;
-    private Double price;
-    private Double oldPrice;
-    private Double savings;
+    AmcalProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
+    }
 
-
-    public static AmcalProduct fromProductElement(Element productElement) {
-
-        AmcalProduct amcalProduct = null;
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         if (!productElement.getElementsByClass("product_info").isEmpty()) {
-            amcalProduct = new AmcalProduct();
-            amcalProduct.setName(extractNameFromProductElement(productElement));
-            amcalProduct.setImage(extractImageFromProductElement(productElement));
-            amcalProduct.setUrl(extractUrlFromProductElement(productElement));
-            amcalProduct.setPrice(extractPriceFromProductElement(productElement));
-            amcalProduct.setOldPrice(extractOldPriceFromProductElement(productElement));
-            amcalProduct.setSavings(amcalProduct.calculateSavings());
+            setName(extractNameFromProductElement(productElement));
+            setImageUrl(extractImageFromProductElement(productElement));
+            setUrl(extractUrlFromProductElement(productElement));
+            setPrice(extractPriceFromProductElement(productElement));
+            setWasPrice(extractOldPriceFromProductElement(productElement));
+        } else {
+            throw new ProductInformationUnavailableException();
         }
-        return amcalProduct;
+
+    }
+
+    @Override
+    public Store getStore() {
+        return Amcal;
     }
 
     private static String extractUrlFromProductElement(Element productElement) {
         return productElement.select(".product_name a").get(0).attr("href");
-    }
-
-    private Double calculateSavings() {
-        if (Objects.nonNull(price) && Objects.nonNull(oldPrice)) {
-            return oldPrice - price;
-        } else {
-            return null;
-        }
     }
 
     private static String extractNameFromProductElement(Element productElement) {
@@ -81,89 +70,5 @@ public class AmcalProduct implements Serializable {
         return null;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Double getOldPrice() {
-        return oldPrice;
-    }
-
-    public void setOldPrice(Double oldPrice) {
-        this.oldPrice = oldPrice;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Product toGroceriesCoachProduct() {
-        Product product = new Product();
-        product.setName(name);
-        product.setImageUrl(image);
-        product.setUrl(url);
-        product.setPrice(price);
-        product.setWasPrice(oldPrice);
-        product.setSaving(savings);
-        product.setStore(Amcal);
-        return product;
-    }
-
-
-    public static List<Product> toProducts(AmcalProduct[] amcalProducts) {
-
-        List<Product> products = new ArrayList<>();
-        for (AmcalProduct amcalProduct : amcalProducts) {
-            Product product = amcalProduct.toGroceriesCoachProduct();
-            if (product != null) {
-                products.add(product);
-            }
-        }
-        return products;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("name", name)
-                .append("image", image)
-                .append("url", url)
-                .append("price", price)
-                .append("oldPrice", oldPrice)
-                .append("savings", savings)
-                .toString();
-    }
-
-    public void setSavings(Double savings) {
-        this.savings = savings;
-    }
-
-    public Double getSavings() {
-        return savings;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }
 

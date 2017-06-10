@@ -1,17 +1,12 @@
 package com.groceriescoach.babybunting.domain;
 
-import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.service.GroceriesCoachSearchResult;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BabyBuntingSearchResult extends GroceriesCoachSearchResult<BabyBuntingProduct> {
 
@@ -19,8 +14,8 @@ public class BabyBuntingSearchResult extends GroceriesCoachSearchResult<BabyBunt
 
     private static final Logger logger = LoggerFactory.getLogger(BabyBuntingSearchResult.class);
 
-    public BabyBuntingSearchResult(Document document) {
-        super(document);
+    public BabyBuntingSearchResult(Document document, GroceriesCoachSortType sortType) {
+        super(document, sortType);
     }
 
     @Override
@@ -29,7 +24,7 @@ public class BabyBuntingSearchResult extends GroceriesCoachSearchResult<BabyBunt
     }
 
     @Override
-    protected BabyBuntingProduct fromProductElement(Element productElement) {
-        return BabyBuntingProduct.fromProductElement(productElement);
+    protected BabyBuntingProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        return new BabyBuntingProduct(productElement, sortType);
     }
 }

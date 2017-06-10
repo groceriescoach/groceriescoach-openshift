@@ -1,7 +1,10 @@
 package com.groceriescoach.pharmacy4less.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -9,19 +12,22 @@ import static com.groceriescoach.core.domain.Store.Pharmacy4Less;
 
 public class Pharmacy4LessProduct extends Product {
 
+    Pharmacy4LessProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+        super(productElement, sortType);
+    }
 
-    public static Pharmacy4LessProduct fromProductElement(Element productElement) {
+    @Override
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+        setName(extractNameFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
+        setPrice(extractPriceFromProductElement(productElement));
+        setWasPrice(extractOldPriceFromProductElement(productElement));
+    }
 
-        Pharmacy4LessProduct product = null;
-        product = new Pharmacy4LessProduct();
-        product.setName(extractNameFromProductElement(productElement));
-        product.setImageUrl(extractImageFromProductElement(productElement));
-        product.setUrl(extractUrlFromProductElement(productElement));
-        product.setPrice(extractPriceFromProductElement(productElement));
-        product.setWasPrice(extractOldPriceFromProductElement(productElement));
-        product.calculateSavings();
-        product.setStore(Pharmacy4Less);
-        return product;
+    @Override
+    public Store getStore() {
+        return Pharmacy4Less;
     }
 
     private static String extractUrlFromProductElement(Element productElement) {

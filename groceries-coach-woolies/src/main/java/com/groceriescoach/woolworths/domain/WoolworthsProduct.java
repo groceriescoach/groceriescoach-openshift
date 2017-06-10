@@ -1,78 +1,20 @@
 package com.groceriescoach.woolworths.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
-import com.groceriescoach.core.domain.Product;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.Store;
+import org.jsoup.nodes.Element;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import static com.groceriescoach.core.domain.Store.Woolworths;
 
-
-public class WoolworthsProduct implements Serializable {
-
-    private static final long serialVersionUID = -3258096516203229499L;
-
-
-    @JsonProperty("Products")
-    private ProductDetails products[];
-    @JsonProperty("Name")
-    private String name;
-
-
-    public ProductDetails[] getProducts() {
-        return products;
-    }
-
-    public void setProducts(ProductDetails[] products) {
-        this.products = products;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+public class WoolworthsProduct extends com.groceriescoach.core.domain.Product {
 
     @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("products", products)
-                .append("name", name)
-                .toString();
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
+
     }
 
-/*
-    public static List<Product> toProducts(WoolworthsProduct[] woolworthsProducts) {
-        List<Product> products = new ArrayList<>();
-
-        for (WoolworthsProduct woolworthsProduct : woolworthsProducts) {
-            products.addAll(woolworthsProduct.toProducts());
-        }
-        return products;
-    }
-*/
-
-    public static List<Product> toProducts(List<WoolworthsProduct> woolworthsProducts, String keywords) {
-        List<Product> products = new ArrayList<>();
-
-        if (!CollectionUtils.isEmpty(woolworthsProducts)) {
-            for (WoolworthsProduct woolworthsProduct : woolworthsProducts) {
-                products.addAll(woolworthsProduct.toProducts(keywords));
-            }
-        }
-        return products;
-    }
-
-
-    public List<Product> toProducts(String keywords) {
-        return ProductDetails.toProducts(products, keywords);
-
+    @Override
+    public Store getStore() {
+        return Woolworths;
     }
 }
-
-

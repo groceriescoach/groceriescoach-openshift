@@ -1,6 +1,8 @@
 package com.groceriescoach.core.service;
 
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,7 +22,7 @@ public abstract class GroceriesCoachSearchResult<P extends Product> implements S
 
     private static final Logger logger = LoggerFactory.getLogger(GroceriesCoachSearchResult.class);
 
-    public GroceriesCoachSearchResult(Document document) {
+    public GroceriesCoachSearchResult(Document document, GroceriesCoachSortType sortType) {
 
         products = new ArrayList<>();
 
@@ -28,10 +30,10 @@ public abstract class GroceriesCoachSearchResult<P extends Product> implements S
 
         for (Element productElement : searchResults) {
             try {
-                P product = fromProductElement(productElement);
-                if (product != null) {
-                    products.add(product);
-                }
+                P product = fromProductElement(productElement, sortType);
+                products.add(product);
+            } catch (ProductInformationUnavailableException e) {
+                logger.error("Unable to extract product from: " + productElement);
             } catch (Exception e) {
                 logger.error("Unable to extract product from: " + productElement, e);
             }
@@ -41,7 +43,7 @@ public abstract class GroceriesCoachSearchResult<P extends Product> implements S
 
     protected abstract String getCssQuery();
 
-    protected abstract P fromProductElement(Element productElement);
+    protected abstract P fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException;
 
 
     @Override

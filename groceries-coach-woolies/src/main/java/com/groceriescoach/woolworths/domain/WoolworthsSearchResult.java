@@ -1,7 +1,6 @@
 package com.groceriescoach.woolworths.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.groceriescoach.core.domain.Product;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ public class WoolworthsSearchResult implements Serializable {
     private static final long serialVersionUID = -7704062795180569959L;
 
     @JsonProperty("Products")
-    private List<WoolworthsProduct> products;
+    private List<Product> products;
 
     @JsonProperty("Corrections")
     private List<Correction> corrections;
@@ -23,11 +22,11 @@ public class WoolworthsSearchResult implements Serializable {
     @JsonProperty("VisualShoppingAisleResponse")
     private VisualShoppingAisleResponse visualShoppingAisleResponse[];
 
-    public List<WoolworthsProduct> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<WoolworthsProduct> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
@@ -65,8 +64,8 @@ public class WoolworthsSearchResult implements Serializable {
                 .toString();
     }
 
-    public List<Product> toProducts(String keywords) {
-        return WoolworthsProduct.toProducts(products, keywords);
+    public List<com.groceriescoach.core.domain.Product> toProducts(String keywords) {
+        return Product.toProducts(products, keywords);
     }
 
 }
