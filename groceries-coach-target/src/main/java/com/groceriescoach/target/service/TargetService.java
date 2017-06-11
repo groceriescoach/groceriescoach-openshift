@@ -3,64 +3,49 @@ package com.groceriescoach.target.service;
 
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
-import com.groceriescoach.core.service.StoreSearchService;
+import com.groceriescoach.core.service.AbstractScrapingStoreSearchService;
 import com.groceriescoach.target.domain.TargetProduct;
 import com.groceriescoach.target.domain.TargetSearchResult;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import static com.groceriescoach.core.domain.Store.Target;
 
 @Profile("online")
 @Service
-public class TargetService implements StoreSearchService<TargetProduct> {
+public class TargetService extends AbstractScrapingStoreSearchService<TargetProduct> {
 
 
     private static final Logger logger = LoggerFactory.getLogger(TargetService.class);
 
-    @Async
     @Override
-    public Future<List<TargetProduct>> search(String keywords, GroceriesCoachSortType sortType) {
+    protected String getStoreSearchUrl() {
+        return "https://www.target.com.au/search";
+    }
 
-        logger.debug("Searching Target for {}.", keywords);
-
+    @Override
+    protected Map<String, String> getRequestParameters() {
         Map<String, String> requestParams = new HashMap<>();
-
         requestParams.put("Nrpp", "90");
+        return requestParams;
+    }
 
-        requestParams.put("text", keywords);
+    @Override
+    protected String getSearchKeywordParameter() {
+        return "text";
+    }
 
-        Document doc = null;
-        try {
-
-            doc = Jsoup.connect("https://www.target.com.au/search")
-                    .data(requestParams)
-                    .timeout(10*1000)
-                    .get();
-
-            TargetSearchResult searchResult = new TargetSearchResult(doc, sortType);
-            List<TargetProduct> products = searchResult.getProducts();
-
-            logger.info("Found {} Target products for keywords[{}].", products.size(), keywords);
-
-            return new AsyncResult<>(products);
-        } catch (IOException e) {
-            logger.error("Unable to search for Target products", e);
-            return new AsyncResult<>(new ArrayList<>());
-        }
+    @Override
+    protected List<TargetProduct> extractProducts(Document doc, GroceriesCoachSortType sortType) {
+        TargetSearchResult searchResult = new TargetSearchResult(doc, sortType);
+        return searchResult.getProducts();
     }
 
     @Override

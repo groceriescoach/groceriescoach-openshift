@@ -17,8 +17,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     public static String replaceEncodedCharacters(final String str) {
         if (isNotBlank(str)) {
-            String processedStr = str.replaceAll("&nbsp;", " ").replaceAll("&amp;", "&");
-            return processedStr;
+            return str.replaceAll("&nbsp;", " ").replaceAll("&amp;", "&");
         } else {
             return str;
         }
@@ -31,5 +30,5 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             return str;
         }
     }
-    
+
 }

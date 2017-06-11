@@ -5,66 +5,55 @@ import com.groceriescoach.coles.domain.ColesProduct;
 import com.groceriescoach.coles.domain.ColesSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
-import com.groceriescoach.core.service.StoreSearchService;
-import org.jsoup.Jsoup;
+import com.groceriescoach.core.service.AbstractScrapingStoreSearchService;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import static com.groceriescoach.core.domain.Store.Coles;
 
 
 @Profile("online")
 @Service
-public class ColesService implements StoreSearchService {
+public class ColesService extends AbstractScrapingStoreSearchService<ColesProduct> {
 
 
     private static Map<String, String> DEFAULT_REQUEST_PARAMS = null;
 
     private static final Logger logger = LoggerFactory.getLogger(ColesService.class);
 
-    @Async
     @Override
-    public Future<List<ColesProduct>> search(String keywords, GroceriesCoachSortType sortType) {
+    protected String getStoreSearchUrl() {
+        return "http://shop.coles.com.au/online/ColesSearchView";
+    }
 
-        logger.debug("Searching Coles for {}.", keywords);
+    @Override
+    protected Map<String, String> getRequestParameters() {
+        return getDefaultRequestParams();
+    }
 
-        Map<String, String> requestParams = new HashMap<>();
-        requestParams.putAll(getDefaultRequestParams());
+    @Override
+    protected String getSearchKeywordParameter() {
+        return "searchTerm";
+    }
 
-        requestParams.put("orderBy", "");
-        requestParams.put("searchTerm", keywords);
+    @Override
+    protected Map<String, String> getRequestCookies() {
+        final Map<String, String> requestCookies = super.getRequestCookies();
+        requestCookies.put("ColesSearchPageSizeCookie", "48");
+        return requestCookies;
+    }
 
-        Document doc = null;
-        try {
-
-            doc = Jsoup.connect("http://shop.coles.com.au/online/ColesSearchView")
-                    .data(requestParams)
-                    .cookie("ColesSearchPageSizeCookie", "48")
-                    .timeout(10*1000)
-                    .get();
-
-            ColesSearchResult colesSearchResult = new ColesSearchResult(doc, sortType);
-
-            List<ColesProduct> products = colesSearchResult.getProducts();
-            logger.info("Found {} Coles products for keywords[{}].", products.size(), keywords);
-
-            return new AsyncResult<>(products);
-        } catch (IOException e) {
-            logger.error("Unable to search for Coles products", e);
-            return new AsyncResult<>(new ArrayList<>());
-        }
+    @Override
+    protected List<ColesProduct> extractProducts(Document doc, GroceriesCoachSortType sortType) {
+        ColesSearchResult colesSearchResult = new ColesSearchResult(doc, sortType);
+        return colesSearchResult.getProducts();
     }
 
     @Override
@@ -92,6 +81,7 @@ public class ColesService implements StoreSearchService {
             DEFAULT_REQUEST_PARAMS.put("context", "refreshController.refreshArea");
             DEFAULT_REQUEST_PARAMS.put("serviceId", "ColesSearchView");
             DEFAULT_REQUEST_PARAMS.put("expectedType", "text");
+            DEFAULT_REQUEST_PARAMS.put("orderBy", "");
         }
 
         return DEFAULT_REQUEST_PARAMS;

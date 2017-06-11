@@ -30,9 +30,10 @@ public abstract class Product implements Serializable {
     private String unitPriceStr;
     private List<QuantityPrice> quantityPriceList = new ArrayList<>();
 
-    public Product() {}
+    public Product() {
+    }
 
-    public Product (Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+    public Product(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         preProductElementExtraction(productElement, sortType);
         extractFromProductElement(productElement, sortType);
         postProductElementExtraction(productElement, sortType);
@@ -59,12 +60,12 @@ public abstract class Product implements Serializable {
     public static List<Product> eliminateProductsWithoutAllSearchKeywords(List<Product> allProducts, String keywords) {
         List<String> searchKeywords = Arrays.asList(StringUtils.split(keywords));
         return allProducts.stream()
-        .filter(product -> product.containsAllSearchKeywords(searchKeywords))
-        .collect(Collectors.toList());
+                .filter(product -> product.containsAllSearchKeywords(searchKeywords))
+                .collect(Collectors.toList());
     }
 
     private boolean containsAllSearchKeywords(List<String> searchKeywords) {
-        for (String keyword: searchKeywords) {
+        for (String keyword : searchKeywords) {
             if (!StringUtils.containsIgnoreCase(name, keyword) && !StringUtils.containsIgnoreCase(brand, keyword)) {
                 return false;
             }
@@ -79,10 +80,21 @@ public abstract class Product implements Serializable {
     }
 
     protected void calculateUnitPrice() {
-        if (StringUtils.containsIgnoreCase(name,"pack")) {
-            final String[] tokens = StringUtils.split(name);
-            for (int i = 0; i < tokens.length -1; i++) {
-                if (StringUtils.equalsIgnoreCase("pack", tokens[i+1])) {
+
+        String nameWorkingCopy = StringUtils.trimToEmpty(name).toLowerCase();
+
+        nameWorkingCopy = nameWorkingCopy.replaceAll("pk", " pack ");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("mega", " ");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("bulk", " ");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("pack", " pack ");
+
+        if (StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
+
+
+            final String[] tokens = StringUtils.split(nameWorkingCopy);
+            for (int i = 0; i < tokens.length - 1; i++) {
+                if (StringUtils.equalsIgnoreCase("pack", tokens[i + 1])) {
                     try {
                         final Double packSize = Double.parseDouble(tokens[i]);
                         unitPrice = roundToTwoDecimalPlaces(price / packSize);

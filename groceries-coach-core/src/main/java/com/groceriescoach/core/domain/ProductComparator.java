@@ -29,14 +29,9 @@ public class ProductComparator implements Comparator<Product> {
             case UnitPrice:
                 Double product1UnitPrice = product1.getUnitPrice();
                 Double product2UnitPrice = product2.getUnitPrice();
-                if (product1UnitPrice == null && product2UnitPrice == null) {
-                    return 0;
-                } else if (product2UnitPrice == null) {
-                    return 1;
-                } else if (product1UnitPrice == null) {
-                    return -1;
-                } else {
+                int unitPriceComparison = 0;
 
+                if (product1UnitPrice != null && product2UnitPrice != null) {
                     if (!CollectionUtils.isEmpty(product1.getQuantityPriceList())) {
                         Product.QuantityPrice quantityPrice = product1.getQuantityPriceList().get(0);
                         if (quantityPrice.getUnitPrice() != null) {
@@ -51,12 +46,12 @@ public class ProductComparator implements Comparator<Product> {
                         }
                     }
 
-                    final int unitPriceComparison = product1UnitPrice.compareTo(product2UnitPrice);
-                    if (unitPriceComparison != 0) {
-                        return unitPriceComparison;
-                    } else {
-                        return product1.getPrice().compareTo(product2.getPrice());
-                    }
+                    unitPriceComparison = product1UnitPrice.compareTo(product2UnitPrice);
+                }
+                if (unitPriceComparison != 0) {
+                    return unitPriceComparison;
+                } else {
+                    return product1.getPrice().compareTo(product2.getPrice());
                 }
             default:
                 return product1.getPrice().compareTo(product2.getPrice());

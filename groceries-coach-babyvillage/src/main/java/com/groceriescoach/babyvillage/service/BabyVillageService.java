@@ -5,7 +5,6 @@ import com.groceriescoach.babyvillage.domain.BabyVillageProduct;
 import com.groceriescoach.babyvillage.domain.BabyVillageRequestParameters;
 import com.groceriescoach.babyvillage.domain.BabyVillageSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -51,16 +49,12 @@ public class BabyVillageService implements StoreSearchService<BabyVillageProduct
     }
 
     private List<BabyVillageProduct> getProductsForPage(String keywords, int pages, GroceriesCoachSortType sortType) {
-        List<Product> products = new ArrayList<>();
-
         BabyVillageSearchResult searchResult = restTemplate.postForObject(
                 "https://www.babyvillage.com.au/api/product/searchproducts",
                 BabyVillageRequestParameters.createParameters(keywords),
                 BabyVillageSearchResult.class);
-
         return searchResult.toProducts(sortType);
     }
-
 
     @Override
     public Store getStore() {
