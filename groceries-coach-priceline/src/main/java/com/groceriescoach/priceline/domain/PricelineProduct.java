@@ -2,8 +2,8 @@ package com.groceriescoach.priceline.domain;
 
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
@@ -11,24 +11,15 @@ import org.jsoup.select.Elements;
 
 import static com.groceriescoach.core.domain.Store.Priceline;
 
-public class PricelineProduct extends Product {
+public class PricelineProduct extends GroceriesCoachJsoupProduct {
 
     PricelineProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
 
-    private static String extractUrlFromProductElement(Element productElement) {
-        return productElement.select(".product-image-container a").get(0).attr("href");
-    }
-
     @Override
-    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
-        setName(extractNameFromProductElement(productElement));
-        setBrand(extractBrandFromProductElement(productElement));
-        setUrl(extractUrlFromProductElement(productElement));
-        setImageUrl(extractImageFromProductElement(productElement));
-        setPrice(extractPriceFromProductElement(productElement));
-        setWasPrice(extractWasPriceFromProductElement(productElement));
+    protected String extractUrlFromProductElement(Element productElement) {
+        return productElement.select(".product-image-container a").get(0).attr("href");
     }
 
     @Override
@@ -36,7 +27,23 @@ public class PricelineProduct extends Product {
         return Priceline;
     }
 
-    private static Double extractWasPriceFromProductElement(Element productElement) {
+    @Override
+    protected String extractBrandFromProductElement(Element productElement) {
+        return productElement.select(".product-brand").get(0).text();
+    }
+
+    @Override
+    protected String extractDescriptionFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected String extractNameFromProductElement(Element productElement) {
+        return productElement.select(".product-link").get(0).text();
+    }
+
+    @Override
+    protected Double extractOldPriceFromProductElement(Element productElement) {
         Elements oldPriceElements = productElement.select(".old-price .price");
         if (oldPriceElements.isEmpty()) {
             return null;
@@ -45,19 +52,13 @@ public class PricelineProduct extends Product {
         }
     }
 
-    private static String extractBrandFromProductElement(Element productElement) {
-        return productElement.select(".product-brand").get(0).text();
-    }
-
-    private static String extractNameFromProductElement(Element productElement) {
-        return productElement.select(".product-link").get(0).text();
-    }
-
-    private static String extractImageFromProductElement(Element productElement) {
+    @Override
+    protected String extractImageFromProductElement(Element productElement) {
         return productElement.select("img").get(0).attr("src");
     }
 
-    private static Double extractPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractPriceFromProductElement(Element productElement) {
         Elements regularPriceElements = productElement.select(".regular-price .price");
         if (regularPriceElements.isEmpty()) {
             return Double.parseDouble(StringUtils.removeCurrencySymbols(productElement.select(".special-price .price").text()));
@@ -66,20 +67,9 @@ public class PricelineProduct extends Product {
         }
     }
 
-
-/*
-    public static List<Product> toProducts(PricelineProduct[] pricelineProducts) {
-
-        List<Product> products = new ArrayList<>();
-        for (PricelineProduct pricelineProduct : pricelineProducts) {
-            Product product = pricelineProduct.toGroceriesCoachProduct();
-            if (product != null) {
-                products.add(product);
-            }
-        }
-        return products;
+    @Override
+    protected Double extractSavingFromProductElement(Element productElement) {
+        return null;
     }
-*/
-
 
 }

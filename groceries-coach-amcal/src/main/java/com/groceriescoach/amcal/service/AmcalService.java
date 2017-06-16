@@ -31,7 +31,7 @@ public class AmcalService extends AbstractScrapingStoreSearchService<AmcalProduc
     }
 
     @Override
-    protected String getStoreSearchUrl() {
+    protected String getStoreSearchUrl(String keywords) {
         return "https://www.amcal.com.au/SearchDisplay";
     }
 

@@ -29,7 +29,7 @@ public class ColesService extends AbstractScrapingStoreSearchService<ColesProduc
     private static final Logger logger = LoggerFactory.getLogger(ColesService.class);
 
     @Override
-    protected String getStoreSearchUrl() {
+    protected String getStoreSearchUrl(String keywords) {
         return "http://shop.coles.com.au/online/ColesSearchView";
     }
 

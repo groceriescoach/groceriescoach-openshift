@@ -1,7 +1,7 @@
 package com.groceriescoach.amcal.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.service.GroceriesCoachSearchResult;
 import org.jsoup.nodes.Document;
@@ -25,7 +25,7 @@ public class AmcalSearchResult extends GroceriesCoachSearchResult {
     }
 
     @Override
-    protected Product fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+    protected GroceriesCoachProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         return new AmcalProduct(productElement, sortType);
     }
 

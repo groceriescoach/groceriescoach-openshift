@@ -1,7 +1,7 @@
 package com.groceriescoach.core.service;
 
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jsoup.nodes.Document;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GroceriesCoachSearchResult<P extends Product> implements Serializable {
+public abstract class GroceriesCoachSearchResult<P extends GroceriesCoachProduct> implements Serializable {
 
     private static final long serialVersionUID = -7704062795180569959L;
 

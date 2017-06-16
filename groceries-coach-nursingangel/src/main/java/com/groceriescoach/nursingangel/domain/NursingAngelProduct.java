@@ -1,8 +1,8 @@
 package com.groceriescoach.nursingangel.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
@@ -10,25 +10,35 @@ import org.jsoup.select.Elements;
 
 import static com.groceriescoach.core.domain.Store.NursingAngel;
 
-public class NursingAngelProduct extends Product {
+public class NursingAngelProduct extends GroceriesCoachJsoupProduct {
 
     NursingAngelProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
 
-    private static String extractUrlFromProductElement(Element productElement) {
+    @Override
+    protected String extractBrandFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected String extractDescriptionFromProductElement(Element productElement) {
+        return null;
+    }
+
+    protected String extractUrlFromProductElement(Element productElement) {
         return productElement.select(".product-title-thumbnail").get(0).attr("href");
     }
 
-    private static String extractNameFromProductElement(Element productElement) {
+    protected String extractNameFromProductElement(Element productElement) {
         return productElement.select(".product-title-thumbnail").get(0).text();
     }
 
-    private static String extractImageFromProductElement(Element productElement) {
+    protected String extractImageFromProductElement(Element productElement) {
         return "http://www.nursingangel.com.au" + productElement.select(".product-image").get(0).attr("src");
     }
 
-    private static Double extractPriceFromProductElement(Element productElement) {
+    protected Double extractPriceFromProductElement(Element productElement) {
         Elements priceElements = productElement.select(".price span");
         if (priceElements != null && !priceElements.isEmpty()) {
             for (Element priceElement : priceElements) {
@@ -40,7 +50,12 @@ public class NursingAngelProduct extends Product {
         return 0D;
     }
 
-    private static Double extractOldPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractSavingFromProductElement(Element productElement) {
+        return null;
+    }
+
+    protected Double extractOldPriceFromProductElement(Element productElement) {
         Elements oldPriceElements = productElement.select(".rrp-wrap");
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             Element oldPriceElement = oldPriceElements.get(0);
@@ -56,15 +71,6 @@ public class NursingAngelProduct extends Product {
             }
         }
         return null;
-    }
-
-    @Override
-    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
-        setName(extractNameFromProductElement(productElement));
-        setImageUrl(extractImageFromProductElement(productElement));
-        setUrl(extractUrlFromProductElement(productElement));
-        setPrice(extractPriceFromProductElement(productElement));
-        setWasPrice(extractOldPriceFromProductElement(productElement));
     }
 
     @Override

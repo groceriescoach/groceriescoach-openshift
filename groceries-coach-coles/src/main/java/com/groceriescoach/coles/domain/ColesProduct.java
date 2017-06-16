@@ -2,8 +2,8 @@ package com.groceriescoach.coles.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
@@ -18,7 +18,7 @@ import java.util.List;
 import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.replaceEncodedCharacters;
 import static com.groceriescoach.core.domain.Store.Coles;
 
-public class ColesProduct extends Product {
+public class ColesProduct extends GroceriesCoachJsoupProduct {
 
 
     private static final Logger logger = LoggerFactory.getLogger(ColesProduct.class);
@@ -27,19 +27,20 @@ public class ColesProduct extends Product {
         super(productElement, sortType);
     }
 
-    private static String extractProductUrlFromProductElement(Element productElement) {
+    @Override
+    protected String extractUrlFromProductElement(Element productElement) {
         return productElement.select(".product-url").first().attr("href");
     }
 
-    private static String extractBrandFromProductElement(Element productElement) {
+    @Override
+    protected String extractBrandFromProductElement(Element productElement) {
         return productElement.select(".brand").text();
     }
 
-    private static Double extractWasPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractOldPriceFromProductElement(Element productElement) {
         Elements savingElements = productElement.select(".saving");
-
         if (!savingElements.isEmpty() && savingElements.first().childNodeSize() > 1) {
-
             TextNode wasTextNode = (TextNode) savingElements.first().childNodes().get(2);
             String wasPriceText = wasTextNode.text();
             return Double.parseDouble(wasPriceText.trim().replaceAll("was \\$", ""));
@@ -70,11 +71,13 @@ public class ColesProduct extends Product {
         return nameAndSize.split("&nbsp;")[1].trim();
     }
 
-    private static String extractDescriptionFromProductElement(Element productElement) {
+    @Override
+    protected String extractDescriptionFromProductElement(Element productElement) {
         return null;
     }
 
-    private static Double extractPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractPriceFromProductElement(Element productElement) {
         Double price = 0D;
 
         Elements priceElements = productElement.select(".purchasing .price");
@@ -113,11 +116,13 @@ public class ColesProduct extends Product {
         return price;
     }
 
-    private static String extractImageUrlFromProductElement(Element productElement) {
+    @Override
+    protected String extractImageFromProductElement(Element productElement) {
         return "http://shop.coles.com.au" + productElement.select(".photo").attr("src");
     }
 
-    private static Double extractSavingFromProductElement(Element productElement) {
+    @Override
+    protected Double extractSavingFromProductElement(Element productElement) {
         Elements savingElements = productElement.select(".saving");
 
         if (savingElements.first() != null && savingElements.first().childNodeSize() > 1) {
@@ -129,7 +134,8 @@ public class ColesProduct extends Product {
         }
     }
 
-    private static String extractNameFromProductElement(Element productElement) {
+    @Override
+    protected String extractNameFromProductElement(Element productElement) {
         String nameAndSize = productElement.select(".detail .item .product-url").first().html();
         return replaceEncodedCharacters(nameAndSize.split("&nbsp;")[0]);
     }
@@ -138,14 +144,14 @@ public class ColesProduct extends Product {
     protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
         setBrand(extractBrandFromProductElement(productElement));
         setDescription(extractDescriptionFromProductElement(productElement));
-        setImageUrl(extractImageUrlFromProductElement(productElement));
+        setImageUrl(extractImageFromProductElement(productElement));
         setName(extractNameFromProductElement(productElement));
         setPackageSize(extractPackageSizeFromProductElement(productElement));
         setPrice(extractPriceFromProductElement(productElement));
-        setUrl(extractProductUrlFromProductElement(productElement));
+        setUrl(extractUrlFromProductElement(productElement));
         setSaving(extractSavingFromProductElement(productElement));
         setUnitPriceStr(extractUnitPriceFromProductElement(productElement));
-        setWasPrice(extractWasPriceFromProductElement(productElement));
+        setWasPrice(extractOldPriceFromProductElement(productElement));
         getQuantityPriceList().addAll(extractQuantityPriceListFromProductElement(productElement));
     }
 

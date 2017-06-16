@@ -1,8 +1,8 @@
 package com.groceriescoach.woolworths.services;
 
 
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import com.groceriescoach.woolworths.domain.WoolworthsSearchResult;
@@ -38,21 +38,21 @@ public class WoolworthsService implements StoreSearchService {
 
     @Async
     @Override
-    public Future<List<Product>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<GroceriesCoachProduct>> search(String keywords, GroceriesCoachSortType sortType) {
 
         logger.info("Searching Woolworths for {}.", keywords);
 
         String trimmedKeywords = keywords.trim().replaceAll(" +", " ").replace(" ", "+");
 
-        List<Product> products = getProductsForPage(trimmedKeywords, 2);
+        List<GroceriesCoachProduct> products = getProductsForPage(trimmedKeywords, 2);
 
         logger.info("Found {} Woolworths products for keywords[{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }
 
-    private List<Product> getProductsForPage(String keywords, int pages) {
-        List<Product> products = new ArrayList<>();
+    private List<GroceriesCoachProduct> getProductsForPage(String keywords, int pages) {
+        List<GroceriesCoachProduct> products = new ArrayList<>();
 
         for (int i = 1; i <= pages; i++) {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://www.woolworths.com.au/apis/ui/Search/products")

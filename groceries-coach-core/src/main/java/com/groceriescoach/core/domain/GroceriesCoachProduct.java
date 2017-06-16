@@ -2,7 +2,6 @@ package com.groceriescoach.core.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.jsoup.nodes.Element;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.roundToTwoDecimalPlaces;
 
-public abstract class Product implements Serializable {
+public abstract class GroceriesCoachProduct implements Serializable {
 
 
     private String name;
@@ -25,39 +24,19 @@ public abstract class Product implements Serializable {
     private Double wasPrice;
     private String imageUrl;
     private String packageSize;
+    private Integer packageSizeInt;
     private Double unitPrice;
     private String unitSize;
     private String unitPriceStr;
     private List<QuantityPrice> quantityPriceList = new ArrayList<>();
 
-    public Product() {
+    public GroceriesCoachProduct() {
     }
-
-    public Product(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
-        preProductElementExtraction(productElement, sortType);
-        extractFromProductElement(productElement, sortType);
-        postProductElementExtraction(productElement, sortType);
-    }
-
-
-    protected void preProductElementExtraction(Element productElement, GroceriesCoachSortType sortType) {
-
-    }
-
-    protected abstract void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException;
 
 
     public abstract Store getStore();
 
-    protected void postProductElementExtraction(Element productElement, GroceriesCoachSortType sortType) {
-        if (sortType.isUnitPriceRequired()) {
-            calculateUnitPrice();
-        }
-        calculateSavings();
-    }
-
-
-    public static List<Product> eliminateProductsWithoutAllSearchKeywords(List<Product> allProducts, String keywords) {
+    public static List<GroceriesCoachProduct> eliminateProductsWithoutAllSearchKeywords(List<GroceriesCoachProduct> allProducts, String keywords) {
         List<String> searchKeywords = Arrays.asList(StringUtils.split(keywords));
         return allProducts.stream()
                 .filter(product -> product.containsAllSearchKeywords(searchKeywords))
@@ -79,11 +58,21 @@ public abstract class Product implements Serializable {
         }
     }
 
-    protected void calculateUnitPrice() {
+    protected void calculateOldPrice() {
+        if (Objects.isNull(wasPrice) && Objects.nonNull(saving) && saving > 0D) {
+            wasPrice = price + saving;
+        }
+    }
+
+    protected void calculatePackageSize() {
 
         String nameWorkingCopy = StringUtils.trimToEmpty(name).toLowerCase();
 
-        nameWorkingCopy = nameWorkingCopy.replaceAll("pk", " pack ");
+        if (!StringUtils.containsIgnoreCase(nameWorkingCopy, "pack") && !StringUtils.containsIgnoreCase(nameWorkingCopy, "pk")) {
+            nameWorkingCopy += " pack";
+        }
+
+        nameWorkingCopy = nameWorkingCopy.replaceAll("pk", "pack");
         nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
         nameWorkingCopy = nameWorkingCopy.replaceAll("mega", " ");
         nameWorkingCopy = nameWorkingCopy.replaceAll("bulk", " ");
@@ -91,15 +80,12 @@ public abstract class Product implements Serializable {
 
         if (StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
 
-
             final String[] tokens = StringUtils.split(nameWorkingCopy);
             for (int i = 0; i < tokens.length - 1; i++) {
                 if (StringUtils.equalsIgnoreCase("pack", tokens[i + 1])) {
                     try {
-                        final Double packSize = Double.parseDouble(tokens[i]);
-                        unitPrice = roundToTwoDecimalPlaces(price / packSize);
-                        unitPriceStr = "$" + unitPrice + " each";
-                        unitSize = "Each";
+                        packageSizeInt = Integer.valueOf(tokens[i]);
+                        packageSize = packageSizeInt + " pack";
                         break;
                     } catch (Exception ignored) {
 
@@ -107,6 +93,18 @@ public abstract class Product implements Serializable {
                 }
             }
         }
+    }
+
+    protected void calculateUnitPrice() {
+        if (packageSizeInt != null && unitPriceHasNotBeenSet()) {
+            unitPrice = price / packageSizeInt;
+            unitPriceStr = "$" + roundToTwoDecimalPlaces(unitPrice) + " each";
+            unitSize = "Each";
+        }
+    }
+
+    private boolean unitPriceHasNotBeenSet() {
+        return (unitPrice == null || unitPrice == 0D);
     }
 
     public String getName() {

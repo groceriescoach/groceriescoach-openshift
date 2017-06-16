@@ -1,8 +1,8 @@
 package com.groceriescoach.pharmacy4less.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
@@ -10,19 +10,20 @@ import org.jsoup.select.Elements;
 
 import static com.groceriescoach.core.domain.Store.Pharmacy4Less;
 
-public class Pharmacy4LessProduct extends Product {
+public class Pharmacy4LessProduct extends GroceriesCoachJsoupProduct {
 
     Pharmacy4LessProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
 
     @Override
-    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
-        setName(extractNameFromProductElement(productElement));
-        setImageUrl(extractImageFromProductElement(productElement));
-        setUrl(extractUrlFromProductElement(productElement));
-        setPrice(extractPriceFromProductElement(productElement));
-        setWasPrice(extractOldPriceFromProductElement(productElement));
+    protected String extractBrandFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected String extractDescriptionFromProductElement(Element productElement) {
+        return null;
     }
 
     @Override
@@ -30,20 +31,19 @@ public class Pharmacy4LessProduct extends Product {
         return Pharmacy4Less;
     }
 
-    private static String extractUrlFromProductElement(Element productElement) {
+    protected String extractUrlFromProductElement(Element productElement) {
         return productElement.select(".sli_content").get(0).attr("data-direct-url");
     }
 
-
-    private static String extractNameFromProductElement(Element productElement) {
+    protected String extractNameFromProductElement(Element productElement) {
         return productElement.select(".product-name").get(0).text();
     }
 
-    private static String extractImageFromProductElement(Element productElement) {
+    protected String extractImageFromProductElement(Element productElement) {
         return productElement.select("img").get(0).attr("src");
     }
 
-    private static Double extractPriceFromProductElement(Element productElement) {
+    protected Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".sli_price").get(0).text();
         if (StringUtils.isNotBlank(price)) {
             return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
@@ -51,7 +51,12 @@ public class Pharmacy4LessProduct extends Product {
         return 0D;
     }
 
-    public static Double extractOldPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractSavingFromProductElement(Element productElement) {
+        return null;
+    }
+
+    protected Double extractOldPriceFromProductElement(Element productElement) {
         Elements oldPriceElements = productElement.select(".sli_orig_price");
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             Element oldPriceElement = oldPriceElements.get(0);

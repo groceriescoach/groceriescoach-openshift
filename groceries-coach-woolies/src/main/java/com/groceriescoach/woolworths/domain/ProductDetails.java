@@ -2,7 +2,7 @@ package com.groceriescoach.woolworths.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
-import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -481,16 +481,16 @@ public class ProductDetails implements Serializable {
         this.deliveryPass = deliveryPass;
     }
 
-    public static List<Product> toProducts(ProductDetails productDetailsArray[], String keywords) {
-        List<Product> products = new ArrayList<>();
+    public static List<GroceriesCoachProduct> toProducts(ProductDetails productDetailsArray[], String keywords) {
+        List<GroceriesCoachProduct> products = new ArrayList<>();
         for (ProductDetails productDetails: productDetailsArray) {
             products.add(productDetails.toGroceriesCoachProduct(keywords));
         }
         return products;
     }
 
-    private Product toGroceriesCoachProduct(String keywords) {
-        Product product = new WoolworthsProduct();
+    private GroceriesCoachProduct toGroceriesCoachProduct(String keywords) {
+        GroceriesCoachProduct product = new WoolworthsProduct();
         product.setName(removeHtml(name));
         product.setDescription(removeHtml(description));
         product.setImageUrl(largeImageFile);
@@ -510,11 +510,11 @@ public class ProductDetails implements Serializable {
         return product;
     }
 
-    private List<Product.QuantityPrice> createQuantityPriceList() {
+    private List<GroceriesCoachProduct.QuantityPrice> createQuantityPriceList() {
 
-        List<Product.QuantityPrice> quantityPriceList = new ArrayList<>();
+        List<GroceriesCoachProduct.QuantityPrice> quantityPriceList = new ArrayList<>();
 
-        Product.QuantityPrice quantityPrice = new Product.QuantityPrice();
+        GroceriesCoachProduct.QuantityPrice quantityPrice = new GroceriesCoachProduct.QuantityPrice();
 
         String tagContent = centreTag.getTagContent();
 //        logger.debug("tagContent = {}", tagContent);

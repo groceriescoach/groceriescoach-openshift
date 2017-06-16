@@ -2,8 +2,8 @@ package com.groceriescoach.service;
 
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductComparator;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
@@ -34,7 +34,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
 
     @Override
-    public List<Product> search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
+    public List<GroceriesCoachProduct> search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
 
         List<Store> searchStores;
 
@@ -44,8 +44,8 @@ public class GroceriesCoachProductService implements ProductSearchService {
             searchStores = stores;
         }
 
-        List<Product> allProducts = new ArrayList<>();
-        Map<Store, Future<List<Product>>> futuresMap = new HashMap<>();
+        List<GroceriesCoachProduct> allProducts = new ArrayList<>();
+        Map<Store, Future<List<GroceriesCoachProduct>>> futuresMap = new HashMap<>();
 
 /*
         storeSearchServices.stream()
@@ -56,7 +56,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
         for (StoreSearchService storeSearchService : storeSearchServices) {
             if (searchStores.contains(storeSearchService.getStore())) {
-                Future<List<Product>> listFuture = storeSearchService.search(keywords, sortType);
+                Future<List<GroceriesCoachProduct>> listFuture = storeSearchService.search(keywords, sortType);
                 futuresMap.put(storeSearchService.getStore(), listFuture);
             }
         }
@@ -67,7 +67,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
             for (Store store : storesStillSearching) {
                 if (futuresMap.get(store).isDone()) {
                     try {
-                        Future<List<Product>> searchResultFuture = futuresMap.remove(store);
+                        Future<List<GroceriesCoachProduct>> searchResultFuture = futuresMap.remove(store);
                         allProducts.addAll(searchResultFuture.get());
                         logger.debug("{} search is complete.", store.getStoreName());
                     } catch (InterruptedException | ExecutionException e) {
@@ -85,7 +85,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
         }
 
         if (allSearchKeywordsRequired) {
-            allProducts = Product.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
+            allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
         }
 
         allProducts.sort(new ProductComparator(sortType));

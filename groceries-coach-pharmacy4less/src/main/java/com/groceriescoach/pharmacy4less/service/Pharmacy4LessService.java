@@ -25,7 +25,7 @@ public class Pharmacy4LessService extends AbstractScrapingStoreSearchService<Pha
     private static final Logger logger = LoggerFactory.getLogger(Pharmacy4LessService.class);
 
     @Override
-    protected String getStoreSearchUrl() {
+    protected String getStoreSearchUrl(String keywords) {
         return "http://www.pharmacy4less.com.au/search/go";
     }
 

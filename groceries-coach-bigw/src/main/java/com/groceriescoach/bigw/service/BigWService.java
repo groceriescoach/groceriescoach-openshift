@@ -26,7 +26,7 @@ public class BigWService extends AbstractScrapingStoreSearchService<BigWProduct>
     private static final Logger logger = LoggerFactory.getLogger(BigWService.class);
 
     @Override
-    protected String getStoreSearchUrl() {
+    protected String getStoreSearchUrl(String keywords) {
         return "https://www.bigw.com.au/search";
     }
 

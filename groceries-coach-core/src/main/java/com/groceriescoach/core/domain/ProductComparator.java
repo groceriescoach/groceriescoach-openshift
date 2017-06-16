@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 
-public class ProductComparator implements Comparator<Product> {
+public class ProductComparator implements Comparator<GroceriesCoachProduct> {
 
     private GroceriesCoachSortType sortType;
 
@@ -17,7 +17,7 @@ public class ProductComparator implements Comparator<Product> {
     }
 
     @Override
-    public int compare(Product product1, Product product2) {
+    public int compare(GroceriesCoachProduct product1, GroceriesCoachProduct product2) {
 
         logger.debug("Comparing {} and {}", product1, product2);
 
@@ -33,14 +33,14 @@ public class ProductComparator implements Comparator<Product> {
 
                 if (product1UnitPrice != null && product2UnitPrice != null) {
                     if (!CollectionUtils.isEmpty(product1.getQuantityPriceList())) {
-                        Product.QuantityPrice quantityPrice = product1.getQuantityPriceList().get(0);
+                        GroceriesCoachProduct.QuantityPrice quantityPrice = product1.getQuantityPriceList().get(0);
                         if (quantityPrice.getUnitPrice() != null) {
                             product1UnitPrice = quantityPrice.getUnitPrice();
                         }
                     }
 
                     if (!CollectionUtils.isEmpty(product2.getQuantityPriceList())) {
-                        Product.QuantityPrice quantityPrice = product2.getQuantityPriceList().get(0);
+                        GroceriesCoachProduct.QuantityPrice quantityPrice = product2.getQuantityPriceList().get(0);
                         if (quantityPrice.getUnitPrice() != null) {
                             product2UnitPrice = quantityPrice.getUnitPrice();
                         }

@@ -24,7 +24,7 @@ public class PricelineService extends AbstractScrapingStoreSearchService<Priceli
     private static final Logger logger = LoggerFactory.getLogger(PricelineService.class);
 
     @Override
-    protected String getStoreSearchUrl() {
+    protected String getStoreSearchUrl(String keywords) {
         return "https://www.priceline.com.au/search";
     }
 

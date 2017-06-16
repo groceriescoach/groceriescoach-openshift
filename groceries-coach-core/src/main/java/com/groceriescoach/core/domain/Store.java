@@ -17,6 +17,7 @@ public enum Store {
     BabyVillage("BV", "Baby Village"),
     BigW("BW", "Big W"),
     ChemistWarehouse("CW", "Chemist Warehouse"),
+    CincottaChemist("CC", "Cincotta Chemist"),
     Coles("C", "Coles"),
 //    Kmart("K", "Kmart"),
     NursingAngel("N", "Nursing Angel"),

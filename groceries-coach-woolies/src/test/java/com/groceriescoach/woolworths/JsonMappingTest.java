@@ -1,7 +1,7 @@
 package com.groceriescoach.woolworths;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.groceriescoach.core.domain.Product;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.woolworths.domain.WoolworthsSearchResult;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class JsonMappingTest {
 
         for (File file : files) {
             WoolworthsSearchResult searchResult = mapper.reader().forType(WoolworthsSearchResult.class).readValue(file);
-            List<Product> products = searchResult.toProducts("test");
+            List<GroceriesCoachProduct> products = searchResult.toProducts("test");
             logger.debug("{}", products);
         }
     }
@@ -66,7 +66,7 @@ public class JsonMappingTest {
 
         for (File file : files) {
             WoolworthsSearchResult searchResult = mapper.reader().forType(WoolworthsSearchResult.class).readValue(file);
-            List<Product> products = searchResult.toProducts("test");
+            List<GroceriesCoachProduct> products = searchResult.toProducts("test");
             logger.debug("{}", products);
         }
     }

@@ -1,9 +1,9 @@
 package com.groceriescoach.controllers;
 
 
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.KVP;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.service.ProductSearchService;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class ProductSearchController {
 
 
     @RequestMapping(value = SEARCH_URL)
-    public ResponseEntity<List<Product>> search(
+    public ResponseEntity<List<GroceriesCoachProduct>> search(
             @RequestParam(value = KEYWORDS) String keywords,
             @RequestParam(value = STORES, required = false) String[] storeKeys,
             @RequestParam(value = SORT_BY, required = false) String sortBy,
@@ -50,7 +50,7 @@ public class ProductSearchController {
             stores.addAll(Store.fromStoreKeys(storeKeys));
         }
 
-        List<Product> products = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
+        List<GroceriesCoachProduct> products = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
         logger.info("Returning {} results.", products.size());
         return ResponseEntity.ok(products);
     }

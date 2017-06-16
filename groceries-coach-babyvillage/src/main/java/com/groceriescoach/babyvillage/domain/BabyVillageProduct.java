@@ -1,7 +1,7 @@
 package com.groceriescoach.babyvillage.domain;
 
+import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Document;
@@ -13,14 +13,15 @@ import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.
 import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeThousandSeparators;
 import static com.groceriescoach.core.domain.Store.BabyVillage;
 
-public class BabyVillageProduct extends Product {
+public class BabyVillageProduct extends GroceriesCoachJsoupProduct {
 
 
     BabyVillageProduct(Document productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
 
-    private static Double extractPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractPriceFromProductElement(Element productElement) {
         final Elements priceElements = productElement.select(".price");
         if (priceElements != null && !priceElements.isEmpty()) {
             final Element priceElement = priceElements.get(0);
@@ -36,7 +37,13 @@ public class BabyVillageProduct extends Product {
         return null;
     }
 
-    private static Double extractWasPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractSavingFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected Double extractOldPriceFromProductElement(Element productElement) {
         final Elements rrpElements = productElement.select(".rrp");
         if (rrpElements != null && !rrpElements.isEmpty()) {
             return Double.parseDouble(removeThousandSeparators(removeCurrencySymbols(rrpElements.get(0).text())));
@@ -45,7 +52,18 @@ public class BabyVillageProduct extends Product {
         }
     }
 
-    private static String extractImageUrlFromProductElement(Element productElement) {
+    @Override
+    protected String extractBrandFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected String extractDescriptionFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected String extractImageFromProductElement(Element productElement) {
         final Elements imageProductElements = productElement.select(".image");
         if (imageProductElements != null && !imageProductElements.isEmpty()) {
             final String style = imageProductElements.get(0).attr("style");
@@ -54,7 +72,8 @@ public class BabyVillageProduct extends Product {
         return null;
     }
 
-    private static String extractUrlFromProductElement(Element productElement) {
+    @Override
+    protected String extractUrlFromProductElement(Element productElement) {
         Elements productLinkElements = productElement.select("a");
         if (productLinkElements != null && !productLinkElements.isEmpty()) {
             return "https://www.babyvillage.com.au" + productLinkElements.get(0).attr("href");
@@ -63,20 +82,11 @@ public class BabyVillageProduct extends Product {
         }
     }
 
-    private static String extractNameFromProductElement(Element productElement) {
+    @Override
+    protected String extractNameFromProductElement(Element productElement) {
         return productElement.select(".name").text();
     }
 
-    @Override
-    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
-        setName(extractNameFromProductElement(productElement));
-        setImageUrl(extractImageUrlFromProductElement(productElement));
-        setUrl(extractUrlFromProductElement(productElement));
-        setWasPrice(extractWasPriceFromProductElement(productElement));
-        setPrice(extractPriceFromProductElement(productElement));
-        calculateSavings();
-
-    }
 
     @Override
     public Store getStore() {

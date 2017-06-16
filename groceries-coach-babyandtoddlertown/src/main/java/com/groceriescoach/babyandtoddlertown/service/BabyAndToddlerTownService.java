@@ -26,7 +26,7 @@ public class BabyAndToddlerTownService extends AbstractScrapingStoreSearchServic
     private static final Logger logger = LoggerFactory.getLogger(BabyAndToddlerTownService.class);
 
     @Override
-    protected String getStoreSearchUrl() {
+    protected String getStoreSearchUrl(String keywords) {
         return "https://www.babyandtoddlertown.com.au/search/show/all";
     }
 

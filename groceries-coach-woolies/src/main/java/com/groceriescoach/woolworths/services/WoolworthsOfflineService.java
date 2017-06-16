@@ -2,8 +2,8 @@ package com.groceriescoach.woolworths.services;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import com.groceriescoach.woolworths.domain.WoolworthsSearchResult;
@@ -37,7 +37,7 @@ public class WoolworthsOfflineService implements StoreSearchService {
     }
 
     @Override
-    public Future<List<Product>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<GroceriesCoachProduct>> search(String keywords, GroceriesCoachSortType sortType) {
 
         String fileName = keywords.trim().replaceAll(" +", " ").replace(" ", "-");
         File file = new File("C:/projects/groceries-coach/groceries-coach-woolies/src/test/resources/" + fileName + ".json");

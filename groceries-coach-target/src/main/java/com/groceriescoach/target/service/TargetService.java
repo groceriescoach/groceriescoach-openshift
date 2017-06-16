@@ -26,7 +26,7 @@ public class TargetService extends AbstractScrapingStoreSearchService<TargetProd
     private static final Logger logger = LoggerFactory.getLogger(TargetService.class);
 
     @Override
-    protected String getStoreSearchUrl() {
+    protected String getStoreSearchUrl(String keywords) {
         return "https://www.target.com.au/search";
     }
 

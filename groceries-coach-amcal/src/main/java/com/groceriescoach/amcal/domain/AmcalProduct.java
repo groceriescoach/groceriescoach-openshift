@@ -1,8 +1,8 @@
 package com.groceriescoach.amcal.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
@@ -10,20 +10,18 @@ import org.jsoup.select.Elements;
 
 import static com.groceriescoach.core.domain.Store.Amcal;
 
-public class AmcalProduct extends Product {
+public class AmcalProduct extends GroceriesCoachJsoupProduct {
 
     AmcalProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
 
     @Override
-    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType)
+            throws ProductInformationUnavailableException {
+
         if (!productElement.getElementsByClass("product_info").isEmpty()) {
-            setName(extractNameFromProductElement(productElement));
-            setImageUrl(extractImageFromProductElement(productElement));
-            setUrl(extractUrlFromProductElement(productElement));
-            setPrice(extractPriceFromProductElement(productElement));
-            setWasPrice(extractOldPriceFromProductElement(productElement));
+            super.extractFromProductElement(productElement, sortType);
         } else {
             throw new ProductInformationUnavailableException();
         }
@@ -31,23 +29,37 @@ public class AmcalProduct extends Product {
     }
 
     @Override
+    protected String extractBrandFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected String extractDescriptionFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
     public Store getStore() {
         return Amcal;
     }
 
-    private static String extractUrlFromProductElement(Element productElement) {
+    @Override
+    protected String extractUrlFromProductElement(Element productElement) {
         return productElement.select(".product_name a").get(0).attr("href");
     }
 
-    private static String extractNameFromProductElement(Element productElement) {
+    @Override
+    protected String extractNameFromProductElement(Element productElement) {
         return productElement.select(".product_name a").get(0).text();
     }
 
-    private static String extractImageFromProductElement(Element productElement) {
+    @Override
+    protected String extractImageFromProductElement(Element productElement) {
         return "https://www.amcal.com.au" + productElement.select("img").get(0).attr("src");
     }
 
-    private static Double extractPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".price").get(0).text();
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
             return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
@@ -55,7 +67,13 @@ public class AmcalProduct extends Product {
         return 0D;
     }
 
-    public static Double extractOldPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractSavingFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected Double extractOldPriceFromProductElement(Element productElement) {
         Elements oldPriceElements = productElement.select(".old_price");
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             Element oldPriceElement = oldPriceElements.get(0);

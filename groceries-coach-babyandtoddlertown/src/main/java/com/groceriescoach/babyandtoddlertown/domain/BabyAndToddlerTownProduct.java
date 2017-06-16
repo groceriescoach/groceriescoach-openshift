@@ -1,8 +1,8 @@
 package com.groceriescoach.babyandtoddlertown.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Product;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
@@ -10,27 +10,31 @@ import org.jsoup.select.Elements;
 
 import static com.groceriescoach.core.domain.Store.BabyAndToddlerTown;
 
-public class BabyAndToddlerTownProduct extends Product {
+public class BabyAndToddlerTownProduct extends GroceriesCoachJsoupProduct {
 
 
     BabyAndToddlerTownProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
 
-    private static String extractUrlFromProductElement(Element productElement) {
+    @Override
+    protected String extractUrlFromProductElement(Element productElement) {
         return productElement.select(".product-name a").get(0).attr("href");
     }
 
 
-    private static String extractNameFromProductElement(Element productElement) {
+    @Override
+    protected String extractNameFromProductElement(Element productElement) {
         return productElement.select(".product-name a").get(0).text();
     }
 
-    private static String extractImageFromProductElement(Element productElement) {
+    @Override
+    protected String extractImageFromProductElement(Element productElement) {
         return productElement.select(".product-image img").get(0).attr("src");
     }
 
-    private static Double extractPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".special-price .price").get(0).text();
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
             return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
@@ -38,7 +42,13 @@ public class BabyAndToddlerTownProduct extends Product {
         return 0D;
     }
 
-    public static Double extractOldPriceFromProductElement(Element productElement) {
+    @Override
+    protected Double extractSavingFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected Double extractOldPriceFromProductElement(Element productElement) {
         Elements oldPriceElements = productElement.select(".old-price .price");
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             Element oldPriceElement = oldPriceElements.get(0);
@@ -60,7 +70,16 @@ public class BabyAndToddlerTownProduct extends Product {
         setUrl(extractUrlFromProductElement(productElement));
         setPrice(extractPriceFromProductElement(productElement));
         setWasPrice(extractOldPriceFromProductElement(productElement));
-        calculateSavings();
+    }
+
+    @Override
+    protected String extractBrandFromProductElement(Element productElement) {
+        return null;
+    }
+
+    @Override
+    protected String extractDescriptionFromProductElement(Element productElement) {
+        return null;
     }
 
     @Override

@@ -29,6 +29,7 @@
         <module>groceries-coach-babyvillage</module>
         <module>groceries-coach-bigw</module>
         <module>groceries-coach-chemistwarehouse</module>
+        <module>groceries-coach-cincottachemist</module>
         <module>groceries-coach-coles</module>
         <module>groceries-coach-nursingangel</module>
         <module>groceries-coach-pharmacy4less</module>
@@ -110,6 +111,11 @@
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-chemistwarehouse</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-cincottachemist</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
