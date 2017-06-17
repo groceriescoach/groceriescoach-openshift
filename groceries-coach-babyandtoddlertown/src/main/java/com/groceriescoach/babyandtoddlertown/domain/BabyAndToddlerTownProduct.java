@@ -35,7 +35,14 @@ public class BabyAndToddlerTownProduct extends GroceriesCoachJsoupProduct {
 
     @Override
     protected Double extractPriceFromProductElement(Element productElement) {
-        String price = productElement.select(".special-price .price").get(0).text();
+        final Elements specialPriceElements = productElement.select(".special-price .price");
+        String price = "";
+        if (specialPriceElements != null && !specialPriceElements.isEmpty()) {
+            price = specialPriceElements.get(0).text();
+        } else {
+            final Elements priceElements = productElement.select(".regular-price .price");
+            price = priceElements.get(0).text();
+        }
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
             return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
         }
