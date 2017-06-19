@@ -59,6 +59,8 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
                     .timeout(10 * 1000)
                     .execute();
 
+            logger.info("URL: {}", response.url());
+
             doc = response.parse();
             List<P> products = extractProducts(doc, sortType);
 

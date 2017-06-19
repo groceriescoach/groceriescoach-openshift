@@ -12,8 +12,6 @@
     <artifactId>groceries-coach-web</artifactId>
     <name>Groceries Coach Web</name>
 
-
-
     <build>
         <resources>
             <resource>

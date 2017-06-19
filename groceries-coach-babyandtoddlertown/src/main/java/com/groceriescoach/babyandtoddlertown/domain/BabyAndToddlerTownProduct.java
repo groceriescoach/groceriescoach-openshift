@@ -71,15 +71,6 @@ public class BabyAndToddlerTownProduct extends GroceriesCoachJsoupProduct {
     }
 
     @Override
-    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
-        setName(extractNameFromProductElement(productElement));
-        setImageUrl(extractImageFromProductElement(productElement));
-        setUrl(extractUrlFromProductElement(productElement));
-        setPrice(extractPriceFromProductElement(productElement));
-        setWasPrice(extractOldPriceFromProductElement(productElement));
-    }
-
-    @Override
     protected String extractBrandFromProductElement(Element productElement) {
         return null;
     }

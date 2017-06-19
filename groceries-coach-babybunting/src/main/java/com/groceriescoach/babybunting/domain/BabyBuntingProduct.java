@@ -37,6 +37,9 @@ public class BabyBuntingProduct extends GroceriesCoachJsoupProduct {
         if (priceElements == null || priceElements.isEmpty()) {
             priceElements = productElement.select(".special-price .price");
         }
+        if (priceElements == null || priceElements.isEmpty()) {
+            priceElements = productElement.select(".price");
+        }
         String price = priceElements.get(0).text();
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
             return Double.parseDouble(StringUtils.removeCurrencySymbols(price));

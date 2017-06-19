@@ -25,13 +25,10 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
     private static final Logger logger = LoggerFactory.getLogger(GroceriesCoachProductService.class);
 
-
-
     @Autowired
     public GroceriesCoachProductService(List<StoreSearchService> storeSearchServices) {
         this.storeSearchServices = storeSearchServices;
     }
-
 
     @Override
     public List<GroceriesCoachProduct> search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
@@ -88,6 +85,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
             allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
         }
 
+//        Comparators.verifyTransitivity(new ProductComparator(sortType), allProducts);
         allProducts.sort(new ProductComparator(sortType));
         return allProducts;
     }
