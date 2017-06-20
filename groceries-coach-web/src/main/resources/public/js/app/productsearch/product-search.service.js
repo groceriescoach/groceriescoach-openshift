@@ -25,7 +25,8 @@
             return $http.get(url, {params: searchCriteria}).then(
                 function (response) {
                     $log.log(response);
-                    return response.data;
+                    serviceUtility.showNotificationMessages(response.data.messages);
+                    return response.data.payload;
                 },
                 function (response) {
                     serviceUtility.processErrorResponse(response);

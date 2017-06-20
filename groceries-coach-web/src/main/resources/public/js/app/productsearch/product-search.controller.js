@@ -17,7 +17,7 @@
         vm.searchCriteria = {stores: []};
         vm.products = [];
         vm.sortTypes = [];
-        vm.stores = [];
+        vm.storeTypeToStoresMap = {};
 
         vm.searchForProducts = searchForProducts;
 
@@ -54,7 +54,7 @@
 
         function getStores() {
             productSearchService.getStores().then(function (result) {
-                vm.stores = result;
+                vm.storeTypeToStoresMap = result;
             })
         }
 

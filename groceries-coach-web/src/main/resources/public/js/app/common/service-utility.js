@@ -11,47 +11,46 @@
         
         var service = {
             processSuccessResponse: processSuccessResponse,
-            processErrorResponse: processErrorResponse
+            processErrorResponse: processErrorResponse,
+            showToast: showToast,
+            showNotificationMessages: showNotificationMessages
         };
         
         return service;
         
 
         function processSuccessResponse(response) {
-            $log.info(response.data.notificationMessages);
+            $log.info(response.data.messages);
+            showNotificationMessages(response.data.messages);
             return response.data.payload;
         }
 
+        function showNotificationMessages(messages) {
+            angular.forEach(messages, function(message) {
+                showToast(message);
+            })
+        }
 
         function processErrorResponse(response) {
             $log.error(response.config);
             $log.error(response.config.headers);
             $log.error(response.config.method);
             $log.error(response.config.url);
-
             $log.error(response.data);
+            showToast(response.data.error + ' - ' + response.data.message + ' - ' + response.data.exception);
+            $log.error(response.status);
+            $log.error(response.statusText);
+        }
 
-/*
-            $scope.showCustomToast = function() {
-                $mdToast.show({
-                    templateUrl: 'error-toast-tmpl.html',
-                    hideDelay: 6000,
-                    position: 'top right'
-                });
-            };
-*/
-
-
+        function showToast(message) {
             $mdToast.show(
                 $mdToast
                     .simple()
-                    .textContent(response.data.error + ' - ' + response.data.message + ' - ' + response.data.exception)
+                    .textContent(message)
                     .position('top right')
                     .hideDelay(5000)
             );
 
-            $log.error(response.status);
-            $log.error(response.statusText);
         }
     }
 })();

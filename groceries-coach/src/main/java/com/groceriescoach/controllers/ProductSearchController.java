@@ -1,11 +1,14 @@
 package com.groceriescoach.controllers;
 
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.KVP;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.service.ProductSearchService;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.groceriescoach.controllers.ApiUrls.ProductSearch.*;
 
@@ -34,7 +39,7 @@ public class ProductSearchController {
 
 
     @RequestMapping(value = SEARCH_URL)
-    public ResponseEntity<List<GroceriesCoachProduct>> search(
+    public ResponseEntity<GroceriesCoachResponse<List<GroceriesCoachProduct>>> search(
             @RequestParam(value = KEYWORDS) String keywords,
             @RequestParam(value = STORES, required = false) String[] storeKeys,
             @RequestParam(value = SORT_BY, required = false) String sortBy,
@@ -44,6 +49,23 @@ public class ProductSearchController {
         logger.info("Received search request: keywords = [{}], stores = [{}], sortBy = [{}], allSearchKeywordsRequired = [{}].",
                 keywords, storeKeys, sortBy, allSearchKeywordsRequired);
 
+        List<String> messages = new ArrayList<>();
+
+
+        if (storeKeys == null || ArrayUtils.isEmpty(storeKeys)) {
+            messages.add("Please select at least one shop to search.");
+        }
+
+        if (StringUtils.isBlank(sortBy)) {
+            messages.add("Please select how you want results sorted.");
+        }
+
+        if (CollectionUtils.isNotEmpty(messages)) {
+            GroceriesCoachResponse response = new GroceriesCoachResponse();
+            response.addMessages(messages);
+            return ResponseEntity.ok(response);
+        }
+
         GroceriesCoachSortType sortType = GroceriesCoachSortType.fromKey(sortBy);
         List<Store> stores = new ArrayList<>();
         if (storeKeys != null && storeKeys.length > 0) {
@@ -52,7 +74,10 @@ public class ProductSearchController {
 
         List<GroceriesCoachProduct> products = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
         logger.info("Returning {} results.", products.size());
-        return ResponseEntity.ok(products);
+
+        final GroceriesCoachResponse<List<GroceriesCoachProduct>> response = new GroceriesCoachResponse<>(products);
+        response.addMessage("Found " + products.size() + " results.");
+        return ResponseEntity.ok(response);
     }
 
 
@@ -63,8 +88,13 @@ public class ProductSearchController {
 
 
     @RequestMapping(value = STORES_URL)
-    public ResponseEntity<List<KVP>> getStores() {
-        return ResponseEntity.ok(KVP.fromMap(Store.getMap()));
+    public ResponseEntity<Map<String, List<KVP>>> getStores() {
+        final Map<String, List<KVP>> storeTypeToStoresMap = new HashMap<>();
+
+        for (Map.Entry<String, Map<String, String>> entry: Store.getMap().entrySet()) {
+            storeTypeToStoresMap.put(entry.getKey(), KVP.fromMap(entry.getValue()));
+        }
+        return ResponseEntity.ok(storeTypeToStoresMap);
     }
 
 }

@@ -17,12 +17,22 @@
                 </md-input-container>
             </md-content>
             <md-content layout-padding>
-                <div layout layout-sm="row" layout-wrap>
-                    <div ng-repeat="store in productSearchVm.stores" flex="50">
-                        <md-checkbox ng-checked="productSearchVm.exists(store.key)" ng-click="productSearchVm.toggle(store.key)" aria-label="store.value">
-                            {{ store.value }}
-                        </md-checkbox>
+                <div layout layout-sm="column" layout-wrap>
+
+                    <div ng-repeat="(storeType, stores) in productSearchVm.storeTypeToStoresMap" flex="100">
+                        <fieldset class="standard">
+                            <legend>{{storeType}}</legend>
+                            <div layout="row" layout-wrap>
+                                <div ng-repeat="store in stores" flex="33">
+                                    <md-checkbox ng-checked="productSearchVm.exists(store.key)" ng-click="productSearchVm.toggle(store.key)" aria-label="store.value">
+                                        {{ store.value }}
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </fieldset>
+
                     </div>
+
                 </div>
             </md-content>
             <md-content layout-padding>
