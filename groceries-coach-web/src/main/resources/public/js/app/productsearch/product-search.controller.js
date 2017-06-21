@@ -15,12 +15,17 @@
         var vm = this;
 
         vm.searchCriteria = {stores: []};
-        vm.searchResults = {};
+        vm.searchResults = null;
         vm.sortTypes = [];
         vm.storeTypeToStoresMap = {};
 
         vm.searchForProducts = searchForProducts;
 
+        vm.searchResultsContainsUnitPriceAndNonUnitPriceProducts = searchResultsContainsUnitPriceAndNonUnitPriceProducts;
+        vm.searchResultsContainsUnitPriceProducts = searchResultsContainsUnitPriceProducts;
+        vm.searchResultsContainsNonUnitPriceProducts = searchResultsContainsNonUnitPriceProducts;
+        vm.searchResultsContainsOnlyUnitPriceProducts = searchResultsContainsOnlyUnitPriceProducts;
+        vm.searchResultsContainsOnlyNonUnitPriceProducts = searchResultsContainsOnlyNonUnitPriceProducts;
 
         activate();
 
@@ -62,6 +67,26 @@
             productSearchService.searchForProducts(vm.searchCriteria).then(function (result) {
                 vm.searchResults = result;
             });
+        }
+
+        function searchResultsContainsUnitPriceAndNonUnitPriceProducts() {
+            return searchResultsContainsUnitPriceProducts() && searchResultsContainsNonUnitPriceProducts();
+        }
+
+        function searchResultsContainsUnitPriceProducts() {
+            return (vm.searchResults && vm.searchResults.productsWithUnitPrices && vm.searchResults.productsWithUnitPrices.length);
+        }
+
+        function searchResultsContainsNonUnitPriceProducts() {
+            return (vm.searchResults && vm.searchResults.productsWithoutUnitPrices && vm.searchResults.productsWithoutUnitPrices.length);
+        }
+
+        function searchResultsContainsOnlyUnitPriceProducts() {
+            return searchResultsContainsUnitPriceProducts() && !searchResultsContainsNonUnitPriceProducts();
+        }
+
+        function searchResultsContainsOnlyNonUnitPriceProducts() {
+            return searchResultsContainsNonUnitPriceProducts() && !searchResultsContainsUnitPriceProducts();
         }
     }
 })();

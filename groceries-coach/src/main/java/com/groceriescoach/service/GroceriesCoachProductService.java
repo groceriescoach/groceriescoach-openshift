@@ -85,7 +85,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
             allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
         }
 
-        GroceriesCoachSearchResult searchResult = new GroceriesCoachSearchResult(allProducts);
+        GroceriesCoachSearchResult searchResult = new GroceriesCoachSearchResult(allProducts, sortType);
         return searchResult;
     }
 

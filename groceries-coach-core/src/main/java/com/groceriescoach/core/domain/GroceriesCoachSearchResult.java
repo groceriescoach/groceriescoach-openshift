@@ -12,8 +12,8 @@ public class GroceriesCoachSearchResult {
     private List<GroceriesCoachProduct> productsWithUnitPrices = new ArrayList<>();
     private List<GroceriesCoachProduct> productsWithoutUnitPrices = new ArrayList<>();
 
-    public GroceriesCoachSearchResult(Collection<GroceriesCoachProduct> products) {
-        addProducts(products);
+    public GroceriesCoachSearchResult(Collection<GroceriesCoachProduct> products, GroceriesCoachSortType sortType) {
+        addProducts(products, sortType);
         sortProducts();
     }
 
@@ -22,17 +22,17 @@ public class GroceriesCoachSearchResult {
         productsWithUnitPrices.sort(new ProductComparator(UnitPrice));
     }
 
-    private void addProduct(GroceriesCoachProduct product) {
-        if (product.hasUnitPrice()) {
+    private void addProduct(GroceriesCoachProduct product, GroceriesCoachSortType sortType) {
+        if (product.hasUnitPrice() && sortType.isUnitPriceRequired()) {
             productsWithUnitPrices.add(product);
         } else {
             productsWithoutUnitPrices.add(product);
         }
     }
 
-    private void addProducts(Collection<GroceriesCoachProduct> products) {
+    private void addProducts(Collection<GroceriesCoachProduct> products, GroceriesCoachSortType sortType) {
         for (GroceriesCoachProduct product : products) {
-            addProduct(product);
+            addProduct(product, sortType);
         }
     }
 
