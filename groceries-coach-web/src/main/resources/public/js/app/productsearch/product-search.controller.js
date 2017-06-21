@@ -15,7 +15,7 @@
         var vm = this;
 
         vm.searchCriteria = {stores: []};
-        vm.products = [];
+        vm.searchResults = {};
         vm.sortTypes = [];
         vm.storeTypeToStoresMap = {};
 
@@ -60,7 +60,7 @@
 
         function searchForProducts() {
             productSearchService.searchForProducts(vm.searchCriteria).then(function (result) {
-                vm.products = result;
+                vm.searchResults = result;
             });
         }
     }

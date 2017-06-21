@@ -3,8 +3,8 @@ package com.groceriescoach.service;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
+import com.groceriescoach.core.domain.GroceriesCoachSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.ProductComparator;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
     }
 
     @Override
-    public List<GroceriesCoachProduct> search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
+    public GroceriesCoachSearchResult search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
 
         List<Store> searchStores;
 
@@ -85,9 +85,8 @@ public class GroceriesCoachProductService implements ProductSearchService {
             allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
         }
 
-//        Comparators.verifyTransitivity(new ProductComparator(sortType), allProducts);
-        allProducts.sort(new ProductComparator(sortType));
-        return allProducts;
+        GroceriesCoachSearchResult searchResult = new GroceriesCoachSearchResult(allProducts);
+        return searchResult;
     }
 
 }

@@ -22,8 +22,6 @@ public class ProductComparator implements Comparator<GroceriesCoachProduct> {
         logger.debug("Comparing {} and {}", product1, product2);
 
         switch (sortType) {
-            case ProductName:
-                return product1.getName().compareTo(product2.getName());
             case Price:
                 return product1.getPrice().compareTo(product2.getPrice());
             case UnitPrice:

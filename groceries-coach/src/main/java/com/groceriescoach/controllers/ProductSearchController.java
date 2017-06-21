@@ -3,7 +3,7 @@ package com.groceriescoach.controllers;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
-import com.groceriescoach.core.domain.GroceriesCoachProduct;
+import com.groceriescoach.core.domain.GroceriesCoachSearchResult;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.KVP;
 import com.groceriescoach.core.domain.Store;
@@ -39,7 +39,7 @@ public class ProductSearchController {
 
 
     @RequestMapping(value = SEARCH_URL)
-    public ResponseEntity<GroceriesCoachResponse<List<GroceriesCoachProduct>>> search(
+    public ResponseEntity<GroceriesCoachResponse<GroceriesCoachSearchResult>> search(
             @RequestParam(value = KEYWORDS) String keywords,
             @RequestParam(value = STORES, required = false) String[] storeKeys,
             @RequestParam(value = SORT_BY, required = false) String sortBy,
@@ -72,11 +72,18 @@ public class ProductSearchController {
             stores.addAll(Store.fromStoreKeys(storeKeys));
         }
 
-        List<GroceriesCoachProduct> products = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
-        logger.info("Returning {} results.", products.size());
+        final GroceriesCoachSearchResult searchResult = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
 
-        final GroceriesCoachResponse<List<GroceriesCoachProduct>> response = new GroceriesCoachResponse<>(products);
-        response.addMessage("Found " + products.size() + " results.");
+        logger.info("Returning {} results.", searchResult.size());
+
+        final GroceriesCoachResponse<GroceriesCoachSearchResult> response = new GroceriesCoachResponse<>(searchResult);
+
+        if (searchResult.isEmpty()) {
+            response.addMessage("No results were found, please try a different search.");
+        } else {
+            response.addMessage("Found " + searchResult.size() + " results.");
+        }
+
         return ResponseEntity.ok(response);
     }
 

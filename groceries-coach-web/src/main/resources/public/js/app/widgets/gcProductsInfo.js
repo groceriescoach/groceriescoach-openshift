@@ -15,7 +15,7 @@
         var directive = {
             restrict: 'EA',
             scope: {
-                products: '='
+                searchResults: '='
             },
             replace: true,
             templateUrl: 'js/app/widgets/products-info.html'

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum GroceriesCoachSortType {
-    ProductName("Name", "Product Name"),
+//    ProductName("Name", "Product Name"),
     Price("Price", "Price"),
     UnitPrice("UnitPrice", "Unit Price") {
         @Override

@@ -1,9 +1,15 @@
+
 <md-content flex>
 <!--<md-content style="height: 900px;">-->
     <section>
         <md-subheader class="md-no-sticky">Search Results</md-subheader>
-        <div layout="column">
-            <gc-product-info product="product" ng-repeat="product in products"/>
+        <div layout-lt-sm="column" layout="row">
+            <div flex-sm flex-gt-sm="50" layout="column">
+                <gc-product-info product="product" ng-repeat="product in searchResults.productsWithUnitPrices"/>
+            </div>
+            <div flex-sm flex-gt-sm="50" layout="column">
+                <gc-product-info product="product" ng-repeat="product in searchResults.productsWithoutUnitPrices"/>
+            </div>
         </div>
     </section>
 </md-content>

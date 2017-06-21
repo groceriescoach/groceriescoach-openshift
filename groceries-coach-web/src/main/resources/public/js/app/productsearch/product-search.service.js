@@ -24,9 +24,7 @@
             var url = "/search";
             return $http.get(url, {params: searchCriteria}).then(
                 function (response) {
-                    $log.log(response);
-                    serviceUtility.showNotificationMessages(response.data.messages);
-                    return response.data.payload;
+                    return serviceUtility.processSuccessResponse(response);
                 },
                 function (response) {
                     serviceUtility.processErrorResponse(response);

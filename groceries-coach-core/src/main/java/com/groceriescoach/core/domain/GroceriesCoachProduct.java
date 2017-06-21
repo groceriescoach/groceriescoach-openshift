@@ -15,6 +15,7 @@ import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.ro
 public abstract class GroceriesCoachProduct implements Serializable {
 
 
+    private static final long serialVersionUID = -3912433236010197063L;
     private String name;
     private String brand;
     private String description;
@@ -227,6 +228,10 @@ public abstract class GroceriesCoachProduct implements Serializable {
                 .append("unitPriceStr", unitPriceStr)
                 .append("quantityPriceList", quantityPriceList)
                 .toString();
+    }
+
+    public boolean hasUnitPrice() {
+        return unitPrice != null && StringUtils.isNotBlank(unitPriceStr);
     }
 
 
