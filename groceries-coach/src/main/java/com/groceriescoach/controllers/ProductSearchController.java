@@ -3,7 +3,7 @@ package com.groceriescoach.controllers;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
-import com.groceriescoach.core.domain.GroceriesCoachSearchResult;
+import com.groceriescoach.core.domain.GroceriesCoachSearchResults;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.KVP;
 import com.groceriescoach.core.domain.Store;
@@ -39,7 +39,7 @@ public class ProductSearchController {
 
 
     @RequestMapping(value = SEARCH_URL)
-    public ResponseEntity<GroceriesCoachResponse<GroceriesCoachSearchResult>> search(
+    public ResponseEntity<GroceriesCoachResponse<GroceriesCoachSearchResults>> search(
             @RequestParam(value = KEYWORDS) String keywords,
             @RequestParam(value = STORES, required = false) String[] storeKeys,
             @RequestParam(value = SORT_BY, required = false) String sortBy,
@@ -72,11 +72,11 @@ public class ProductSearchController {
             stores.addAll(Store.fromStoreKeys(storeKeys));
         }
 
-        final GroceriesCoachSearchResult searchResult = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
+        final GroceriesCoachSearchResults searchResult = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
 
         logger.info("Returning {} results.", searchResult.size());
 
-        final GroceriesCoachResponse<GroceriesCoachSearchResult> response = new GroceriesCoachResponse<>(searchResult);
+        final GroceriesCoachResponse<GroceriesCoachSearchResults> response = new GroceriesCoachResponse<>(searchResult);
 
         if (searchResult.isEmpty()) {
             response.addMessage("No results were found, please try a different search.");

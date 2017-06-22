@@ -14,15 +14,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GroceriesCoachSearchResult<P extends GroceriesCoachProduct> implements Serializable {
+public abstract class StoreSearchResult<P extends GroceriesCoachProduct> implements Serializable {
 
     private static final long serialVersionUID = -7704062795180569959L;
 
     private List<P> products;
 
-    private static final Logger logger = LoggerFactory.getLogger(GroceriesCoachSearchResult.class);
+    private static final Logger logger = LoggerFactory.getLogger(StoreSearchResult.class);
 
-    public GroceriesCoachSearchResult(Document document, GroceriesCoachSortType sortType) {
+    public StoreSearchResult(Document document, GroceriesCoachSortType sortType) {
 
         products = new ArrayList<>();
 

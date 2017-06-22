@@ -2,13 +2,13 @@ package com.groceriescoach.coles.domain;
 
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
-import com.groceriescoach.core.service.GroceriesCoachSearchResult;
+import com.groceriescoach.core.service.StoreSearchResult;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ColesSearchResult extends GroceriesCoachSearchResult<ColesProduct> {
+public class ColesSearchResult extends StoreSearchResult<ColesProduct> {
 
     private static final long serialVersionUID = -7704062795180569959L;
 

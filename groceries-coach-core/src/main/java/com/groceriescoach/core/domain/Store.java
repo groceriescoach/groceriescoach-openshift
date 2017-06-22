@@ -26,6 +26,7 @@ public enum Store {
     Pharmacy4Less("P4L", "Pharmacy 4 Less", Pharmacy),
     Priceline("P", "Priceline", Pharmacy),
     Target("T", "Target", Supermarket),
+    TerryWhite("TW", "Terry White", Pharmacy),
     Woolworths("W", "Woolworths", Supermarket);
 
 

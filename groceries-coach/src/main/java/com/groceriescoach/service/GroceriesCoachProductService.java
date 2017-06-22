@@ -3,7 +3,7 @@ package com.groceriescoach.service;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
-import com.groceriescoach.core.domain.GroceriesCoachSearchResult;
+import com.groceriescoach.core.domain.GroceriesCoachSearchResults;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
@@ -31,7 +31,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
     }
 
     @Override
-    public GroceriesCoachSearchResult search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
+    public GroceriesCoachSearchResults search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
 
         List<Store> searchStores;
 
@@ -85,7 +85,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
             allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
         }
 
-        GroceriesCoachSearchResult searchResult = new GroceriesCoachSearchResult(allProducts, sortType);
+        GroceriesCoachSearchResults searchResult = new GroceriesCoachSearchResults(allProducts, sortType);
         return searchResult;
     }
 

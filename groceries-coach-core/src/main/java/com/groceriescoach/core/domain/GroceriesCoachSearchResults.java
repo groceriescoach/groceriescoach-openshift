@@ -7,12 +7,12 @@ import java.util.List;
 import static com.groceriescoach.core.domain.GroceriesCoachSortType.Price;
 import static com.groceriescoach.core.domain.GroceriesCoachSortType.UnitPrice;
 
-public class GroceriesCoachSearchResult {
+public class GroceriesCoachSearchResults {
 
     private List<GroceriesCoachProduct> productsWithUnitPrices = new ArrayList<>();
     private List<GroceriesCoachProduct> productsWithoutUnitPrices = new ArrayList<>();
 
-    public GroceriesCoachSearchResult(Collection<GroceriesCoachProduct> products, GroceriesCoachSortType sortType) {
+    public GroceriesCoachSearchResults(Collection<GroceriesCoachProduct> products, GroceriesCoachSortType sortType) {
         addProducts(products, sortType);
         sortProducts();
     }
