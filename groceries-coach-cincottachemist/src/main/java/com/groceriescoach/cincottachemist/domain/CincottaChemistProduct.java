@@ -59,10 +59,14 @@ public class CincottaChemistProduct extends GroceriesCoachJsoupProduct {
 
     @Override
     protected Double extractPriceFromProductElement(Element productElement) {
-        final Elements regularPriceElements = productElement.select(".regular-price .price");
-        if (regularPriceElements != null && !regularPriceElements.isEmpty()) {
-            final Element regularPriceElement = regularPriceElements.get(0);
-            final String price = StringUtils.trimToEmpty(regularPriceElement.text());
+        Elements priceElements = productElement.select(".special-price .price");
+        if (priceElements == null || priceElements.isEmpty()) {
+            priceElements = productElement.select(".regular-price .price");
+        }
+
+        if (priceElements != null && !priceElements.isEmpty()) {
+            final Element priceElement = priceElements.get(0);
+            final String price = StringUtils.trimToEmpty(priceElement.text());
 
             if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
                 return Double.parseDouble(StringUtils.removeCurrencySymbols(price));

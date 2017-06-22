@@ -137,7 +137,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
     }
 
     public void setSaving(Double saving) {
-        this.saving = (saving == null ? 0 : saving);
+        this.saving = saving;
     }
 
     public String getImageUrl() {
