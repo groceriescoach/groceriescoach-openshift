@@ -17,6 +17,16 @@ public class Tag implements Serializable {
     private String fallbackText;
     @JsonProperty("TagType")
     private String tagType;
+    @JsonProperty("BackgroundColor")
+    private String backgroundColor;
+    @JsonProperty("BorderColor")
+    private String borderColor;
+    @JsonProperty("TextColor")
+    private String textColor;
+    @JsonProperty("Content")
+    private String content;
+    @JsonProperty("Promotion")
+    private String promotion;
 
 
     public String getTagContent() {

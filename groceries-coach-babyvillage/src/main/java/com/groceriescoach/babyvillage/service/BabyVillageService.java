@@ -43,7 +43,7 @@ public class BabyVillageService implements StoreSearchService<BabyVillageProduct
 
         List<BabyVillageProduct> products = getProductsForPage(keywords, 1, sortType);
 
-        logger.info("Found {} Baby Village products for keywords[{}].", products.size(), keywords);
+        logger.info("Found {} Baby Village products for keywords [{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }

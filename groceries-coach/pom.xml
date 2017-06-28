@@ -91,6 +91,10 @@
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-royyoung</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-target</artifactId>
         </dependency>
         <dependency>

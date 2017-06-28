@@ -31,9 +31,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
     private String unitPriceStr;
     private List<QuantityPrice> quantityPriceList = new ArrayList<>();
 
-    public GroceriesCoachProduct() {
-    }
-
+    public GroceriesCoachProduct() {}
 
     public abstract Store getStore();
 

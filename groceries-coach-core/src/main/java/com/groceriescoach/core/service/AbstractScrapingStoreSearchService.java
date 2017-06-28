@@ -64,7 +64,7 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
             doc = response.parse();
             List<P> products = extractProducts(doc, sortType);
 
-            logger.info("Found {} {} products for keywords[{}].", products.size(), getStore(), keywords);
+            logger.info("Found {} {} products for keywords [{}].", products.size(), getStore(), keywords);
 
             return new AsyncResult<>(products);
         } catch (IOException e) {

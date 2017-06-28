@@ -42,11 +42,11 @@ public class WoolworthsService implements StoreSearchService {
 
         logger.info("Searching Woolworths for {}.", keywords);
 
-        String trimmedKeywords = keywords.trim().replaceAll(" +", " ").replace(" ", "+");
+//        String trimmedKeywords = keywords.trim().replaceAll(" +", " ").replace(" ", "+");
 
-        List<GroceriesCoachProduct> products = getProductsForPage(trimmedKeywords, 2);
+        List<GroceriesCoachProduct> products = getProductsForPage(keywords, 2);
 
-        logger.info("Found {} Woolworths products for keywords[{}].", products.size(), keywords);
+        logger.info("Found {} Woolworths products for keywords [{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }

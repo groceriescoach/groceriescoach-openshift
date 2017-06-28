@@ -20,7 +20,7 @@ public class JsonMappingTest {
     public void testMapping() throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
-        File file = new File("C:/projects/groceries-coach/groceries-coach-woolies/src/test/resources/appletiser.json");
+        File file = new File("C:/projects/groceries-coach/groceries-coach-woolies/src/test/resources/cadbury.json");
         WoolworthsSearchResult searchResult = mapper.reader().forType(WoolworthsSearchResult.class).readValue(file);
         logger.debug("{}", searchResult);
     }

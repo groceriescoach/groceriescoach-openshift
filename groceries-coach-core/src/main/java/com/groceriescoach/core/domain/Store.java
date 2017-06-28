@@ -22,9 +22,10 @@ public enum Store {
     CincottaChemist("CC", "Cincotta Chemist", Pharmacy),
     Coles("C", "Coles", Supermarket),
     MrVitamins("M", "Mr. Vitamins", Pharmacy),
-    NursingAngel("N", "Nursing Angel", Pharmacy),
+    NursingAngel("N", "Nursing Angel", BabyShop),
     Pharmacy4Less("P4L", "Pharmacy 4 Less", Pharmacy),
     Priceline("P", "Priceline", Pharmacy),
+    RoyYoung("R", "Roy Young", Pharmacy),
     Target("T", "Target", Supermarket),
     TerryWhite("TW", "Terry White", Pharmacy),
     Woolworths("W", "Woolworths", Supermarket);

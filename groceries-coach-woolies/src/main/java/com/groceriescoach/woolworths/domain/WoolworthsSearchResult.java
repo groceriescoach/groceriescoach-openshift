@@ -1,5 +1,6 @@
 package com.groceriescoach.woolworths.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.io.Serializable;
 import java.util.List;
 
+@JsonIgnoreProperties({"Aggregations"})
 public class WoolworthsSearchResult implements Serializable {
 
     private static final long serialVersionUID = -7704062795180569959L;

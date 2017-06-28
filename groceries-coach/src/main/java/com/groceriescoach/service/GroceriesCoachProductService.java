@@ -2,6 +2,7 @@ package com.groceriescoach.service;
 
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSearchResults;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -41,6 +42,9 @@ public class GroceriesCoachProductService implements ProductSearchService {
             searchStores = stores;
         }
 
+        String trimmedKeywords = StringUtils.trimToEmpty(keywords).replaceAll(" +", " ").replace(" ", "+");
+
+
         List<GroceriesCoachProduct> allProducts = new ArrayList<>();
         Map<Store, Future<List<GroceriesCoachProduct>>> futuresMap = new HashMap<>();
 
@@ -53,7 +57,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
         for (StoreSearchService storeSearchService : storeSearchServices) {
             if (searchStores.contains(storeSearchService.getStore())) {
-                Future<List<GroceriesCoachProduct>> listFuture = storeSearchService.search(keywords, sortType);
+                Future<List<GroceriesCoachProduct>> listFuture = storeSearchService.search(trimmedKeywords, sortType);
                 futuresMap.put(storeSearchService.getStore(), listFuture);
             }
         }

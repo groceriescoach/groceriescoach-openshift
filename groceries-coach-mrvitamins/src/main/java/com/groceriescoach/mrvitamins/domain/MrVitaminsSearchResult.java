@@ -1,24 +1,72 @@
 package com.groceriescoach.mrvitamins.domain;
 
-import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.ProductInformationUnavailableException;
-import com.groceriescoach.core.service.StoreSearchResult;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class MrVitaminsSearchResult extends StoreSearchResult<MrVitaminsProduct> {
+import java.io.Serializable;
+import java.util.List;
 
-    public MrVitaminsSearchResult(Document document, GroceriesCoachSortType sortType) {
-        super(document, sortType);
+public class MrVitaminsSearchResult implements Serializable {
+
+    private static final long serialVersionUID = -6541884730040308932L;
+
+    private static final Logger logger = LoggerFactory.getLogger(MrVitaminsSearchResult.class);
+
+
+    @JsonProperty("totalItems")
+    private int totalItems;
+    @JsonProperty("startIndex")
+    private int startIndex;
+    @JsonProperty("itemsPerPage")
+    private int itemsPerPage;
+    @JsonProperty("currentItemCount")
+    private int currentItemCount;
+    @JsonProperty("items")
+    private List<Item> items;
+
+
+    public int getTotalItems() {
+        return totalItems;
     }
 
-    @Override
-    protected String getCssQuery() {
-        return ".snize-product";
+    public void setTotalItems(int totalItems) {
+        this.totalItems = totalItems;
     }
 
-    @Override
-    protected MrVitaminsProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
-        return new MrVitaminsProduct(productElement, sortType);
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    public int getItemsPerPage() {
+        return itemsPerPage;
+    }
+
+    public void setItemsPerPage(int itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
+    }
+
+    public int getCurrentItemCount() {
+        return currentItemCount;
+    }
+
+    public void setCurrentItemCount(int currentItemCount) {
+        this.currentItemCount = currentItemCount;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public List<MrVitaminsProduct> toProducts() {
+        return Item.toProducts(items);
     }
 }

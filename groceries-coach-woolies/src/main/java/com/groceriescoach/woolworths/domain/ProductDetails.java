@@ -16,6 +16,7 @@ import java.util.List;
 import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.roundToTwoDecimalPlaces;
 import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeHtml;
 
+
 public class ProductDetails implements Serializable {
 
     private static final long serialVersionUID = 3253996340428188193L;
@@ -56,6 +57,9 @@ public class ProductDetails implements Serializable {
 
     @JsonProperty("LargeImageFile")
     private String largeImageFile;
+
+    @JsonProperty("IsNew")
+    private Boolean newProduct;
 
     @JsonProperty("IsOnSpecial")
     private Boolean onSpecial;
@@ -108,6 +112,9 @@ public class ProductDetails implements Serializable {
     @JsonProperty("TextTag")
     private Tag textTag;
 
+    @JsonProperty("HeaderTag")
+    private Tag headerTag;
+
     @JsonProperty("FooterTag")
     private Tag footerTag;
 
@@ -116,6 +123,9 @@ public class ProductDetails implements Serializable {
 
     @JsonProperty("IsCentreTag")
     private boolean centreTagFlag;
+
+    @JsonProperty("HasHeaderTag")
+    private Boolean headerTagFlag;
 
     @JsonProperty("IsFooterEnabled")
     private Boolean footerEnabled;
@@ -146,6 +156,24 @@ public class ProductDetails implements Serializable {
 
     @JsonProperty("HideWasSavedPrice")
     private Boolean hideWasSavedPrice;
+
+    @JsonProperty("FullDescription")
+    private String fullDescription;
+
+    @JsonProperty("SapCategories")
+    private String sapCategories;
+
+    @JsonProperty("Brand")
+    private String brand;
+
+    @JsonProperty("Diagnostics")
+    private String diagnostics;
+
+    @JsonProperty("IsBundle")
+    private Boolean bundle;
+
+    @JsonProperty("ChildProducts")
+    private List<ChildProduct> childProducts;
 
 
 
@@ -247,6 +275,14 @@ public class ProductDetails implements Serializable {
 
     public void setLargeImageFile(String largeImageFile) {
         this.largeImageFile = largeImageFile;
+    }
+
+    public Boolean getNewProduct() {
+        return newProduct;
+    }
+
+    public void setNewProduct(Boolean newProduct) {
+        this.newProduct = newProduct;
     }
 
     public Boolean getOnSpecial() {
@@ -479,6 +515,30 @@ public class ProductDetails implements Serializable {
 
     public void setDeliveryPass(Boolean deliveryPass) {
         this.deliveryPass = deliveryPass;
+    }
+
+    public Tag getHeaderTag() {
+        return headerTag;
+    }
+
+    public void setHeaderTag(Tag headerTag) {
+        this.headerTag = headerTag;
+    }
+
+    public Boolean getHeaderTagFlag() {
+        return headerTagFlag;
+    }
+
+    public void setHeaderTagFlag(Boolean headerTagFlag) {
+        this.headerTagFlag = headerTagFlag;
+    }
+
+    public Boolean getHideWasSavedPrice() {
+        return hideWasSavedPrice;
+    }
+
+    public void setHideWasSavedPrice(Boolean hideWasSavedPrice) {
+        this.hideWasSavedPrice = hideWasSavedPrice;
     }
 
     public static List<GroceriesCoachProduct> toProducts(ProductDetails productDetailsArray[], String keywords) {
