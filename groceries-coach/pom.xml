@@ -79,6 +79,10 @@
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-mychemist</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-nursingangel</artifactId>
         </dependency>
         <dependency>
