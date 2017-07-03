@@ -107,6 +107,10 @@
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-thepharmacy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-woolies</artifactId>
         </dependency>
         <dependency>

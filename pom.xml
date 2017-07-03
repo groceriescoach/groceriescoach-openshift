@@ -39,6 +39,7 @@
         <module>groceries-coach-royyoung</module>
         <module>groceries-coach-target</module>
         <module>groceries-coach-terrywhite</module>
+        <module>groceries-coach-thepharmacy</module>
         <module>groceries-coach-woolies</module>
     </modules>
 
@@ -165,6 +166,11 @@
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-terrywhite</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-thepharmacy</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

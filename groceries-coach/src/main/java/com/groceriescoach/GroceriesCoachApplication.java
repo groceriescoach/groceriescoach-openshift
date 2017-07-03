@@ -19,6 +19,8 @@ import com.groceriescoach.pharmacy4less.Pharmacy4LessConfig;
 import com.groceriescoach.priceline.PricelineConfig;
 import com.groceriescoach.royyoung.RoyYoungConfig;
 import com.groceriescoach.target.TargetConfig;
+import com.groceriescoach.terrywhite.config.TerryWhiteConfig;
+import com.groceriescoach.thepharmacy.config.ThePharmacyConfig;
 import com.groceriescoach.woolworths.config.WoolworthsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
         BabyBounceConfig.class, BabyBuntingConfig.class, BabyKingdomConfig.class, BabyVillageConfig.class,
         BigWConfig.class, ChemistWarehouseConfig.class, CincottaChemistConfig.class, ColesConfig.class,
         MrVitaminsConfig.class, MyChemistConfig.class, NursingAngelConfig.class, Pharmacy4LessConfig.class,
-        PricelineConfig.class, RoyYoungConfig.class, TargetConfig.class, WoolworthsConfig.class
+        PricelineConfig.class, RoyYoungConfig.class, TargetConfig.class, ThePharmacyConfig.class, TerryWhiteConfig.class,
+        WoolworthsConfig.class
 })
 @SpringBootApplication
 @EnableAsync
