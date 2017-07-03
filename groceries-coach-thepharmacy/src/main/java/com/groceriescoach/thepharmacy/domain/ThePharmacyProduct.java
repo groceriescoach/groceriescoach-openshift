@@ -14,7 +14,7 @@ public class ThePharmacyProduct extends GroceriesCoachJsoupProduct {
 
     private static final long serialVersionUID = -2794171389255975633L;
 
-    public ThePharmacyProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+    ThePharmacyProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
 
@@ -78,6 +78,6 @@ public class ThePharmacyProduct extends GroceriesCoachJsoupProduct {
 
     @Override
     protected String extractUrlFromProductElement(Element productElement) {
-        return productElement.select(".product-name").get(0).attr("href");
+        return productElement.select(".product-name a").get(0).attr("href");
     }
 }

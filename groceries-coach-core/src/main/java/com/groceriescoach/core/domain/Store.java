@@ -25,6 +25,7 @@ public enum Store {
     MyChemist("MC", "My Chemist", Pharmacy),
     NursingAngel("N", "Nursing Angel", BabyShop),
     Pharmacy4Less("P4L", "Pharmacy 4 Less", Pharmacy),
+    PharmacyDirect("PD", "Pharmacy Direct", Pharmacy),
     Priceline("P", "Priceline", Pharmacy),
     RoyYoung("R", "Roy Young", Pharmacy),
     Target("T", "Target", Supermarket),
