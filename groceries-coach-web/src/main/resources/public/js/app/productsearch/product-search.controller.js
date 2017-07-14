@@ -14,12 +14,17 @@
 
         var vm = this;
 
-        vm.searchCriteria = {stores: []};
+        vm.searchCriteria = {
+            allKeywordsRequired: true,
+            sortBy: "Price",
+            stores: []
+        };
         vm.searchResults = null;
         vm.sortTypes = [];
         vm.storeTypeToStoresMap = {};
 
         vm.searchForProducts = searchForProducts;
+        vm.searchForProductsUsingSearchPhrase = searchForProductsUsingSearchPhrase;
 
         vm.searchResultsContainsUnitPriceAndNonUnitPriceProducts = searchResultsContainsUnitPriceAndNonUnitPriceProducts;
         vm.searchResultsContainsUnitPriceProducts = searchResultsContainsUnitPriceProducts;
@@ -65,6 +70,12 @@
 
         function searchForProducts() {
             productSearchService.searchForProducts(vm.searchCriteria).then(function (result) {
+                vm.searchResults = result;
+            });
+        }
+
+        function searchForProductsUsingSearchPhrase() {
+            productSearchService.searchForProductsWithPhrase(vm.searchCriteria).then(function (result) {
                 vm.searchResults = result;
             });
         }

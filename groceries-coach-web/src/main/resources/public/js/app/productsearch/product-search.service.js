@@ -11,6 +11,7 @@
 
         var service = {
             searchForProducts: searchForProducts,
+            searchForProductsWithPhrase: searchForProductsWithPhrase,
             getSortTypes: getSortTypes,
             getStores: getStores
         };
@@ -22,11 +23,29 @@
 
         function searchForProducts(searchCriteria) {
             var url = "/search";
+            serviceUtility.showWait();
             return $http.get(url, {params: searchCriteria}).then(
                 function (response) {
+                    serviceUtility.hideWait();
                     return serviceUtility.processSuccessResponse(response);
                 },
                 function (response) {
+                    serviceUtility.hideWait();
+                    serviceUtility.processErrorResponse(response);
+                }
+            );
+        }
+
+        function searchForProductsWithPhrase(searchCriteria) {
+            var url = "/search-with-phrase";
+            serviceUtility.showWait();
+            return $http.get(url, {params: searchCriteria}).then(
+                function (response) {
+                    serviceUtility.hideWait();
+                    return serviceUtility.processSuccessResponse(response);
+                },
+                function (response) {
+                    serviceUtility.hideWait();
                     serviceUtility.processErrorResponse(response);
                 }
             );

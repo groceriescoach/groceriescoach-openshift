@@ -5,6 +5,8 @@ public class ApiUrls {
     public static final class ProductSearch {
 
         public static final String SEARCH_URL = "/search";
+        public static final String SEARCH_WITH_PHRASE_URL = "/search-with-phrase";
+        public static final String SEARCH_PHRASE = "searchPhrase";
         public static final String KEYWORDS = "keywords";
         public static final String STORES = "stores";
         public static final String SORT_BY = "sortBy";

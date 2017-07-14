@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
-public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoachProduct> implements StoreSearchService {
+public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoachProduct> extends AbstractStoreSearchService {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractScrapingStoreSearchService.class);
 
@@ -38,17 +38,19 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
     @Override
     public Future<List<P>> search(String keywords, GroceriesCoachSortType sortType) {
 
-        logger.debug("Searching {} for {}.", getStore(), keywords);
+        String reformattedKeywords = reformatKeywordsForStore(keywords);
+
+        logger.debug("Searching {} for {}.", getStore(), reformattedKeywords);
 
         Map<String, String> requestParams = getRequestParameters();
         if (StringUtils.isNotBlank(getSearchKeywordParameter())) {
-            requestParams.put(getSearchKeywordParameter(), keywords);
+            requestParams.put(getSearchKeywordParameter(), reformattedKeywords);
         }
 
         Document doc;
         try {
 
-            final Connection.Response response = Jsoup.connect(getStoreSearchUrl(keywords))
+            final Connection.Response response = Jsoup.connect(getStoreSearchUrl(reformattedKeywords))
                     .data(requestParams)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
                     .header("Accept", "*/*")
@@ -64,7 +66,7 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
             doc = response.parse();
             List<P> products = extractProducts(doc, sortType);
 
-            logger.info("Found {} {} products for keywords [{}].", products.size(), getStore(), keywords);
+            logger.info("Found {} {} products for keywords [{}].", products.size(), getStore(), reformattedKeywords);
 
             return new AsyncResult<>(products);
         } catch (IOException e) {

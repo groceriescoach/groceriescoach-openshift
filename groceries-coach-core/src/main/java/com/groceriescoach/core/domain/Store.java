@@ -1,6 +1,8 @@
 package com.groceriescoach.core.domain;
 
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,7 @@ import static com.groceriescoach.core.domain.StoreType.*;
 public enum Store {
 
     Amcal("A", "Amcal", Pharmacy),
-//    BabiesRUs("BRU", "Babies R Us"),
+    //    BabiesRUs("BRU", "Babies R Us"),
     BabyAndToddlerTown("BTT", "Baby & Toddler Town", BabyShop),
     BabyBounce("BB1", "Baby Bounce", BabyShop),
     BabyBunting("BB2", "Baby Bunting", BabyShop),
@@ -63,8 +65,7 @@ public enum Store {
             }
         }
         throw new IllegalArgumentException(storeKey + " is not a valid Store key.");
-     }
-
+    }
 
     public static Map<String, Map<String, String>> getMap() {
         Map<String, Map<String, String>> storeTypeToStoresMap = new TreeMap<>();
@@ -86,6 +87,25 @@ public enum Store {
             stores.add(fromStoreKey(storeKey));
         }
         return stores;
+    }
+
+    public boolean stringContainStore(String stores) {
+        return (StringUtils.containsIgnoreCase(stores, storeName));
+    }
+
+    public String removeStoreFromString(String stores) {
+        return StringUtils.trimToEmpty(stores.replaceAll(storeName, ""));
+    }
+
+    public static List<Store> getStoresFrom(String storesStr) {
+        List<Store> storeList = new ArrayList<>();
+        for (Store store : Store.values()) {
+            if (store.stringContainStore(storesStr)) {
+                storeList.add(store);
+                storesStr = store.removeStoreFromString(storesStr);
+            }
+        }
+        return storeList;
     }
 }
 

@@ -3,6 +3,7 @@ package com.groceriescoach.chemistwarehouse.service;
 
 import com.groceriescoach.chemistwarehouse.domain.ChemistWarehouseProduct;
 import com.groceriescoach.chemistwarehouse.domain.ChemistWarehouseSearchResult;
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.AbstractScrapingStoreSearchService;
@@ -34,7 +35,7 @@ public class ChemistWarehouseService extends AbstractScrapingStoreSearchService<
     protected Map<String, String> getRequestParameters() {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("sort", "rank");
-        requestParams.put("searchmode", "allwords");
+        requestParams.put("searchmode", "anywords");
         requestParams.put("size", "120");
         return requestParams;
     }
@@ -55,4 +56,8 @@ public class ChemistWarehouseService extends AbstractScrapingStoreSearchService<
         return ChemistWarehouse;
     }
 
+    @Override
+    protected String reformatKeywordsForStore(String keywords) {
+        return StringUtils.trimToEmpty(keywords);
+    }
 }

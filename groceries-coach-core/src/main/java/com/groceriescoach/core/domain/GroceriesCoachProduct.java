@@ -67,15 +67,18 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
         String nameWorkingCopy = StringUtils.trimToEmpty(name).toLowerCase();
 
-        if (!StringUtils.containsIgnoreCase(nameWorkingCopy, "pack") && !StringUtils.containsIgnoreCase(nameWorkingCopy, "pk")) {
-            nameWorkingCopy += " pack";
-        }
-
         nameWorkingCopy = nameWorkingCopy.replaceAll("pk", "pack");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("pcs", "pack");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("'s", "pack");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("’s", "pack");
         nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
         nameWorkingCopy = nameWorkingCopy.replaceAll("mega", " ");
         nameWorkingCopy = nameWorkingCopy.replaceAll("bulk", " ");
         nameWorkingCopy = nameWorkingCopy.replaceAll("pack", " pack ");
+
+        if (!StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
+            nameWorkingCopy += " pack";
+        }
 
         if (StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
 

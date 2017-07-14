@@ -1,23 +1,24 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('GroceriesCoachApp.commonUtilities')
         .factory('serviceUtility', serviceUtility);
 
-    serviceUtility.$inject = ['$http', '$log', '$mdToast'];
+    serviceUtility.$inject = ['$http', '$log', '$mdToast', '$mdDialog'];
 
-    function serviceUtility($http, $log, $mdToast) {
-        
+    function serviceUtility($http, $log, $mdToast, $mdDialog) {
         var service = {
             processSuccessResponse: processSuccessResponse,
             processErrorResponse: processErrorResponse,
             showToast: showToast,
-            showNotificationMessages: showNotificationMessages
+            showNotificationMessages: showNotificationMessages,
+            showWait: showWait,
+            hideWait: hideWait
         };
-        
+
         return service;
-        
+
 
         function processSuccessResponse(response) {
             $log.info(response.data.messages);
@@ -26,7 +27,7 @@
         }
 
         function showNotificationMessages(messages) {
-            angular.forEach(messages, function(message) {
+            angular.forEach(messages, function (message) {
                 showToast(message);
             })
         }
@@ -50,7 +51,27 @@
                     .position('top right')
                     .hideDelay(5000)
             );
+        }
 
+        function showWait() {
+            $mdDialog.show({
+                // controller: 'waitCtrl',
+                template:
+                '<md-dialog style="background-color:transparent;box-shadow:none">' +
+                    '<div layout="row" layout-sm="column" layout-align="center center" aria-label="wait" style="height: 100px;">' +
+                        '<md-progress-circular md-mode="indeterminate"></md-progress-circular>' +
+                    '</div>' +
+                '</md-dialog>',
+                parent: angular.element(document.body),
+                clickOutsideToClose: false,
+                fullscreen: false
+            }).then(function (answer) {
+
+            });
+        }
+
+        function hideWait(){
+            $mdDialog.cancel();
         }
     }
 })();

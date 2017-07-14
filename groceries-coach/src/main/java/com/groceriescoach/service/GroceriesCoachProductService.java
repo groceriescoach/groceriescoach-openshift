@@ -2,7 +2,6 @@ package com.groceriescoach.service;
 
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
-import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSearchResults;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -32,18 +31,32 @@ public class GroceriesCoachProductService implements ProductSearchService {
     }
 
     @Override
-    public GroceriesCoachSearchResults search(String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired) throws IOException {
+    public GroceriesCoachSearchResults search(
+            String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
+            throws IOException {
+
+        SearchRequest searchRequest = SearchRequest.createSearchRequest(keywords, stores, sortType, allSearchKeywordsRequired);
+        return search(searchRequest);
+    }
+
+    @Override
+    public GroceriesCoachSearchResults search(String searchString) {
+        SearchRequest searchRequest = SearchRequest.createSearchRequest(searchString);
+        return search(searchRequest);
+    }
+
+
+    private GroceriesCoachSearchResults search(SearchRequest searchRequest) {
+
+        logger.info("Received search request: {}", searchRequest);
 
         List<Store> searchStores;
 
-        if (CollectionUtils.isEmpty(stores)) {
+        if (CollectionUtils.isEmpty(searchRequest.getStores())) {
             searchStores = Arrays.asList(Store.values()) ;
         } else {
-            searchStores = stores;
+            searchStores = searchRequest.getStores();
         }
-
-        String trimmedKeywords = StringUtils.trimToEmpty(keywords).replaceAll(" +", " ").replace(" ", "+");
-
 
         List<GroceriesCoachProduct> allProducts = new ArrayList<>();
         Map<Store, Future<List<GroceriesCoachProduct>>> futuresMap = new HashMap<>();
@@ -57,7 +70,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
         for (StoreSearchService storeSearchService : storeSearchServices) {
             if (searchStores.contains(storeSearchService.getStore())) {
-                Future<List<GroceriesCoachProduct>> listFuture = storeSearchService.search(trimmedKeywords, sortType);
+                Future<List<GroceriesCoachProduct>> listFuture = storeSearchService.search(searchRequest.getKeywords(), searchRequest.getSortType());
                 futuresMap.put(storeSearchService.getStore(), listFuture);
             }
         }
@@ -85,12 +98,11 @@ public class GroceriesCoachProductService implements ProductSearchService {
             }
         }
 
-        if (allSearchKeywordsRequired) {
-            allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, keywords);
+        if (searchRequest.isAllKeywordsRequired()) {
+            allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, searchRequest.getKeywords());
         }
 
-        GroceriesCoachSearchResults searchResult = new GroceriesCoachSearchResults(allProducts, sortType);
-        return searchResult;
+        return new GroceriesCoachSearchResults(allProducts, searchRequest.getSortType());
     }
 
 }

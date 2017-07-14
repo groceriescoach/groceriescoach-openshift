@@ -11,4 +11,6 @@ public interface ProductSearchService {
 
     GroceriesCoachSearchResults search(String keyword, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
             throws IOException;
+
+    GroceriesCoachSearchResults search(String searchString);
 }

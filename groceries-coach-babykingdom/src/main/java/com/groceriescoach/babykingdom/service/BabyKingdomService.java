@@ -3,6 +3,7 @@ package com.groceriescoach.babykingdom.service;
 
 import com.groceriescoach.babykingdom.domain.BabyKingdomProduct;
 import com.groceriescoach.babykingdom.domain.BabyKingdomSearchResult;
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.AbstractScrapingStoreSearchService;
@@ -53,4 +54,8 @@ public class BabyKingdomService extends AbstractScrapingStoreSearchService<BabyK
         return BabyKingdom;
     }
 
+    @Override
+    protected String reformatKeywordsForStore(String keywords) {
+        return StringUtils.trimToEmpty(keywords);
+    }
 }

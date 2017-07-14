@@ -1,6 +1,19 @@
 <div ng-controller="ProductSearchController as productSearchVm" layout="row" layout-sm="column" layout-xs="column">
     <div flex-gt-sm="40">
         <form id="productSearchForm" name="productSearchForm" ng-submit="productSearchVm.searchForProducts()" flex>
+
+            <md-content layout-padding>
+                <div layout layout-wrap>
+                    <md-input-container class="md-block" flex>
+                        <label for="searchPhrase">Search phrase:</label>
+                        <input id="searchPhrase" name="searchPhrase" type="text" ng-model="productSearchVm.searchCriteria.searchPhrase" placeholder="Search Woolworths and Coles for Kleenex [sort by unit price] [all keywords are required]"/>
+                    </md-input-container>
+                    <md-button class="md-primary md-cornered" type="submit" ng-click="productSearchVm.searchForProductsUsingSearchPhrase()">
+                        Search
+                    </md-button>
+                </div>
+            </md-content>
+
             <md-content layout-padding>
                 <md-input-container class="md-block">
                     <label for="keywords">Product keywords:</label>

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,20 +38,41 @@ public class ProductSearchController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductSearchController.class);
 
+    @RequestMapping(value = SEARCH_WITH_PHRASE_URL)
+    public ResponseEntity<GroceriesCoachResponse<GroceriesCoachSearchResults>> searchWithPhrase(
+            @RequestParam(value = SEARCH_PHRASE, required = true) String searchPhrase,
+            @RequestHeader Map<String, String> headers)
+            throws IOException {
+
+        logger.info("Received search request: search phrase = [{}], headers: [{}].", searchPhrase, headers);
+
+        final GroceriesCoachSearchResults searchResults = productSearchService.search(searchPhrase);
+        logger.info("Returning {} results.", searchResults.size());
+
+        final GroceriesCoachResponse<GroceriesCoachSearchResults> response = new GroceriesCoachResponse<>(searchResults);
+
+        if (searchResults.isEmpty()) {
+            response.addMessage("No results were found, please try a different search.");
+        } else {
+            response.addMessage("Found " + searchResults.size() + " results.");
+        }
+
+        return ResponseEntity.ok(response);
+    }
 
     @RequestMapping(value = SEARCH_URL)
     public ResponseEntity<GroceriesCoachResponse<GroceriesCoachSearchResults>> search(
             @RequestParam(value = KEYWORDS) String keywords,
             @RequestParam(value = STORES, required = false) String[] storeKeys,
             @RequestParam(value = SORT_BY, required = false) String sortBy,
-            @RequestParam(value = ALL_SEARCH_KEYWORDS_REQUIRED, required = false) boolean allSearchKeywordsRequired)
+            @RequestParam(value = ALL_SEARCH_KEYWORDS_REQUIRED, required = false) boolean allSearchKeywordsRequired,
+            @RequestHeader Map<String, String> headers)
             throws IOException {
 
-        logger.info("Received search request: keywords = [{}], stores = [{}], sortBy = [{}], allSearchKeywordsRequired = [{}].",
-                keywords, storeKeys, sortBy, allSearchKeywordsRequired);
+        logger.info("Received search request: keywords = [{}], stores = [{}], sortBy = [{}], allSearchKeywordsRequired = [{}], headers: [{}].",
+                keywords, storeKeys, sortBy, allSearchKeywordsRequired, headers);
 
         List<String> messages = new ArrayList<>();
-
 
         if (storeKeys == null || ArrayUtils.isEmpty(storeKeys)) {
             messages.add("Please select at least one shop to search.");
