@@ -11,10 +11,12 @@ public class GroceriesCoachSearchResults {
 
     private List<GroceriesCoachProduct> productsWithUnitPrices = new ArrayList<>();
     private List<GroceriesCoachProduct> productsWithoutUnitPrices = new ArrayList<>();
+    private SearchCriteria searchCriteria;
 
-    public GroceriesCoachSearchResults(Collection<GroceriesCoachProduct> products, GroceriesCoachSortType sortType) {
+    public GroceriesCoachSearchResults(Collection<GroceriesCoachProduct> products, GroceriesCoachSortType sortType, SearchCriteria searchCriteria) {
         addProducts(products, sortType);
         sortProducts();
+        this.searchCriteria = searchCriteria;
     }
 
     private void sortProducts() {
@@ -50,5 +52,9 @@ public class GroceriesCoachSearchResults {
 
     public List<GroceriesCoachProduct> getProductsWithoutUnitPrices() {
         return productsWithoutUnitPrices;
+    }
+
+    public SearchCriteria getSearchCriteria() {
+        return searchCriteria;
     }
 }

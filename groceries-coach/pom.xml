@@ -61,6 +61,10 @@
         </dependency>
         <dependency>
             <groupId>com.groceriescoach</groupId>
+            <artifactId>groceries-coach-babysavings</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-babyvillage</artifactId>
         </dependency>
         <dependency>

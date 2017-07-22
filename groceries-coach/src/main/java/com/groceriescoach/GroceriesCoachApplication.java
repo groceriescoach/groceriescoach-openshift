@@ -6,6 +6,7 @@ import com.groceriescoach.babyandtoddlertown.BabyAndToddlerTownConfig;
 import com.groceriescoach.babybounce.BabyBounceConfig;
 import com.groceriescoach.babybunting.BabyBuntingConfig;
 import com.groceriescoach.babykingdom.BabyKingdomConfig;
+import com.groceriescoach.babysavings.config.BabySavingsConfig;
 import com.groceriescoach.babyvillage.BabyVillageConfig;
 import com.groceriescoach.bigw.BigWConfig;
 import com.groceriescoach.chemistwarehouse.ChemistWarehouseConfig;
@@ -31,11 +32,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @Import({
         GroceriesCoachConfig.class, AmcalConfig.class, BabyAndToddlerTownConfig.class,
-        BabyBounceConfig.class, BabyBuntingConfig.class, BabyKingdomConfig.class, BabyVillageConfig.class,
-        BigWConfig.class, ChemistWarehouseConfig.class, CincottaChemistConfig.class, ColesConfig.class,
-        MrVitaminsConfig.class, MyChemistConfig.class, NursingAngelConfig.class, Pharmacy4LessConfig.class,
-        PricelineConfig.class, RoyYoungConfig.class, TargetConfig.class, ThePharmacyConfig.class, TerryWhiteConfig.class,
-        WoolworthsConfig.class
+        BabyBounceConfig.class, BabyBuntingConfig.class, BabyKingdomConfig.class, BabySavingsConfig.class,
+        BabyVillageConfig.class, BigWConfig.class, ChemistWarehouseConfig.class, CincottaChemistConfig.class,
+        ColesConfig.class, MrVitaminsConfig.class, MyChemistConfig.class, NursingAngelConfig.class,
+        Pharmacy4LessConfig.class, PricelineConfig.class, RoyYoungConfig.class, TargetConfig.class,
+        ThePharmacyConfig.class, TerryWhiteConfig.class, WoolworthsConfig.class
 })
 @SpringBootApplication
 @EnableAsync

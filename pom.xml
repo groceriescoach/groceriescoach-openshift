@@ -26,6 +26,7 @@
         <module>groceries-coach-babybounce</module>
         <module>groceries-coach-babybunting</module>
         <module>groceries-coach-babykingdom</module>
+        <module>groceries-coach-babysavings</module>
         <module>groceries-coach-babyvillage</module>
         <module>groceries-coach-bigw</module>
         <module>groceries-coach-chemistwarehouse</module>
@@ -102,6 +103,11 @@
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-babykingdom</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-babysavings</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -3,6 +3,7 @@ package com.groceriescoach.babyvillage.domain;
 import java.io.Serializable;
 
 public class BabyVillageRequestParameters implements Serializable {
+    private static final long serialVersionUID = -22234601566794273L;
 
     //  {"page":1,"pageSize":30,"sort":"BrandAsc","filters":[],"keyword":"car"}
 

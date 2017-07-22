@@ -2,6 +2,7 @@ package com.groceriescoach.babybounce.service;
 
 import com.groceriescoach.babybounce.domain.BabyBounceProduct;
 import com.groceriescoach.babybounce.domain.BabyBounceSearchResult;
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.AbstractScrapingStoreSearchService;
@@ -50,5 +51,11 @@ public class BabyBounceService extends AbstractScrapingStoreSearchService<BabyBo
     public Store getStore() {
         return BabyBounce;
     }
+
+    @Override
+    protected String reformatKeywordsForStore(String keywords) {
+        return StringUtils.trimToEmpty(keywords);
+    }
+
 
 }

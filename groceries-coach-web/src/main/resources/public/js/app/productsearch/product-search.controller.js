@@ -71,12 +71,14 @@
         function searchForProducts() {
             productSearchService.searchForProducts(vm.searchCriteria).then(function (result) {
                 vm.searchResults = result;
+                vm.searchCriteria = result.searchCriteria;
             });
         }
 
         function searchForProductsUsingSearchPhrase() {
             productSearchService.searchForProductsWithPhrase(vm.searchCriteria).then(function (result) {
                 vm.searchResults = result;
+                vm.searchCriteria = result.searchCriteria;
             });
         }
 

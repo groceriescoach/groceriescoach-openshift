@@ -25,6 +25,12 @@ public class ProductDetails implements Serializable {
     @JsonProperty("Stockcode")
     private String stockCode;
 
+    @JsonProperty("Barcode")
+    private String barcode;
+
+    @JsonProperty("GtinFormat")
+    private String gtinFormat;
+
     @JsonProperty("CupPrice")
     private Double cupPrice;
 
@@ -539,6 +545,14 @@ public class ProductDetails implements Serializable {
 
     public void setHideWasSavedPrice(Boolean hideWasSavedPrice) {
         this.hideWasSavedPrice = hideWasSavedPrice;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public static List<GroceriesCoachProduct> toProducts(ProductDetails productDetailsArray[], String keywords) {

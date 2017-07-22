@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import static com.groceriescoach.core.domain.GroceriesCoachSortType.Price;
 import static com.groceriescoach.core.domain.GroceriesCoachSortType.UnitPrice;
-import static com.groceriescoach.core.domain.Store.Coles;
-import static com.groceriescoach.core.domain.Store.Woolworths;
+import static com.groceriescoach.core.domain.Store.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -27,8 +26,16 @@ public class SearchRequestTest {
     }
 
     @Test
-    public void allKeywordsAreNotRequired() {
+    public void allKeywordsAreRequiredByDefault() {
         String searchString = "Search Woolworths and Coles for Babylove nappies";
+        SearchRequest searchRequest = SearchRequest.createSearchRequest(searchString);
+        assertThat(searchRequest.isAllKeywordsRequired(), is(true));
+    }
+
+
+    @Test
+    public void allKeywordsAreNotRequired() {
+        String searchString = "Search Woolworths and Coles for Babylove nappies all keywords are optional";
         SearchRequest searchRequest = SearchRequest.createSearchRequest(searchString);
         assertThat(searchRequest.isAllKeywordsRequired(), is(false));
     }
@@ -81,4 +88,10 @@ public class SearchRequestTest {
         assertThat(searchRequest.getStores(), containsInAnyOrder(equalTo(Woolworths), equalTo(Coles)));
     }
 
+    @Test
+    public void searchSupermarkets() {
+        String searchString = "Search all supermarkets for Babylove nappies order by unit price";
+        SearchRequest searchRequest = SearchRequest.createSearchRequest(searchString);
+        assertThat(searchRequest.getStores(), containsInAnyOrder(equalTo(BigW), equalTo(Coles), equalTo(Target), equalTo(Woolworths)));
+    }
 }

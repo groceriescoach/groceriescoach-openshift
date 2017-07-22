@@ -3,42 +3,42 @@ package com.groceriescoach.core.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static com.groceriescoach.core.domain.StoreType.*;
 
 public enum Store {
 
-    Amcal("A", "Amcal", Pharmacy),
+    Amcal("A", "Amcal", Pharmacies),
     //    BabiesRUs("BRU", "Babies R Us"),
-    BabyAndToddlerTown("BTT", "Baby & Toddler Town", BabyShop),
-    BabyBounce("BB1", "Baby Bounce", BabyShop),
-    BabyBunting("BB2", "Baby Bunting", BabyShop),
-    BabyKingdom("BK", "Baby Kingdom", BabyShop),
-    BabyVillage("BV", "Baby Village", BabyShop),
-    BigW("BW", "Big W", Supermarket),
-    ChemistWarehouse("CW", "Chemist Warehouse", Pharmacy),
-    CincottaChemist("CC", "Cincotta Chemist", Pharmacy),
-    Coles("C", "Coles", Supermarket),
-    MrVitamins("M", "Mr. Vitamins", Pharmacy),
-    MyChemist("MC", "My Chemist", Pharmacy),
-    NursingAngel("N", "Nursing Angel", BabyShop),
-    Pharmacy4Less("P4L", "Pharmacy 4 Less", Pharmacy),
-    PharmacyDirect("PD", "Pharmacy Direct", Pharmacy),
-    Priceline("P", "Priceline", Pharmacy),
-    RoyYoung("R", "Roy Young", Pharmacy),
-    Target("T", "Target", Supermarket),
-    TerryWhite("TW", "Terry White", Pharmacy),
-    ThePharmacy("TP", "The Pharmacy", Pharmacy),
-    Woolworths("W", "Woolworths", Supermarket);
+    BabyAndToddlerTown("BTT", "Baby & Toddler Town", BabyShops),
+    BabyBounce("BB1", "Baby Bounce", BabyShops),
+    BabyBunting("BB2", "Baby Bunting", BabyShops),
+    BabyKingdom("BK", "Baby Kingdom", BabyShops),
+    BabySavings("BS", "Baby Savings", BabyShops),
+    BabyVillage("BV", "Baby Village", BabyShops),
+    BigW("BW", "Big W", Supermarkets),
+    ChemistWarehouse("CW", "Chemist Warehouse", Pharmacies),
+    CincottaChemist("CC", "Cincotta Chemist", Pharmacies),
+    Coles("C", "Coles", Supermarkets),
+    MrVitamins("M", "Mr. Vitamins", Pharmacies),
+    MyChemist("MC", "My Chemist", Pharmacies),
+    NursingAngel("N", "Nursing Angel", BabyShops),
+    Pharmacy4Less("P4L", "Pharmacy 4 Less", Pharmacies),
+    PharmacyDirect("PD", "Pharmacy Direct", Pharmacies),
+    Priceline("P", "Priceline", Pharmacies),
+    RoyYoung("R", "Roy Young", Pharmacies),
+    Target("T", "Target", Supermarkets),
+    TerryWhite("TW", "Terry White", Pharmacies),
+    ThePharmacy("TP", "The Pharmacy", Pharmacies),
+    Woolworths("W", "Woolworths", Supermarkets);
 
 
     private final String storeKey;
     private final String storeName;
     private final StoreType storeType;
+
+    private static Map<StoreType, List<Store>> storeTypeToStoreMap = new HashMap<>();
 
     Store(String storeKey, String storeName, StoreType storeType) {
         this.storeKey = storeKey;
@@ -89,7 +89,7 @@ public enum Store {
         return stores;
     }
 
-    public boolean stringContainStore(String stores) {
+    public boolean stringContainsStore(String stores) {
         return (StringUtils.containsIgnoreCase(stores, storeName));
     }
 
@@ -100,25 +100,34 @@ public enum Store {
     public static List<Store> getStoresFrom(String storesStr) {
         List<Store> storeList = new ArrayList<>();
         for (Store store : Store.values()) {
-            if (store.stringContainStore(storesStr)) {
+            if (store.stringContainsStore(storesStr) && !storeList.contains(store)) {
                 storeList.add(store);
                 storesStr = store.removeStoreFromString(storesStr);
             }
         }
         return storeList;
     }
-}
 
-enum StoreType {
-    BabyShop("Baby Shops"), Pharmacy("Pharmacies"), Supermarket("Supermarkets");
+    public static List<Store> getStoresFor(StoreType storeType) {
+        if (!storeTypeToStoreMap.containsKey(storeType)) {
+            List<Store> storeList = new ArrayList<>();
+            for (Store store : Store.values()) {
+                if (store.getStoreType().equals(storeType)) {
+                    storeList.add(store);
+                }
+            }
+            storeTypeToStoreMap.put(storeType, storeList);
+        }
 
-    private final String name;
-
-    StoreType(String name) {
-        this.name = name;
+        return storeTypeToStoreMap.get(storeType);
     }
 
-    public String getName() {
-        return name;
+    public static String[] getStoreKeysFor(List<Store> stores) {
+        List<String> storeKeys = new ArrayList<>();
+        for (Store store: stores) {
+            storeKeys.add(store.getStoreKey());
+        }
+        return storeKeys.toArray(new String[]{});
     }
 }
+

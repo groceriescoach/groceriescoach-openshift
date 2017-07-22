@@ -3,6 +3,7 @@ package com.groceriescoach.service;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
+import com.groceriescoach.core.domain.StoreType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,9 @@ import static com.groceriescoach.core.domain.GroceriesCoachSortType.UnitPrice;
 public class SearchRequest {
 
     public static final String ALL_KEYWORDS_REQUIRED = "all keywords required";
+    public static final String ALL_KEYWORDS_OPTIONAL = "all keywords optional";
     public static final String ALL_KEYWORDS_ARE_REQUIRED = "all keywords are required";
+    public static final String ALL_KEYWORDS_ARE_OPTIONAL = "all keywords are optional";
     public static final String SORT_BY = "sort by";
     public static final String ORDER_BY = "order by";
 
@@ -27,7 +30,7 @@ public class SearchRequest {
     private List<Store> stores = new ArrayList<>();
     private GroceriesCoachSortType sortType = Price;
     private boolean allKeywordsRequired;
-
+    private String searchPhrase;
 
     private static final Logger logger = LoggerFactory.getLogger(SearchRequest.class);
 
@@ -58,17 +61,22 @@ public class SearchRequest {
         return allKeywordsRequired;
     }
 
-    public static SearchRequest createSearchRequest(String searchString) {
+    public String getSearchPhrase() {
+        return searchPhrase;
+    }
+
+    public static SearchRequest createSearchRequest(String searchPhrase) {
 
         SearchRequest searchRequest = new SearchRequest();
-        searchString = StringUtils.trimToEmpty(searchString).toLowerCase();
+        searchRequest.searchPhrase = searchPhrase;
+        searchPhrase = StringUtils.trimToEmpty(searchPhrase).toLowerCase();
 
-        searchString = updateAllKeywordsRequiredFlag(searchRequest, searchString);
-        searchString = updateSortBy(searchRequest, searchString);
+        searchPhrase = updateAllKeywordsRequiredFlag(searchRequest, searchPhrase);
+        searchPhrase = updateSortBy(searchRequest, searchPhrase);
 
-        searchString = updateSearchKeywords(searchRequest, searchString);
+        searchPhrase = updateSearchKeywords(searchRequest, searchPhrase);
 
-        updateStores(searchRequest, searchString);
+        updateStores(searchRequest, searchPhrase);
 
         return searchRequest;
     }
@@ -87,7 +95,8 @@ public class SearchRequest {
     }
 
     private static void updateStores(SearchRequest searchRequest, String searchString) {
-        searchRequest.stores = Store.getStoresFrom(searchString);
+        searchRequest.stores = StoreType.getStoresFrom(searchString);
+        searchRequest.stores.addAll(Store.getStoresFrom(searchString));
     }
 
     private static String updateSortBy(SearchRequest searchRequest, String searchString) {
@@ -109,6 +118,14 @@ public class SearchRequest {
             searchRequest.allKeywordsRequired = true;
         } else if (searchString.contains(ALL_KEYWORDS_ARE_REQUIRED)) {
             searchString = StringUtils.trimToEmpty(searchString.replaceAll(ALL_KEYWORDS_ARE_REQUIRED, ""));
+            searchRequest.allKeywordsRequired = true;
+        } else if (searchString.contains(ALL_KEYWORDS_ARE_OPTIONAL)) {
+            searchString = StringUtils.trimToEmpty(searchString.replaceAll(ALL_KEYWORDS_ARE_OPTIONAL, ""));
+            searchRequest.allKeywordsRequired = false;
+        } else if (searchString.contains(ALL_KEYWORDS_OPTIONAL)) {
+            searchString = StringUtils.trimToEmpty(searchString.replaceAll(ALL_KEYWORDS_OPTIONAL, ""));
+            searchRequest.allKeywordsRequired = false;
+        } else {
             searchRequest.allKeywordsRequired = true;
         }
         return searchString;

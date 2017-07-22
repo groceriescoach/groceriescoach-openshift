@@ -2,10 +2,7 @@ package com.groceriescoach.service;
 
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
-import com.groceriescoach.core.domain.GroceriesCoachProduct;
-import com.groceriescoach.core.domain.GroceriesCoachSearchResults;
-import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.Store;
+import com.groceriescoach.core.domain.*;
 import com.groceriescoach.core.service.StoreSearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +37,22 @@ public class GroceriesCoachProductService implements ProductSearchService {
     }
 
     @Override
-    public GroceriesCoachSearchResults search(String searchString) {
-        SearchRequest searchRequest = SearchRequest.createSearchRequest(searchString);
+    public GroceriesCoachSearchResults search(
+            String keywords, String[] storeKeys, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
+            throws IOException {
+        List<Store> stores = new ArrayList<>();
+        if (storeKeys != null && storeKeys.length > 0) {
+            stores.addAll(Store.fromStoreKeys(storeKeys));
+        }
+
+        SearchRequest searchRequest =
+                SearchRequest.createSearchRequest(keywords, stores, sortType, allSearchKeywordsRequired);
+        return search(searchRequest);
+    }
+
+    @Override
+    public GroceriesCoachSearchResults search(String searchPhrase) {
+        SearchRequest searchRequest = SearchRequest.createSearchRequest(searchPhrase);
         return search(searchRequest);
     }
 
@@ -66,7 +77,6 @@ public class GroceriesCoachProductService implements ProductSearchService {
                 .filter(storeSearchService -> searchStores.contains(storeSearchService.getStore()))
                 .forEach(storeSearchService -> futuresMap.put(storeSearchService.getStore(), storeSearchService.search(keywords, sortType)));
 */
-
 
         for (StoreSearchService storeSearchService : storeSearchServices) {
             if (searchStores.contains(storeSearchService.getStore())) {
@@ -102,7 +112,13 @@ public class GroceriesCoachProductService implements ProductSearchService {
             allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, searchRequest.getKeywords());
         }
 
-        return new GroceriesCoachSearchResults(allProducts, searchRequest.getSortType());
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setAllKeywordsRequired(searchRequest.isAllKeywordsRequired());
+        searchCriteria.setKeywords(searchRequest.getKeywords());
+        searchCriteria.setSortBy(searchRequest.getSortType());
+        searchCriteria.setStores(Store.getStoreKeysFor(searchRequest.getStores()));
+        searchCriteria.setSearchPhrase(searchRequest.getSearchPhrase());
+        return new GroceriesCoachSearchResults(allProducts, searchRequest.getSortType(), searchCriteria);
     }
 
 }

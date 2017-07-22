@@ -1,55 +1,54 @@
-package com.groceriescoach.mychemist.service;
+package com.groceriescoach.babysavings.service;
 
+import com.groceriescoach.babysavings.domain.BabySavingsProduct;
+import com.groceriescoach.babysavings.domain.BabySavingsSearchResult;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.AbstractScrapingStoreSearchService;
-import com.groceriescoach.mychemist.domain.MyChemistProduct;
-import com.groceriescoach.mychemist.domain.MyChemistSearchResult;
 import org.jsoup.nodes.Document;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.groceriescoach.core.domain.Store.MyChemist;
+import static com.groceriescoach.core.domain.Store.BabySavings;
 
-@Profile("online")
 @Service
-public class MyChemistService extends AbstractScrapingStoreSearchService<MyChemistProduct> {
-
-    @Override
-    public Store getStore() {
-        return MyChemist ;
-    }
+public class BabySavingsService extends AbstractScrapingStoreSearchService<BabySavingsProduct> {
 
     @Override
     protected String getStoreSearchUrl(String keywords) {
-        return "http://www.mychemist.com.au/searchresult.asp";
+        return "https://www.babysavings.com.au/catalogsearch/result/index";
     }
 
     @Override
     protected Map<String, String> getRequestParameters() {
         Map<String, String> requestParameters = new HashMap<>();
-        requestParameters.put("perPage", "120");
+        requestParameters.put("limit", "30");
         return requestParameters;
     }
 
     @Override
     protected String getSearchKeywordParameter() {
-        return "terms";
+        return "q";
     }
 
     @Override
-    protected List<MyChemistProduct> extractProducts(Document doc, GroceriesCoachSortType sortType) {
-        MyChemistSearchResult searchResult = new MyChemistSearchResult(doc, sortType);
-        return searchResult.getProducts();
+    protected List<BabySavingsProduct> extractProducts(Document doc, GroceriesCoachSortType sortType) {
+        BabySavingsSearchResult babySavingsSearchResult = new BabySavingsSearchResult(doc, sortType);
+        return babySavingsSearchResult.getProducts();
+    }
+
+    @Override
+    public Store getStore() {
+        return BabySavings;
     }
 
     @Override
     protected String reformatKeywordsForStore(String keywords) {
         return StringUtils.trimToEmpty(keywords);
     }
+
 }

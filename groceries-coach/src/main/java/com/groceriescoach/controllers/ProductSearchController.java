@@ -89,12 +89,8 @@ public class ProductSearchController {
         }
 
         GroceriesCoachSortType sortType = GroceriesCoachSortType.fromKey(sortBy);
-        List<Store> stores = new ArrayList<>();
-        if (storeKeys != null && storeKeys.length > 0) {
-            stores.addAll(Store.fromStoreKeys(storeKeys));
-        }
 
-        final GroceriesCoachSearchResults searchResult = productSearchService.search(keywords, stores, sortType, allSearchKeywordsRequired);
+        final GroceriesCoachSearchResults searchResult = productSearchService.search(keywords, storeKeys, sortType, allSearchKeywordsRequired);
 
         logger.info("Returning {} results.", searchResult.size());
 
