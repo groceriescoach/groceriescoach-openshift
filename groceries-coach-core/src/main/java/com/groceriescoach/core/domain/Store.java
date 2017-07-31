@@ -129,5 +129,9 @@ public enum Store {
         }
         return storeKeys.toArray(new String[]{});
     }
+
+    public static Collection<Store> getAllStores() {
+        return Arrays.asList(Store.values());
+    }
 }
 

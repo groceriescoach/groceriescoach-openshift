@@ -6,7 +6,7 @@ public class MathUtils {
 
 
     public static String formatDouble(Double d) {
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("0.00");
         return df.format(d);
     }
 

@@ -1,6 +1,7 @@
 package com.groceriescoach.mrvitamins.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +67,7 @@ public class MrVitaminsSearchResult implements Serializable {
         this.items = items;
     }
 
-    public List<MrVitaminsProduct> toProducts() {
-        return Item.toProducts(items);
+    public List<MrVitaminsProduct> toProducts(GroceriesCoachSortType sortType) {
+        return Item.toProducts(items, sortType);
     }
 }

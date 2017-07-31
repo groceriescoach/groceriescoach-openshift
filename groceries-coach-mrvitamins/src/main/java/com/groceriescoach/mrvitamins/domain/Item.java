@@ -2,9 +2,12 @@ package com.groceriescoach.mrvitamins.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.groceriescoach.mrvitamins.domain.MrVitaminsProduct.MrVitaminsProductBuilder.aMrVitaminsProduct;
 
 public class Item {
 
@@ -108,22 +111,23 @@ public class Item {
         this.image = image;
     }
 
-    private MrVitaminsProduct toProduct() {
-        MrVitaminsProduct mrVitaminsProduct = new MrVitaminsProduct();
-        mrVitaminsProduct.setImageUrl(image);
-        mrVitaminsProduct.setName(title);
-        mrVitaminsProduct.setDescription(description);
-        mrVitaminsProduct.setPrice(price);
-        mrVitaminsProduct.setWasPrice(listPrice);
-        mrVitaminsProduct.setUrl(link);
-        return mrVitaminsProduct;
+    private MrVitaminsProduct toProduct(GroceriesCoachSortType sortType) {
+        MrVitaminsProduct.MrVitaminsProductBuilder mrVitaminsProduct = aMrVitaminsProduct();
+        return mrVitaminsProduct
+                .withName(title)
+                .withDescription(description)
+                .withUrl(link)
+                .withImageUrl(image)
+                .withPrice(price)
+                .withWasPrice(listPrice)
+                .build(sortType);
     }
 
-    static List<MrVitaminsProduct> toProducts(List<Item> items) {
+    static List<MrVitaminsProduct> toProducts(List<Item> items, GroceriesCoachSortType sortType) {
         List<MrVitaminsProduct> products = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(items)) {
             for (Item item : items) {
-                products.add(item.toProduct());
+                products.add(item.toProduct(sortType));
             }
         }
         return products;

@@ -2,6 +2,7 @@ package com.groceriescoach.pharmacy4less.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,20 +65,20 @@ public class Hit implements Serializable {
         this.price = price;
     }
 
-    public static Collection<Pharmacy4LessProduct> toGroceriesCoachProducts(List<Hit> hits) {
+    public static Collection<Pharmacy4LessProduct> toGroceriesCoachProducts(List<Hit> hits, GroceriesCoachSortType sortType) {
         List<Pharmacy4LessProduct> products = new ArrayList<>();
         for (Hit hit : hits) {
-            products.add(hit.toGroceriesCoachProduct());
+            products.add(hit.toGroceriesCoachProduct(sortType));
         }
         return products;
     }
 
-    private Pharmacy4LessProduct toGroceriesCoachProduct() {
-        Pharmacy4LessProduct pharmacy4LessProduct = new Pharmacy4LessProduct();
-        pharmacy4LessProduct.setImageUrl(imageUrl);
-        pharmacy4LessProduct.setName(name);
-        pharmacy4LessProduct.setUrl(url);
-        pharmacy4LessProduct.setPrice(price.getAud().getDefaultCost());
-        return pharmacy4LessProduct;
+    private Pharmacy4LessProduct toGroceriesCoachProduct(GroceriesCoachSortType sortType) {
+        return Pharmacy4LessProduct.Pharmacy4LessProductBuilder.aPharmacy4LessProduct()
+                .withName(name)
+                .withImageUrl(imageUrl)
+                .withPrice(price.getAud().getDefaultCost())
+                .withUrl(url)
+                .build(sortType);
     }
 }

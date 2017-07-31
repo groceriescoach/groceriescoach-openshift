@@ -40,7 +40,7 @@ public class MyChemistProduct extends GroceriesCoachJsoupProduct {
 
     @Override
     protected String extractNameFromProductElement(Element productElement) {
-        return productElement.select(".productName_row").get(0).text();
+        return productElement.select(".productName_row a").get(0).attr("title");
     }
 
     @Override

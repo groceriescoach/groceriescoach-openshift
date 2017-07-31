@@ -1,6 +1,9 @@
 package com.groceriescoach.core.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.pack.MultiPack;
+import com.groceriescoach.core.domain.pack.Pack;
+import com.groceriescoach.core.domain.pack.PackageCreator;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -36,7 +39,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
     public abstract Store getStore();
 
     public static List<GroceriesCoachProduct> eliminateProductsWithoutAllSearchKeywords(List<GroceriesCoachProduct> allProducts, String keywords) {
-        List<String> searchKeywords = Arrays.asList(StringUtils.split(keywords));
+        List<String> searchKeywords = Arrays.asList(StringUtils.split(StringUtils.trimToEmpty(keywords)));
         return allProducts.stream()
                 .filter(product -> product.containsAllSearchKeywords(searchKeywords))
                 .collect(Collectors.toList());
@@ -65,36 +68,71 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
     protected void calculatePackageSize() {
 
-        String nameWorkingCopy = StringUtils.trimToEmpty(name).toLowerCase();
+        if (StringUtils.isBlank(packageSize)) {
+            final Pack pack = PackageCreator.createPackage(name, price);
+            if (pack instanceof MultiPack) {
+                packageSizeInt = pack.getPackSizeInt();
+                packageSize = pack.getPackSize();
 
-        nameWorkingCopy = nameWorkingCopy.replaceAll("pk", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("pcs", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("'s", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("’s", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("mega", " ");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("bulk", " ");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("pack", " pack ");
+                if (packageSizeInt != null && unitPriceHasNotBeenSet()) {
+                    unitPrice = pack.getUnitPrice();
+                    unitPriceStr = pack.getUnitPriceStr();
+                    unitSize = "Each";
+                }
 
-        if (!StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
-            nameWorkingCopy += " pack";
+
+            }
         }
+/*
+            String nameWorkingCopy = StringUtils.trimToEmpty(name).toLowerCase();
 
-        if (StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
+            nameWorkingCopy = nameWorkingCopy.replaceAll("pk", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("pcs", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("wipes", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("sheets", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("refill", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("tub", "pack");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("'s", "pack");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("’s", "pack");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("mega", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("bulk", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("bundle", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("box", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("travel", "");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("pack", " pack ");
+            nameWorkingCopy = nameWorkingCopy.replaceAll("x", "*");
 
-            final String[] tokens = StringUtils.split(nameWorkingCopy);
-            for (int i = 0; i < tokens.length - 1; i++) {
-                if (StringUtils.equalsIgnoreCase("pack", tokens[i + 1])) {
-                    try {
-                        packageSizeInt = Integer.valueOf(tokens[i]);
-                        packageSize = packageSizeInt + " pack";
-                        break;
-                    } catch (Exception ignored) {
+            if (!StringUtils.endsWith(StringUtils.trimToEmpty(nameWorkingCopy), "pack")) {
+                nameWorkingCopy = StringUtils.trimToEmpty(nameWorkingCopy) + " pack";
+            }
 
+            if (StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
+
+                final String[] tokens = StringUtils.split(nameWorkingCopy);
+                for (int i = 0; i < tokens.length - 1; i++) {
+                    if (StringUtils.equalsIgnoreCase("pack", tokens[i + 1])) {
+                        try {
+                            packageSizeInt = Integer.valueOf(tokens[i]);
+                            packageSize = packageSizeInt + " pack";
+                            break;
+                        } catch (Exception e) {
+                            try {
+                                Expression expression = new Expression(tokens[i]);
+                                BigDecimal result = expression.eval();
+
+                                packageSizeInt = result.intValue();
+                                packageSize = packageSizeInt + " Pack";
+                                break;
+                            } catch (Exception ignored) {
+
+                            }
+                        }
                     }
                 }
             }
         }
+*/
     }
 
     protected void calculateUnitPrice() {
@@ -295,5 +333,22 @@ public abstract class GroceriesCoachProduct implements Serializable {
                     .toString();
         }
     }
+
+
+    protected void preProductElementExtraction(GroceriesCoachSortType sortType) {
+
+    }
+
+
+    protected void postProductElementExtraction(GroceriesCoachSortType sortType) {
+
+        if (sortType.isUnitPriceRequired()) {
+            calculatePackageSize();
+//            calculateUnitPrice();
+        }
+        calculateSavings();
+        calculateOldPrice();
+    }
+
 
 }

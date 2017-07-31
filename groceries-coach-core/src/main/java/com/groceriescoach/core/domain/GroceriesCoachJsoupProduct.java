@@ -5,16 +5,14 @@ import org.jsoup.nodes.Element;
 public abstract class GroceriesCoachJsoupProduct extends GroceriesCoachProduct {
 
 
+    private static final long serialVersionUID = 4064378611395172246L;
+
     public GroceriesCoachJsoupProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
-        preProductElementExtraction(productElement, sortType);
+        preProductElementExtraction(sortType);
         extractFromProductElement(productElement, sortType);
-        postProductElementExtraction(productElement, sortType);
+        postProductElementExtraction(sortType);
     }
 
-
-    protected void preProductElementExtraction(Element productElement, GroceriesCoachSortType sortType) {
-
-    }
 
     protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         setBrand(extractBrandFromProductElement(productElement));
@@ -44,14 +42,5 @@ public abstract class GroceriesCoachJsoupProduct extends GroceriesCoachProduct {
 
     protected abstract String extractUrlFromProductElement(Element productElement);
 
-    protected void postProductElementExtraction(Element productElement, GroceriesCoachSortType sortType) {
-
-        calculatePackageSize();
-        if (sortType.isUnitPriceRequired()) {
-            calculateUnitPrice();
-        }
-        calculateSavings();
-        calculateOldPrice();
-    }
 
 }

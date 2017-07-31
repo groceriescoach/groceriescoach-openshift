@@ -21,7 +21,7 @@ public class Pharmacy4LessSearchResult  {
 
 
     public List<Pharmacy4LessProduct> toProducts(GroceriesCoachSortType sortType) {
-        return Result.toGroceriesCoachProducts(results);
+        return Result.toGroceriesCoachProducts(results, sortType);
     }
 
     public List<Result> getResults() {

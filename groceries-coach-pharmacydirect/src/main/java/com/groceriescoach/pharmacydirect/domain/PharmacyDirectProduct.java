@@ -39,7 +39,7 @@ public class PharmacyDirectProduct extends GroceriesCoachJsoupProduct {
 
     @Override
     protected String extractNameFromProductElement(Element productElement) {
-        return productElement.select(".sli_grid_title").get(0).text();
+        return productElement.select(".sli_grid_image a").get(0).attr("title");
     }
 
     @Override

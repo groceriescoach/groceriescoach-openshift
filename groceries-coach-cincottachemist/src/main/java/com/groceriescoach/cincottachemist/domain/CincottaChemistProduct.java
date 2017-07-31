@@ -41,7 +41,7 @@ public class CincottaChemistProduct extends GroceriesCoachJsoupProduct {
 
     @Override
     protected String extractNameFromProductElement(Element productElement) {
-        return productElement.select(".product-name").get(0).text();
+        return productElement.select(".product-name a").get(0).attr("title");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.groceriescoach.nursingangel.service;
 
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.AbstractScrapingStoreSearchService;
@@ -54,4 +55,8 @@ public class NursingAngelService extends AbstractScrapingStoreSearchService<Nurs
         return NursingAngel;
     }
 
+    @Override
+    protected String reformatKeywordsForStore(String keywords) {
+        return StringUtils.trimToEmpty(keywords);
+    }
 }

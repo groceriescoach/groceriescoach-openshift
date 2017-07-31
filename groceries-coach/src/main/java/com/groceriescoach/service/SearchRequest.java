@@ -1,5 +1,6 @@
 package com.groceriescoach.service;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
@@ -97,6 +98,10 @@ public class SearchRequest {
     private static void updateStores(SearchRequest searchRequest, String searchString) {
         searchRequest.stores = StoreType.getStoresFrom(searchString);
         searchRequest.stores.addAll(Store.getStoresFrom(searchString));
+        if (CollectionUtils.isEmpty(searchRequest.stores)) {
+            logger.debug("No stores specified in search phrase, will search all stores.");
+            searchRequest.stores.addAll(Store.getAllStores());
+        }
     }
 
     private static String updateSortBy(SearchRequest searchRequest, String searchString) {

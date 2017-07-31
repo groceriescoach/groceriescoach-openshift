@@ -28,7 +28,6 @@ public enum StoreType {
             }
         }
         return storeList;
-
     }
 
     public boolean stringContainsStoreType(String stores) {

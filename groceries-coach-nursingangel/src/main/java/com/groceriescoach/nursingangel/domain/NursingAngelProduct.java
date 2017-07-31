@@ -12,6 +12,8 @@ import static com.groceriescoach.core.domain.Store.NursingAngel;
 
 public class NursingAngelProduct extends GroceriesCoachJsoupProduct {
 
+    private static final long serialVersionUID = -5620627161169645941L;
+
     NursingAngelProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }
