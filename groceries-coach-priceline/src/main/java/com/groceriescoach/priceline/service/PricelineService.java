@@ -29,7 +29,7 @@ public class PricelineService extends AbstractScrapingStoreSearchService<Priceli
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("limit", "40");
         return requestParams;

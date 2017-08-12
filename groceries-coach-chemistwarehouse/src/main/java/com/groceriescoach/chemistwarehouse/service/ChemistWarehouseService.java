@@ -32,11 +32,12 @@ public class ChemistWarehouseService extends AbstractScrapingStoreSearchService<
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("sort", "rank");
         requestParams.put("searchmode", "anywords");
         requestParams.put("size", "120");
+        requestParams.put("page", "" + page);
         return requestParams;
     }
 

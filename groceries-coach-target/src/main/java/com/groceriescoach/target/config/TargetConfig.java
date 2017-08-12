@@ -1,4 +1,4 @@
-package com.groceriescoach.target;
+package com.groceriescoach.target.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

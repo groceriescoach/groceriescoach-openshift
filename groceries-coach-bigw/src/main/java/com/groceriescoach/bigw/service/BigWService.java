@@ -31,10 +31,11 @@ public class BigWService extends AbstractScrapingStoreSearchService<BigWProduct>
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("sort", "relevance");
         requestParams.put("pageSize", "144");
+        requestParams.put("page", "" + (page-1));
         return requestParams;
     }
 

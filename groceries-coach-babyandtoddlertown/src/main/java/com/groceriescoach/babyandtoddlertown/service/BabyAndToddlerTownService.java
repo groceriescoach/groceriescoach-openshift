@@ -31,7 +31,7 @@ public class BabyAndToddlerTownService extends AbstractScrapingStoreSearchServic
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         return new HashMap<>();
     }
 

@@ -31,9 +31,12 @@ public class TargetService extends AbstractScrapingStoreSearchService<TargetProd
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("Nrpp", "90");
+        if (page > 1) {
+            requestParams.put("page", "" + (page - 1));
+        }
         return requestParams;
     }
 

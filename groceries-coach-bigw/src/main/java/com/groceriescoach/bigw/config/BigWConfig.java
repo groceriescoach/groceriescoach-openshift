@@ -1,4 +1,4 @@
-package com.groceriescoach.bigw;
+package com.groceriescoach.bigw.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

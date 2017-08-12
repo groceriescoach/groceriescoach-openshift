@@ -30,7 +30,7 @@ public class RoyYoungService extends AbstractScrapingStoreSearchService<RoyYoung
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParameters = new HashMap<>();
         requestParameters.put("cnt", "300");
         return requestParameters;

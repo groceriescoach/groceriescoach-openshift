@@ -5,6 +5,7 @@ import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
+import com.groceriescoach.woolworths.domain.WoolworthsRequestParameters;
 import com.groceriescoach.woolworths.domain.WoolworthsSearchResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,34 +38,28 @@ public class WoolworthsService implements StoreSearchService {
 
     @Async
     @Override
-    public Future<List<GroceriesCoachProduct>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<GroceriesCoachProduct>> search(String keywords, GroceriesCoachSortType sortType, int page) {
 
         logger.info("Searching Woolworths for {}.", keywords);
 
 //        String trimmedKeywords = keywords.trim().replaceAll(" +", " ").replace(" ", "+");
 
-        List<GroceriesCoachProduct> products = getProductsForPage(keywords, 2);
+        List<GroceriesCoachProduct> products = getProductsForPage(keywords, page);
 
         logger.info("Found {} Woolworths products for keywords [{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }
 
-    private List<GroceriesCoachProduct> getProductsForPage(String keywords, int pages) {
+    private List<GroceriesCoachProduct> getProductsForPage(String keywords, int page) {
+
         List<GroceriesCoachProduct> products = new ArrayList<>();
-
-        for (int i = 1; i <= pages; i++) {
-            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://www.woolworths.com.au/apis/ui/Search/products")
-                    .queryParam("IsSpecial", "false")
-                    .queryParam("PageNumber", i)
-                    .queryParam("PageSize", "36")
-                    .queryParam("SearchTerm", keywords)
-                    .queryParam("SortType", "Personalised");
-
-            WoolworthsSearchResult searchResult = restTemplate.getForObject(builder.build().toUri(), WoolworthsSearchResult.class);
-            products.addAll(searchResult.toProducts(keywords));
-        }
-
+        WoolworthsSearchResult searchResult =
+                restTemplate.postForObject(
+                        "https://www.woolworths.com.au/apis/ui/Search/products",
+                        WoolworthsRequestParameters.createParameters(keywords, page),
+                        WoolworthsSearchResult.class);
+        products.addAll(searchResult.toProducts(keywords));
         return products;
     }
 

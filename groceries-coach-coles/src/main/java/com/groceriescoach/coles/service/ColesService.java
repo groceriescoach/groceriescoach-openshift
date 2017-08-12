@@ -34,7 +34,7 @@ public class ColesService extends AbstractScrapingStoreSearchService<ColesProduc
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         return getDefaultRequestParams();
     }
 

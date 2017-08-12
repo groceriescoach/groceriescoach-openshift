@@ -37,17 +37,17 @@ public class Pharmacy4LessService implements StoreSearchService<Pharmacy4LessPro
 
     @Async
     @Override
-    public Future<List<Pharmacy4LessProduct>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<Pharmacy4LessProduct>> search(String keywords, GroceriesCoachSortType sortType, int page) {
         logger.debug("Searching Pharmacy 4 Less for {}.", keywords);
 
-        List<Pharmacy4LessProduct> products = getProductsForPage(keywords, 1, sortType);
+        List<Pharmacy4LessProduct> products = getProductsForPage(keywords, page, sortType);
 
         logger.info("Found {} Pharmacy 4 Less products for keywords [{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }
 
-    private List<Pharmacy4LessProduct> getProductsForPage(String keywords, int pages, GroceriesCoachSortType sortType) {
+    private List<Pharmacy4LessProduct> getProductsForPage(String keywords, int page, GroceriesCoachSortType sortType) {
 
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://6g4l8r87sh-dsn.algolia.net/1/indexes/*/queries")

@@ -24,6 +24,7 @@ public class AmcalService extends AbstractScrapingStoreSearchService<AmcalProduc
 
 
     private static final Logger logger = LoggerFactory.getLogger(AmcalService.class);
+    private static final int PAGE_SIZE = 50;
 
     @Override
     public Store getStore() {
@@ -36,13 +37,13 @@ public class AmcalService extends AbstractScrapingStoreSearchService<AmcalProduc
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("storeId", "10301");
         requestParams.put("catalogId", "10502");
         requestParams.put("sType", "SimpleSearch");
-        requestParams.put("beginIndex", "0");
-        requestParams.put("pageSize", "50");
+        requestParams.put("beginIndex", "" + (PAGE_SIZE * (page-1)));
+        requestParams.put("pageSize", "" + PAGE_SIZE );
         return requestParams;
     }
 

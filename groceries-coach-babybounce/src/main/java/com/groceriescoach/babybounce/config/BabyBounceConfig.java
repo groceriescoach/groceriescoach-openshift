@@ -1,4 +1,4 @@
-package com.groceriescoach.babybounce;
+package com.groceriescoach.babybounce.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

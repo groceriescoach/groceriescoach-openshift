@@ -30,7 +30,7 @@ public class BabyBounceService extends AbstractScrapingStoreSearchService<BabyBo
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("limit", "all");
         return requestParams;

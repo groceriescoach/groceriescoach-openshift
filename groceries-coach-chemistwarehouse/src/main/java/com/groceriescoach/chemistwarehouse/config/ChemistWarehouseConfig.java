@@ -1,4 +1,4 @@
-package com.groceriescoach.chemistwarehouse;
+package com.groceriescoach.chemistwarehouse.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

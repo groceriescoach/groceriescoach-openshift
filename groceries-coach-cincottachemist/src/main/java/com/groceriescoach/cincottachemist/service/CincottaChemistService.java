@@ -30,7 +30,7 @@ public class CincottaChemistService extends AbstractScrapingStoreSearchService<C
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         final HashMap<String, String> requestParameters = new HashMap<>();
         requestParameters.put("p", "1");
         return requestParameters;

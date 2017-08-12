@@ -32,7 +32,7 @@ public class NursingAngelService extends AbstractScrapingStoreSearchService<Nurs
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("pgnum", "1");
         requestParams.put("rf", "kw");

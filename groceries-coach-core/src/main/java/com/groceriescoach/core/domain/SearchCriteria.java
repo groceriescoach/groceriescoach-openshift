@@ -7,6 +7,7 @@ public class SearchCriteria {
     private GroceriesCoachSortType sortBy;
     private String[] stores;
     private String searchPhrase;
+    private int page;
 
 
     public boolean isAllKeywordsRequired() {
@@ -47,5 +48,13 @@ public class SearchCriteria {
 
     public void setSearchPhrase(String searchPhrase) {
         this.searchPhrase = searchPhrase;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

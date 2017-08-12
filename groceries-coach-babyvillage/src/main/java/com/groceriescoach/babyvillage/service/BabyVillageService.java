@@ -37,21 +37,21 @@ public class BabyVillageService implements StoreSearchService<BabyVillageProduct
 
     @Async
     @Override
-    public Future<List<BabyVillageProduct>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<BabyVillageProduct>> search(String keywords, GroceriesCoachSortType sortType, int page) {
 
         logger.debug("Searching Baby Village for {}.", keywords);
 
-        List<BabyVillageProduct> products = getProductsForPage(keywords, 1, sortType);
+        List<BabyVillageProduct> products = getProductsForPage(keywords, page, sortType);
 
         logger.info("Found {} Baby Village products for keywords [{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }
 
-    private List<BabyVillageProduct> getProductsForPage(String keywords, int pages, GroceriesCoachSortType sortType) {
+    private List<BabyVillageProduct> getProductsForPage(String keywords, int page, GroceriesCoachSortType sortType) {
         BabyVillageSearchResult searchResult = restTemplate.postForObject(
                 "https://www.babyvillage.com.au/api/product/searchproducts",
-                BabyVillageRequestParameters.createParameters(keywords),
+                BabyVillageRequestParameters.createParameters(keywords, page),
                 BabyVillageSearchResult.class);
         return searchResult.toProducts(sortType);
     }

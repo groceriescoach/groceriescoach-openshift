@@ -35,9 +35,10 @@ public class TerryWhiteService extends AbstractScrapingStoreSearchService<TerryW
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("limit", "48");
+        requestParams.put("p", "" + page);
         return requestParams;
     }
 

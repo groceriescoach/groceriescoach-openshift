@@ -1,4 +1,4 @@
-package com.groceriescoach.babykingdom;
+package com.groceriescoach.babykingdom.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

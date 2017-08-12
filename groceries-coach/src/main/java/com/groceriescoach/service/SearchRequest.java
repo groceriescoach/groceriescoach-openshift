@@ -32,16 +32,18 @@ public class SearchRequest {
     private GroceriesCoachSortType sortType = Price;
     private boolean allKeywordsRequired;
     private String searchPhrase;
+    private int page;
 
     private static final Logger logger = LoggerFactory.getLogger(SearchRequest.class);
 
     public static SearchRequest createSearchRequest(
-            String keywords, Collection<Store> stores, GroceriesCoachSortType sortType, boolean allKeywordsRequired) {
+            String keywords, Collection<Store> stores, GroceriesCoachSortType sortType, boolean allKeywordsRequired, int page) {
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.allKeywordsRequired = allKeywordsRequired;
         searchRequest.keywords = keywords;
         searchRequest.sortType = sortType;
         searchRequest.stores.addAll(stores);
+        searchRequest.page = page;
         return searchRequest;
     }
 
@@ -66,6 +68,10 @@ public class SearchRequest {
         return searchPhrase;
     }
 
+    public int getPage() {
+        return page;
+    }
+
     public static SearchRequest createSearchRequest(String searchPhrase) {
 
         SearchRequest searchRequest = new SearchRequest();
@@ -78,6 +84,8 @@ public class SearchRequest {
         searchPhrase = updateSearchKeywords(searchRequest, searchPhrase);
 
         updateStores(searchRequest, searchPhrase);
+
+        searchRequest.page = 1;
 
         return searchRequest;
     }
@@ -144,6 +152,7 @@ public class SearchRequest {
                 .append("stores", stores)
                 .append("sortType", sortType)
                 .append("allKeywordsRequired", allKeywordsRequired)
+                .append("page", page)
                 .toString();
     }
 }

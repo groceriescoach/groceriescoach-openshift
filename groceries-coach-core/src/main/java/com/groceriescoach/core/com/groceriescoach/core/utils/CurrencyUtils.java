@@ -6,12 +6,11 @@ public class CurrencyUtils {
 
     private static DecimalFormat df = new DecimalFormat("0.00");
 
-    public static String formatCurrencyAmount(Double amount) {
-        if (amount >= 1) {
-            return "$" + df.format(amount);
+    public static String formatCurrencyAmount(Double amountInCents) {
+        if (amountInCents >= 100) {
+            return "$" + df.format(amountInCents/100);
         } else {
-            Double cents = amount * 100;
-            return df.format(cents) + " cents";
+            return df.format(amountInCents) + " cents";
         }
     }
 

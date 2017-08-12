@@ -29,16 +29,16 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
     @Override
     public GroceriesCoachSearchResults search(
-            String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
+            String keywords, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired, int page)
             throws IOException {
 
-        SearchRequest searchRequest = SearchRequest.createSearchRequest(keywords, stores, sortType, allSearchKeywordsRequired);
+        SearchRequest searchRequest = SearchRequest.createSearchRequest(keywords, stores, sortType, allSearchKeywordsRequired, page);
         return search(searchRequest);
     }
 
     @Override
     public GroceriesCoachSearchResults search(
-            String keywords, String[] storeKeys, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
+            String keywords, String[] storeKeys, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired, int page)
             throws IOException {
         List<Store> stores = new ArrayList<>();
         if (storeKeys != null && storeKeys.length > 0) {
@@ -46,7 +46,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
         }
 
         SearchRequest searchRequest =
-                SearchRequest.createSearchRequest(keywords, stores, sortType, allSearchKeywordsRequired);
+                SearchRequest.createSearchRequest(keywords, stores, sortType, allSearchKeywordsRequired, page);
         return search(searchRequest);
     }
 
@@ -80,7 +80,8 @@ public class GroceriesCoachProductService implements ProductSearchService {
 
         for (StoreSearchService storeSearchService : storeSearchServices) {
             if (searchStores.contains(storeSearchService.getStore())) {
-                Future<List<GroceriesCoachProduct>> listFuture = storeSearchService.search(searchRequest.getKeywords(), searchRequest.getSortType());
+                Future<List<GroceriesCoachProduct>> listFuture =
+                        storeSearchService.search(searchRequest.getKeywords(), searchRequest.getSortType(), searchRequest.getPage());
                 futuresMap.put(storeSearchService.getStore(), listFuture);
             }
         }
@@ -118,6 +119,7 @@ public class GroceriesCoachProductService implements ProductSearchService {
         searchCriteria.setSortBy(searchRequest.getSortType());
         searchCriteria.setStores(Store.getStoreKeysFor(searchRequest.getStores()));
         searchCriteria.setSearchPhrase(searchRequest.getSearchPhrase());
+        searchCriteria.setPage(searchRequest.getPage());
         return new GroceriesCoachSearchResults(allProducts, searchRequest.getSortType(), searchCriteria);
     }
 

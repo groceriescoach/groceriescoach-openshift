@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface ProductSearchService {
 
-    GroceriesCoachSearchResults search(String keyword, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
+    GroceriesCoachSearchResults search(String keyword, List<Store> stores, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired, int page)
             throws IOException;
 
-    GroceriesCoachSearchResults search(String keyword, String[] storeKeys, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired)
+    GroceriesCoachSearchResults search(String keyword, String[] storeKeys, GroceriesCoachSortType sortType, boolean allSearchKeywordsRequired, int page)
             throws IOException;
 
     GroceriesCoachSearchResults search(String searchString);

@@ -66,11 +66,12 @@ public class ProductSearchController {
             @RequestParam(value = STORES, required = false) String[] storeKeys,
             @RequestParam(value = SORT_BY, required = false) String sortBy,
             @RequestParam(value = ALL_SEARCH_KEYWORDS_REQUIRED, required = false) boolean allSearchKeywordsRequired,
+            @RequestParam(value = PAGE_NUMBER, required = false, defaultValue = "1") int page,
             @RequestHeader Map<String, String> headers)
             throws IOException {
 
-        logger.info("Received search request: keywords = [{}], stores = [{}], sortBy = [{}], allSearchKeywordsRequired = [{}], headers: [{}].",
-                keywords, storeKeys, sortBy, allSearchKeywordsRequired, headers);
+        logger.info("Received search request: keywords = [{}], stores = [{}], sortBy = [{}], allSearchKeywordsRequired = [{}], page = [{}], headers: [{}].",
+                keywords, storeKeys, sortBy, allSearchKeywordsRequired, page, headers);
 
         List<String> messages = new ArrayList<>();
 
@@ -90,7 +91,7 @@ public class ProductSearchController {
 
         GroceriesCoachSortType sortType = GroceriesCoachSortType.fromKey(sortBy);
 
-        final GroceriesCoachSearchResults searchResult = productSearchService.search(keywords, storeKeys, sortType, allSearchKeywordsRequired);
+        final GroceriesCoachSearchResults searchResult = productSearchService.search(keywords, storeKeys, sortType, allSearchKeywordsRequired, page);
 
         logger.info("Returning {} results.", searchResult.size());
 

@@ -30,9 +30,10 @@ public class BabyBuntingService extends AbstractScrapingStoreSearchService<BabyB
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("limit", "120");
+        requestParams.put("p", "" + page);
         return requestParams;
     }
 

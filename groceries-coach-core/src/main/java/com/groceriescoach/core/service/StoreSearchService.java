@@ -9,7 +9,7 @@ import java.util.concurrent.Future;
 
 public interface StoreSearchService<P extends GroceriesCoachProduct> {
 
-    Future<List<P>> search(String keywords, GroceriesCoachSortType sortType);
+    Future<List<P>> search(String keywords, GroceriesCoachSortType sortType, int page);
 
     Store getStore();
 }

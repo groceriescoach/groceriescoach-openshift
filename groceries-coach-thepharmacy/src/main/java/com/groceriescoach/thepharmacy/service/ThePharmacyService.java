@@ -30,9 +30,10 @@ public class ThePharmacyService extends AbstractScrapingStoreSearchService<ThePh
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParameters = new HashMap<>();
         requestParameters.put("limit", "30");
+        requestParameters.put("p", "" + page);
         return requestParameters;
     }
 

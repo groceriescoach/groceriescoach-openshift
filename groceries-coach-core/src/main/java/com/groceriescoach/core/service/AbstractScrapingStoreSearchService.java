@@ -24,7 +24,7 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
 
     protected abstract String getStoreSearchUrl(String keywords);
 
-    protected abstract Map<String, String> getRequestParameters();
+    protected abstract Map<String, String> getRequestParameters(int page);
 
     protected Map<String, String> getRequestCookies() {
         return new HashMap<>();
@@ -36,13 +36,13 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
 
     @Async
     @Override
-    public Future<List<P>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<P>> search(String keywords, GroceriesCoachSortType sortType, int page) {
 
         String reformattedKeywords = reformatKeywordsForStore(keywords);
 
         logger.debug("Searching {} for {}.", getStore(), reformattedKeywords);
 
-        Map<String, String> requestParams = getRequestParameters();
+        Map<String, String> requestParams = getRequestParameters(page);
         if (StringUtils.isNotBlank(getSearchKeywordParameter())) {
             requestParams.put(getSearchKeywordParameter(), reformattedKeywords);
         }

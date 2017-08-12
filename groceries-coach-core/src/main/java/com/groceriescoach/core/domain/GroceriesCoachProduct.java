@@ -1,7 +1,6 @@
 package com.groceriescoach.core.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
-import com.groceriescoach.core.domain.pack.MultiPack;
 import com.groceriescoach.core.domain.pack.Pack;
 import com.groceriescoach.core.domain.pack.PackageCreator;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,8 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.roundToTwoDecimalPlaces;
 
 public abstract class GroceriesCoachProduct implements Serializable {
 
@@ -70,76 +67,16 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
         if (StringUtils.isBlank(packageSize)) {
             final Pack pack = PackageCreator.createPackage(name, price);
-            if (pack instanceof MultiPack) {
+            if (pack != null) {
                 packageSizeInt = pack.getPackSizeInt();
                 packageSize = pack.getPackSize();
 
                 if (packageSizeInt != null && unitPriceHasNotBeenSet()) {
                     unitPrice = pack.getUnitPrice();
                     unitPriceStr = pack.getUnitPriceStr();
-                    unitSize = "Each";
-                }
-
-
-            }
-        }
-/*
-            String nameWorkingCopy = StringUtils.trimToEmpty(name).toLowerCase();
-
-            nameWorkingCopy = nameWorkingCopy.replaceAll("pk", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("pcs", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("wipes", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("sheets", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("refill", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("tub", "pack");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("'s", "pack");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("’s", "pack");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("mega", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("bulk", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("bundle", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("box", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("travel", "");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("pack", " pack ");
-            nameWorkingCopy = nameWorkingCopy.replaceAll("x", "*");
-
-            if (!StringUtils.endsWith(StringUtils.trimToEmpty(nameWorkingCopy), "pack")) {
-                nameWorkingCopy = StringUtils.trimToEmpty(nameWorkingCopy) + " pack";
-            }
-
-            if (StringUtils.containsIgnoreCase(nameWorkingCopy, "pack")) {
-
-                final String[] tokens = StringUtils.split(nameWorkingCopy);
-                for (int i = 0; i < tokens.length - 1; i++) {
-                    if (StringUtils.equalsIgnoreCase("pack", tokens[i + 1])) {
-                        try {
-                            packageSizeInt = Integer.valueOf(tokens[i]);
-                            packageSize = packageSizeInt + " pack";
-                            break;
-                        } catch (Exception e) {
-                            try {
-                                Expression expression = new Expression(tokens[i]);
-                                BigDecimal result = expression.eval();
-
-                                packageSizeInt = result.intValue();
-                                packageSize = packageSizeInt + " Pack";
-                                break;
-                            } catch (Exception ignored) {
-
-                            }
-                        }
-                    }
+                    unitSize = pack.getUnitSize();
                 }
             }
-        }
-*/
-    }
-
-    protected void calculateUnitPrice() {
-        if (packageSizeInt != null && unitPriceHasNotBeenSet()) {
-            unitPrice = price / packageSizeInt;
-            unitPriceStr = "$" + roundToTwoDecimalPlaces(unitPrice) + " each";
-            unitSize = "Each";
         }
     }
 

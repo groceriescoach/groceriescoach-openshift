@@ -21,6 +21,7 @@ public class MultiPack extends Pack {
 
 
     public static MultiPack createPackage(String productName, Double price) {
+        Double priceInCents = price * 100;
         String nameWorkingCopy = StringUtils.trimToEmpty(productName).toLowerCase();
 
         nameWorkingCopy = nameWorkingCopy.replaceAll("pk", "pack");
@@ -68,8 +69,9 @@ public class MultiPack extends Pack {
                         multiPack.setPackSize(packageSize);
                         multiPack.setPackSizeInt(packageSizeInt);
 
-                        multiPack.setUnitPrice(price / packageSizeInt);
+                        multiPack.setUnitPrice(priceInCents / packageSizeInt);
                         multiPack.setUnitPriceStr(formatCurrencyAmount(multiPack.getUnitPrice()) + " each");
+                        multiPack.setUnitSize("Each");
                         return multiPack;
                     } catch (Exception e) {
                         logger.error("Unable to extract multipack: {}", productName, e);

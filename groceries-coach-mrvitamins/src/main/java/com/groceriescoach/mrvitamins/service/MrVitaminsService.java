@@ -38,7 +38,7 @@ public class MrVitaminsService implements StoreSearchService<MrVitaminsProduct> 
     }
 
     @Override
-    public Future<List<MrVitaminsProduct>> search(String keywords, GroceriesCoachSortType sortType) {
+    public Future<List<MrVitaminsProduct>> search(String keywords, GroceriesCoachSortType sortType, int page) {
         logger.debug("Searching Mr. Vitamins for {}.", keywords);
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://www.searchanise.com/getresults")

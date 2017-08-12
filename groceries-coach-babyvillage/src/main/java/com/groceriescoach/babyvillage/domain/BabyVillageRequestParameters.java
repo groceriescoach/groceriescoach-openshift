@@ -52,7 +52,7 @@ public class BabyVillageRequestParameters implements Serializable {
         this.keyword = keyword;
     }
 
-    public static BabyVillageRequestParameters createParameters(String keywords) {
-        return new BabyVillageRequestParameters(1, 200, "BrandAsc", keywords);
+    public static BabyVillageRequestParameters createParameters(String keywords, int page) {
+        return new BabyVillageRequestParameters(page, 200, "BrandAsc", keywords);
     }
 }

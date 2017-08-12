@@ -31,7 +31,7 @@ public class MyChemistService extends AbstractScrapingStoreSearchService<MyChemi
     }
 
     @Override
-    protected Map<String, String> getRequestParameters() {
+    protected Map<String, String> getRequestParameters(int page) {
         Map<String, String> requestParameters = new HashMap<>();
         requestParameters.put("perPage", "120");
         return requestParameters;
