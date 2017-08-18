@@ -1,4 +1,4 @@
-package com.groceriescoach.cincottachemist;
+package com.groceriescoach.cincottachemist.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

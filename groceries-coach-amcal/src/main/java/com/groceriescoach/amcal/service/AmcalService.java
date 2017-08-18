@@ -23,8 +23,9 @@ import static com.groceriescoach.core.domain.Store.Amcal;
 public class AmcalService extends AbstractScrapingStoreSearchService<AmcalProduct> {
 
 
+    private static final int PAGE_SIZE = 100;
+
     private static final Logger logger = LoggerFactory.getLogger(AmcalService.class);
-    private static final int PAGE_SIZE = 50;
 
     @Override
     public Store getStore() {

@@ -50,7 +50,8 @@ public class MrVitaminsService implements StoreSearchService<MrVitaminsProduct> 
                 .queryParam("api_key", "2t9v1p0n4a");
 
 
-        MrVitaminsSearchResult searchResult = restTemplate.getForObject(builder.build().toUri(), MrVitaminsSearchResult.class);
+        MrVitaminsSearchResult searchResult =
+                restTemplate.getForObject(builder.build().toUri(), MrVitaminsSearchResult.class);
         List<MrVitaminsProduct> products = searchResult.toProducts(sortType);
 
         logger.info("Found {} Mr. Vitamins products for keywords [{}].", products.size(), keywords);

@@ -18,8 +18,6 @@ public class Pharmacy4LessSearchResult  {
 
     private static final Logger logger = LoggerFactory.getLogger(Pharmacy4LessSearchResult.class);
 
-
-
     public List<Pharmacy4LessProduct> toProducts(GroceriesCoachSortType sortType) {
         return Result.toGroceriesCoachProducts(results, sortType);
     }

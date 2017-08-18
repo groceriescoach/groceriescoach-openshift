@@ -24,7 +24,8 @@ public class BabyBuntingSearchResult extends StoreSearchResult<BabyBuntingProduc
     }
 
     @Override
-    protected BabyBuntingProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+    protected BabyBuntingProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType)
+            throws ProductInformationUnavailableException {
         return new BabyBuntingProduct(productElement, sortType);
     }
 }

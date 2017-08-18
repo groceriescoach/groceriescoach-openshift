@@ -1,10 +1,10 @@
 package com.groceriescoach.woolworths.services;
 
 
-import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.Store;
 import com.groceriescoach.core.service.StoreSearchService;
+import com.groceriescoach.woolworths.domain.WoolworthsProduct;
 import com.groceriescoach.woolworths.domain.WoolworthsRequestParameters;
 import com.groceriescoach.woolworths.domain.WoolworthsSearchResult;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ import static com.groceriescoach.core.domain.Store.Woolworths;
 
 @Profile("online")
 @Service
-public class WoolworthsService implements StoreSearchService {
+public class WoolworthsService implements StoreSearchService<WoolworthsProduct> {
 
     private final RestTemplate restTemplate;
 
@@ -38,22 +38,22 @@ public class WoolworthsService implements StoreSearchService {
 
     @Async
     @Override
-    public Future<List<GroceriesCoachProduct>> search(String keywords, GroceriesCoachSortType sortType, int page) {
+    public Future<List<WoolworthsProduct>> search(String keywords, GroceriesCoachSortType sortType, int page) {
 
-        logger.info("Searching Woolworths for {}.", keywords);
+        logger.info("Searching Woolworths for {}, page {}.", keywords, page);
 
 //        String trimmedKeywords = keywords.trim().replaceAll(" +", " ").replace(" ", "+");
 
-        List<GroceriesCoachProduct> products = getProductsForPage(keywords, page);
+        List<WoolworthsProduct> products = getProductsForPage(keywords, page);
 
         logger.info("Found {} Woolworths products for keywords [{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }
 
-    private List<GroceriesCoachProduct> getProductsForPage(String keywords, int page) {
+    private List<WoolworthsProduct> getProductsForPage(String keywords, int page) {
 
-        List<GroceriesCoachProduct> products = new ArrayList<>();
+        List<WoolworthsProduct> products = new ArrayList<>();
         WoolworthsSearchResult searchResult =
                 restTemplate.postForObject(
                         "https://www.woolworths.com.au/apis/ui/Search/products",

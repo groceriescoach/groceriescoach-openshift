@@ -2,7 +2,6 @@ package com.groceriescoach.woolworths.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -67,7 +66,7 @@ public class WoolworthsSearchResult implements Serializable {
                 .toString();
     }
 
-    public List<GroceriesCoachProduct> toProducts(String keywords) {
+    public List<WoolworthsProduct> toProducts(String keywords) {
         return Product.toProducts(products, keywords);
     }
 

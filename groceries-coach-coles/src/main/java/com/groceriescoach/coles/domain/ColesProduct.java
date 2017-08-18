@@ -2,9 +2,8 @@ package com.groceriescoach.coles.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
-import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
-import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
@@ -15,39 +14,88 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.replaceEncodedCharacters;
 import static com.groceriescoach.core.domain.Store.Coles;
 
-public class ColesProduct extends GroceriesCoachJsoupProduct {
+public class ColesProduct extends GroceriesCoachProduct {
 
+    private static final long serialVersionUID = -1185239086449021441L;
 
     private static final Logger logger = LoggerFactory.getLogger(ColesProduct.class);
 
-    ColesProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
-        super(productElement, sortType);
-    }
 
-    @Override
-    protected String extractUrlFromProductElement(Element productElement) {
-        return productElement.select(".product-url").first().attr("href");
-    }
 
-    @Override
-    protected String extractBrandFromProductElement(Element productElement) {
-        return productElement.select(".brand").text();
-    }
+    public static final class ColesProductBuilder {
+        private String brand;
+        private String name;
+        private Double price;
+        private Double wasPrice;
+        private String imageUrl;
+        private String url;
+        private String unitPriceStr;
+        private String packageSize;
 
-    @Override
-    protected Double extractOldPriceFromProductElement(Element productElement) {
-        Elements savingElements = productElement.select(".saving");
-        if (!savingElements.isEmpty() && savingElements.first().childNodeSize() > 1) {
-            TextNode wasTextNode = (TextNode) savingElements.first().childNodes().get(2);
-            String wasPriceText = wasTextNode.text();
-            return Double.parseDouble(wasPriceText.trim().replaceAll("was \\$", ""));
-        } else {
-            return null;
+        private ColesProductBuilder() {
+        }
+
+        public static ColesProductBuilder aColesProduct() {
+            return new ColesProductBuilder();
+        }
+
+        public ColesProductBuilder withBrand(String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        public ColesProductBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ColesProductBuilder withPrice(Double price) {
+            this.price = price;
+            return this;
+        }
+
+        public ColesProductBuilder withWasPrice(Double wasPrice) {
+            this.wasPrice = wasPrice;
+            return this;
+        }
+
+        public ColesProductBuilder withImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public ColesProductBuilder withUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public ColesProductBuilder withUnitPriceStr(String unitPriceStr) {
+            this.unitPriceStr = unitPriceStr;
+            return this;
+        }
+
+        public ColesProductBuilder withPackageSize(String packageSize) {
+            this.packageSize = packageSize;
+            return this;
+        }
+
+        public ColesProduct build(GroceriesCoachSortType sortType) {
+            ColesProduct colesProduct = new ColesProduct();
+            colesProduct.preProductElementExtraction(sortType);
+            colesProduct.setBrand(brand);
+            colesProduct.setName(name);
+            colesProduct.setPrice(price);
+            colesProduct.setUnitPriceStr(unitPriceStr);
+            colesProduct.setPackageSize(packageSize);
+            colesProduct.setImageUrl(imageUrl);
+            colesProduct.postProductElementExtraction(sortType);
+            return colesProduct;
         }
     }
+
+
 
     private static String extractUnitPriceFromProductElement(Element productElement) {
         Elements unitPriceElements = productElement.select(".unit-price");
@@ -71,12 +119,7 @@ public class ColesProduct extends GroceriesCoachJsoupProduct {
         return nameAndSize.split("&nbsp;")[1].trim();
     }
 
-    @Override
-    protected String extractDescriptionFromProductElement(Element productElement) {
-        return null;
-    }
 
-    @Override
     protected Double extractPriceFromProductElement(Element productElement) {
         Double price = 0D;
 
@@ -116,12 +159,10 @@ public class ColesProduct extends GroceriesCoachJsoupProduct {
         return price;
     }
 
-    @Override
     protected String extractImageFromProductElement(Element productElement) {
         return "http://shop.coles.com.au" + productElement.select(".photo").attr("src");
     }
 
-    @Override
     protected Double extractSavingFromProductElement(Element productElement) {
         Elements savingElements = productElement.select(".saving");
 
@@ -132,27 +173,6 @@ public class ColesProduct extends GroceriesCoachJsoupProduct {
         } else {
             return null;
         }
-    }
-
-    @Override
-    protected String extractNameFromProductElement(Element productElement) {
-        String nameAndSize = productElement.select(".detail .item .product-url").first().html();
-        return replaceEncodedCharacters(nameAndSize.split("&nbsp;")[0]);
-    }
-
-    @Override
-    protected void extractFromProductElement(Element productElement, GroceriesCoachSortType sortType) {
-        setBrand(extractBrandFromProductElement(productElement));
-        setDescription(extractDescriptionFromProductElement(productElement));
-        setImageUrl(extractImageFromProductElement(productElement));
-        setName(extractNameFromProductElement(productElement));
-        setPackageSize(extractPackageSizeFromProductElement(productElement));
-        setPrice(extractPriceFromProductElement(productElement));
-        setUrl(extractUrlFromProductElement(productElement));
-        setSaving(extractSavingFromProductElement(productElement));
-        setUnitPriceStr(extractUnitPriceFromProductElement(productElement));
-        setWasPrice(extractOldPriceFromProductElement(productElement));
-        getQuantityPriceList().addAll(extractQuantityPriceListFromProductElement(productElement));
     }
 
     @Override

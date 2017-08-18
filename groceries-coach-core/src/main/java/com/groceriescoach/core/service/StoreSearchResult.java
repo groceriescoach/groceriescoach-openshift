@@ -18,9 +18,13 @@ public abstract class StoreSearchResult<P extends GroceriesCoachProduct> impleme
 
     private static final long serialVersionUID = -7704062795180569959L;
 
-    private List<P> products;
+    protected List<P> products;
 
     private static final Logger logger = LoggerFactory.getLogger(StoreSearchResult.class);
+
+    protected StoreSearchResult() {
+
+    }
 
     public StoreSearchResult(Document document, GroceriesCoachSortType sortType) {
 

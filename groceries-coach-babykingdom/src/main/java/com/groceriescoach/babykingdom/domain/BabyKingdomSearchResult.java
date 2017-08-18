@@ -24,7 +24,8 @@ public class BabyKingdomSearchResult extends StoreSearchResult<BabyKingdomProduc
     }
 
     @Override
-    protected BabyKingdomProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+    protected BabyKingdomProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType)
+            throws ProductInformationUnavailableException {
         return new BabyKingdomProduct(productElement, sortType);
     }
 }

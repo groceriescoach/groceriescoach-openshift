@@ -555,20 +555,20 @@ public class ProductDetails implements Serializable {
         this.barcode = barcode;
     }
 
-    public static List<GroceriesCoachProduct> toProducts(ProductDetails productDetailsArray[], String keywords) {
-        List<GroceriesCoachProduct> products = new ArrayList<>();
+    public static List<WoolworthsProduct> toProducts(ProductDetails productDetailsArray[], String keywords) {
+        List<WoolworthsProduct> products = new ArrayList<>();
         for (ProductDetails productDetails: productDetailsArray) {
             products.add(productDetails.toGroceriesCoachProduct(keywords));
         }
         return products;
     }
 
-    private GroceriesCoachProduct toGroceriesCoachProduct(String keywords) {
-        GroceriesCoachProduct product = new WoolworthsProduct();
+    private WoolworthsProduct toGroceriesCoachProduct(String keywords) {
+        WoolworthsProduct product = new WoolworthsProduct();
         product.setName(removeHtml(name));
         product.setDescription(removeHtml(description));
         product.setImageUrl(largeImageFile);
-        product.setUrl("https://www.woolworths.com.au/Shop/Search/Products?searchTerm=" + keywords + "&productId=" + stockCode);
+        product.setUrl("https://www.woolworths.com.au/shop/productdetails/" + stockCode + "/" + urlFriendlyName);
         product.setPrice(price);
         product.setWasPrice(wasPrice);
         product.setPackageSize(packageSize);

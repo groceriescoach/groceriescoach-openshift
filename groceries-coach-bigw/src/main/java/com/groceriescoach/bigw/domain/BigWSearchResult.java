@@ -24,7 +24,8 @@ public class BigWSearchResult extends StoreSearchResult<BigWProduct> {
     }
 
     @Override
-    protected BigWProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+    protected BigWProduct fromProductElement(Element productElement, GroceriesCoachSortType sortType)
+            throws ProductInformationUnavailableException {
         return new BigWProduct(productElement, sortType);
     }
 }

@@ -1,4 +1,4 @@
-package com.groceriescoach.pharmacy4less;
+package com.groceriescoach.pharmacy4less.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

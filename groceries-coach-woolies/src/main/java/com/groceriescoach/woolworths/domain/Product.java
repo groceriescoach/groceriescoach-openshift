@@ -2,7 +2,6 @@ package com.groceriescoach.woolworths.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
-import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -57,8 +56,8 @@ public class Product implements Serializable {
     }
 */
 
-    public static List<GroceriesCoachProduct> toProducts(List<Product> woolworthsProducts, String keywords) {
-        List<GroceriesCoachProduct> products = new ArrayList<>();
+    public static List<WoolworthsProduct> toProducts(List<Product> woolworthsProducts, String keywords) {
+        List<WoolworthsProduct> products = new ArrayList<>();
 
         if (!CollectionUtils.isEmpty(woolworthsProducts)) {
             for (Product woolworthsProduct : woolworthsProducts) {
@@ -69,9 +68,8 @@ public class Product implements Serializable {
     }
 
 
-    public List<GroceriesCoachProduct> toProducts(String keywords) {
+    public List<WoolworthsProduct> toProducts(String keywords) {
         return ProductDetails.toProducts(products, keywords);
-
     }
 }
 

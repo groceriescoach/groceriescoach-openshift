@@ -17,7 +17,7 @@ public class MrVitaminsProduct extends GroceriesCoachProduct {
     }
 
 
-    public static final class MrVitaminsProductBuilder {
+    static final class MrVitaminsProductBuilder {
 
         private String name;
         private String description;
@@ -29,41 +29,41 @@ public class MrVitaminsProduct extends GroceriesCoachProduct {
         private MrVitaminsProductBuilder() {
         }
 
-        public static MrVitaminsProductBuilder aMrVitaminsProduct() {
+        static MrVitaminsProductBuilder aMrVitaminsProduct() {
             return new MrVitaminsProductBuilder();
         }
 
-        public MrVitaminsProductBuilder withName(String name) {
+        MrVitaminsProductBuilder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public MrVitaminsProductBuilder withDescription(String description) {
+        MrVitaminsProductBuilder withDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public MrVitaminsProductBuilder withUrl(String url) {
+        MrVitaminsProductBuilder withUrl(String url) {
             this.url = url;
             return this;
         }
 
-        public MrVitaminsProductBuilder withPrice(Double price) {
+        MrVitaminsProductBuilder withPrice(Double price) {
             this.price = price;
             return this;
         }
 
-        public MrVitaminsProductBuilder withWasPrice(Double wasPrice) {
+        MrVitaminsProductBuilder withWasPrice(Double wasPrice) {
             this.wasPrice = wasPrice;
             return this;
         }
 
-        public MrVitaminsProductBuilder withImageUrl(String imageUrl) {
+        MrVitaminsProductBuilder withImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
             return this;
         }
 
-        public MrVitaminsProduct build(GroceriesCoachSortType sortType) {
+        MrVitaminsProduct build(GroceriesCoachSortType sortType) {
             MrVitaminsProduct mrVitaminsProduct = new MrVitaminsProduct();
             mrVitaminsProduct.setName(name);
             mrVitaminsProduct.setDescription(description);

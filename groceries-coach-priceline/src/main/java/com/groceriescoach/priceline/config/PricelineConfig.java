@@ -1,4 +1,4 @@
-package com.groceriescoach.priceline;
+package com.groceriescoach.priceline.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

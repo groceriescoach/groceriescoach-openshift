@@ -1,4 +1,4 @@
-package com.groceriescoach.nursingangel;
+package com.groceriescoach.nursingangel.config;
 
 
 import org.springframework.context.annotation.ComponentScan;
