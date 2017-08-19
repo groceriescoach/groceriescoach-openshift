@@ -44,14 +44,14 @@ public class WoolworthsService implements StoreSearchService<WoolworthsProduct> 
 
 //        String trimmedKeywords = keywords.trim().replaceAll(" +", " ").replace(" ", "+");
 
-        List<WoolworthsProduct> products = getProductsForPage(keywords, page);
+        List<WoolworthsProduct> products = getProductsForPage(keywords, sortType, page);
 
         logger.info("Found {} Woolworths products for keywords [{}].", products.size(), keywords);
 
         return new AsyncResult<>(products);
     }
 
-    private List<WoolworthsProduct> getProductsForPage(String keywords, int page) {
+    private List<WoolworthsProduct> getProductsForPage(String keywords, GroceriesCoachSortType sortType, int page) {
 
         List<WoolworthsProduct> products = new ArrayList<>();
         WoolworthsSearchResult searchResult =
@@ -59,7 +59,7 @@ public class WoolworthsService implements StoreSearchService<WoolworthsProduct> 
                         "https://www.woolworths.com.au/apis/ui/Search/products",
                         WoolworthsRequestParameters.createParameters(keywords, page),
                         WoolworthsSearchResult.class);
-        products.addAll(searchResult.toProducts(keywords));
+        products.addAll(searchResult.toWoolworthsProducts(sortType));
         return products;
     }
 

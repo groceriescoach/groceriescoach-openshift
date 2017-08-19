@@ -3,6 +3,7 @@ package com.groceriescoach.woolworths.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
+import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -555,33 +556,38 @@ public class ProductDetails implements Serializable {
         this.barcode = barcode;
     }
 
-    public static List<WoolworthsProduct> toProducts(ProductDetails productDetailsArray[], String keywords) {
+    public static List<WoolworthsProduct> toProducts(ProductDetails[] productDetailsArray, GroceriesCoachSortType sortType) {
         List<WoolworthsProduct> products = new ArrayList<>();
         for (ProductDetails productDetails: productDetailsArray) {
-            products.add(productDetails.toGroceriesCoachProduct(keywords));
+            products.add(productDetails.toWoolworthsProduct(sortType));
         }
         return products;
     }
 
-    private WoolworthsProduct toGroceriesCoachProduct(String keywords) {
-        WoolworthsProduct product = new WoolworthsProduct();
-        product.setName(removeHtml(name));
-        product.setDescription(removeHtml(description));
-        product.setImageUrl(largeImageFile);
-        product.setUrl("https://www.woolworths.com.au/shop/productdetails/" + stockCode + "/" + urlFriendlyName);
-        product.setPrice(price);
-        product.setWasPrice(wasPrice);
-        product.setPackageSize(packageSize);
-        product.setSaving(savingsAmount);
-        product.setUnitPrice(cupPrice);
-        product.setUnitSize(cupMeasure);
-        product.setUnitPriceStr(cupString);
+    private WoolworthsProduct toWoolworthsProduct(GroceriesCoachSortType sortType) {
+        WoolworthsProduct.WoolworthsProductBuilder aWoolworthsProduct =
+                WoolworthsProduct.WoolworthsProductBuilder.aWoolworthsProduct();
+
+        aWoolworthsProduct
+                .withName(removeHtml(name))
+                .withDescription(removeHtml(description))
+                .withImageUrl(largeImageFile)
+                .withUrl("https://www.woolworths.com.au/shop/productdetails/" + stockCode + "/" + urlFriendlyName)
+                .withPrice(price)
+                .withWasPrice(wasPrice)
+                .withPackageSize(packageSize)
+                .withSavingsAmount(savingsAmount)
+                .withUnitPrice(cupPrice)
+                .withUnitSize(cupMeasure)
+                .withUnitPriceStr(cupString);
+
+        WoolworthsProduct woolworthsProduct = aWoolworthsProduct.build(sortType);
 
         if (isCentreTagFlag()) {
-            product.setQuantityPriceList(createQuantityPriceList());
+            woolworthsProduct.setQuantityPriceList(createQuantityPriceList());
         }
 
-        return product;
+        return woolworthsProduct;
     }
 
     private List<GroceriesCoachProduct.QuantityPrice> createQuantityPriceList() {

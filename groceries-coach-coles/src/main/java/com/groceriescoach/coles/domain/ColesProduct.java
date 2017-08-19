@@ -23,8 +23,7 @@ public class ColesProduct extends GroceriesCoachProduct {
     private static final Logger logger = LoggerFactory.getLogger(ColesProduct.class);
 
 
-
-    public static final class ColesProductBuilder {
+    static final class ColesProductBuilder {
         private String brand;
         private String name;
         private Double price;
@@ -90,6 +89,7 @@ public class ColesProduct extends GroceriesCoachProduct {
             colesProduct.setUnitPriceStr(unitPriceStr);
             colesProduct.setPackageSize(packageSize);
             colesProduct.setImageUrl(imageUrl);
+            colesProduct.setUrl(url);
             colesProduct.postProductElementExtraction(sortType);
             return colesProduct;
         }

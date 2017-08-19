@@ -31,7 +31,9 @@ public abstract class GroceriesCoachProduct implements Serializable {
     private String unitPriceStr;
     private List<QuantityPrice> quantityPriceList = new ArrayList<>();
 
-    public GroceriesCoachProduct() {}
+
+    public GroceriesCoachProduct() {
+    }
 
     public abstract Store getStore();
 
@@ -65,17 +67,20 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
     protected void calculatePackageSize() {
 
+        Pack pack = null;
         if (StringUtils.isBlank(packageSize)) {
-            final Pack pack = PackageCreator.createPackage(name, price);
-            if (pack != null) {
-                packageSizeInt = pack.getPackSizeInt();
-                packageSize = pack.getPackSize();
+            pack = PackageCreator.createPackage(name, price);
+        } else {
+            pack = PackageCreator.createPackage(packageSize, price);
+        }
+        if (pack != null) {
+            packageSizeInt = pack.getPackSizeInt();
+            packageSize = pack.getPackSize();
 
-                if (packageSizeInt != null && unitPriceHasNotBeenSet()) {
-                    unitPrice = pack.getUnitPrice();
-                    unitPriceStr = pack.getUnitPriceStr();
-                    unitSize = pack.getUnitSize();
-                }
+            if (packageSizeInt != null) {
+                unitPrice = pack.getUnitPrice();
+                unitPriceStr = pack.getUnitPriceStr();
+                unitSize = pack.getUnitSize();
             }
         }
     }
