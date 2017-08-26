@@ -117,6 +117,11 @@ public class ColesService extends AbstractStoreSearchService<ColesProduct> {
     }
 
     @Override
+    protected String reformatKeywordsForStore(String keywords) {
+        return StringUtils.trimToEmpty(keywords);
+    }
+
+    @Override
     public Store getStore() {
         return Coles;
     }

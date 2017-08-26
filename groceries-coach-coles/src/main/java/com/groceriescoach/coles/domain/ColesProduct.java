@@ -4,6 +4,7 @@ import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
 import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
@@ -80,18 +81,23 @@ public class ColesProduct extends GroceriesCoachProduct {
             return this;
         }
 
-        public ColesProduct build(GroceriesCoachSortType sortType) {
-            ColesProduct colesProduct = new ColesProduct();
-            colesProduct.preProductElementExtraction(sortType);
-            colesProduct.setBrand(brand);
-            colesProduct.setName(name);
-            colesProduct.setPrice(price);
-            colesProduct.setUnitPriceStr(unitPriceStr);
-            colesProduct.setPackageSize(packageSize);
-            colesProduct.setImageUrl(imageUrl);
-            colesProduct.setUrl(url);
-            colesProduct.postProductElementExtraction(sortType);
-            return colesProduct;
+        public ColesProduct build(GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
+            try {
+                ColesProduct colesProduct = new ColesProduct();
+                colesProduct.preProductElementExtraction(sortType);
+                colesProduct.setBrand(brand);
+                colesProduct.setName(name);
+                colesProduct.setPrice(price);
+                colesProduct.setWasPrice(wasPrice);
+                colesProduct.setUnitPriceStr(unitPriceStr);
+                colesProduct.setPackageSize(packageSize);
+                colesProduct.setImageUrl(imageUrl);
+                colesProduct.setUrl(url);
+                colesProduct.postProductElementExtraction(sortType);
+                return colesProduct;
+            } catch (Exception e) {
+                throw new ProductInformationUnavailableException();
+            }
         }
     }
 
@@ -181,6 +187,7 @@ public class ColesProduct extends GroceriesCoachProduct {
     }
 
     public void setUnitPriceStr(String unitPriceStr) {
+        unitPriceStr = StringUtils.trimToEmpty(unitPriceStr);
         super.setUnitPriceStr(unitPriceStr);
 
         if (unitPriceStr.contains("per")) {

@@ -1,7 +1,13 @@
 package com.groceriescoach.woolworths.domain;
 
-/**
- * Created by Arun on 28-Jun-17.
- */
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ChildProduct {
+
+    @JsonProperty("Product")
+    private ProductDetails productDetails;
+
+
 }

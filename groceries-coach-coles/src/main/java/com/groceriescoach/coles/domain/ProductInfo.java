@@ -3,6 +3,7 @@ package com.groceriescoach.coles.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
@@ -29,5 +30,12 @@ public class ProductInfo implements Serializable {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("size", size)
+                .toString();
     }
 }

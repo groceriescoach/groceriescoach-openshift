@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.trimToEmpty;
+
 public abstract class GroceriesCoachProduct implements Serializable {
 
 
@@ -38,7 +40,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
     public abstract Store getStore();
 
     public static List<GroceriesCoachProduct> eliminateProductsWithoutAllSearchKeywords(List<GroceriesCoachProduct> allProducts, String keywords) {
-        List<String> searchKeywords = Arrays.asList(StringUtils.split(StringUtils.trimToEmpty(keywords)));
+        List<String> searchKeywords = Arrays.asList(StringUtils.split(trimToEmpty(keywords)));
         return allProducts.stream()
                 .filter(product -> product.containsAllSearchKeywords(searchKeywords))
                 .collect(Collectors.toList());
@@ -68,8 +70,10 @@ public abstract class GroceriesCoachProduct implements Serializable {
     protected void calculatePackageSize() {
 
         Pack pack = null;
-        if (StringUtils.isBlank(packageSize)) {
+        if (StringUtils.isBlank(packageSize) && StringUtils.isBlank(unitPriceStr)) {
             pack = PackageCreator.createPackage(name, price);
+        } else if (StringUtils.isNotBlank(unitPriceStr)) {
+            pack = PackageCreator.createPackage(packageSize, unitPriceStr, price);
         } else {
             pack = PackageCreator.createPackage(packageSize, price);
         }
@@ -77,11 +81,11 @@ public abstract class GroceriesCoachProduct implements Serializable {
             packageSizeInt = pack.getPackSizeInt();
             packageSize = pack.getPackSize();
 
-            if (packageSizeInt != null) {
+//            if (packageSizeInt != null) {
                 unitPrice = pack.getUnitPrice();
                 unitPriceStr = pack.getUnitPriceStr();
                 unitSize = pack.getUnitSize();
-            }
+//            }
         }
     }
 
@@ -94,7 +98,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = trimToEmpty(name);
     }
 
     public String getBrand() {
@@ -110,6 +114,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
     }
 
     public void setPrice(Double price) {
+        Objects.requireNonNull(price, "Price cannot be null");
         this.price = price;
     }
 

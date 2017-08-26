@@ -12,6 +12,8 @@ import static com.groceriescoach.core.domain.Store.Amcal;
 
 public class AmcalProduct extends GroceriesCoachJsoupProduct {
 
+    private static final long serialVersionUID = -401791345740735643L;
+
     AmcalProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
     }

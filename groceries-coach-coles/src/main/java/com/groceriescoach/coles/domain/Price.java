@@ -1,6 +1,7 @@
 package com.groceriescoach.coles.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 
@@ -26,5 +27,13 @@ public class Price implements Serializable {
 
     public void setWas(Double was) {
         this.was = was;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("now", now)
+                .append("was", was)
+                .toString();
     }
 }

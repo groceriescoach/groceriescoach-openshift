@@ -3,6 +3,10 @@ package com.groceriescoach.coles.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
+import com.groceriescoach.core.domain.ProductInformationUnavailableException;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,6 +43,8 @@ public class Product implements Serializable {
 
     @JsonProperty("s")
     private String urlSuffix;
+
+    private static final Logger logger = LoggerFactory.getLogger(Product.class);
 
     public String getProductCode() {
         return productCode;
@@ -115,12 +121,16 @@ public class Product implements Serializable {
     public static Collection<ColesProduct> toColesProducts(Product[] products, GroceriesCoachSortType sortType) {
         List<ColesProduct> colesProducts = new ArrayList<>();
         for (Product product : products) {
-            colesProducts.add(product.toColesProduct(sortType));
+            try {
+                colesProducts.add(product.toColesProduct(sortType));
+            } catch (ProductInformationUnavailableException e) {
+                logger.error("Unable to extract Coles product information from: {}", product);
+            }
         }
         return colesProducts;
     }
 
-    private ColesProduct toColesProduct(GroceriesCoachSortType sortType) {
+    private ColesProduct toColesProduct(GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
 
         ColesProduct.ColesProductBuilder aColesProduct = ColesProduct.ColesProductBuilder.aColesProduct();
 
@@ -134,5 +144,20 @@ public class Product implements Serializable {
                 .withUnitPriceStr(unitPriceStr)
                 .withPackageSize(productInfo.getPackageSize())
                 .build(sortType);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("productCode", productCode)
+                .append("price", price)
+                .append("productInfo", productInfo)
+                .append("name", name)
+                .append("brand", brand)
+                .append("unitPriceStr", unitPriceStr)
+                .append("thumbnail", thumbnail)
+                .append("promotionalLimit", promotionalLimit)
+                .append("urlSuffix", urlSuffix)
+                .toString();
     }
 }
