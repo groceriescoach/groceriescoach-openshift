@@ -35,7 +35,7 @@ public class BabiesRUsProduct extends Product {
     private static Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".price").get(0).text();
         if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
+            return CurrencyUtils.extractPriceFrom(price);
         }
         return 0D;
     }
@@ -47,7 +47,7 @@ public class BabiesRUsProduct extends Product {
             if (oldPriceElement != null) {
                 String price = oldPriceElement.text();
                 if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
+                    return CurrencyUtils.extractPriceFrom(price);
                 }
                 return 0D;
             }

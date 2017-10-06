@@ -1,5 +1,6 @@
 package com.groceriescoach.cincottachemist.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -50,9 +51,7 @@ public class CincottaChemistProduct extends GroceriesCoachJsoupProduct {
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             final Element oldPriceElement = oldPriceElements.get(0);
             String oldPrice = StringUtils.trimToEmpty(oldPriceElement.text());
-            if (StringUtils.isNotBlank(oldPrice) && oldPrice.startsWith("$")) {
-                return Double.parseDouble(StringUtils.removeCurrencySymbols(oldPrice));
-            }
+            return CurrencyUtils.extractPriceFrom(oldPrice, null);
         }
         return null;
     }
@@ -69,7 +68,7 @@ public class CincottaChemistProduct extends GroceriesCoachJsoupProduct {
             final String price = StringUtils.trimToEmpty(priceElement.text());
 
             if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
+                return CurrencyUtils.extractPriceFrom(price, null);
             }
         }
         return null;

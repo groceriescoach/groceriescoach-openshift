@@ -27,7 +27,7 @@ public class ChemistWarehouseService extends AbstractScrapingStoreSearchService<
     private static final Logger logger = LoggerFactory.getLogger(ChemistWarehouseService.class);
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "http://www.chemistwarehouse.com.au/search";
     }
 

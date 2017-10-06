@@ -1,0 +1,228 @@
+{
+  "type": "COLRSCatalogEntryList",
+  "categories": {
+    "parentCatgroup_id_search": {
+      "478627": "2",
+      "28272": "5",
+      "479110": "2",
+      "478564": "2",
+      "25991": "5",
+      "25573": "5"
+    }
+  },
+  "products": [
+    {
+      "p": "1404071P",
+      "p1": {
+        "o": "0.9"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "250g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "coles-biscuits-scotch-fingers",
+      "t": "/wcsstore/Coles-CAS/images/1/4/0/1404071-th.jpg",
+      "u": "221054",
+      "s9": "221199",
+      "pl": "20",
+      "t1": "V",
+      "u2": "$0.36 per 100G",
+      "m": "Coles",
+      "n": "Scotch Fingers Biscuits"
+    },
+    {
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "250g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "p1": {
+        "o": "3.14"
+      },
+      "pq": "2",
+      "pr": "2.00000",
+      "pt": "MultibuyMultiSku",
+      "s9": "42074",
+      "m": "Arnott\u0027s",
+      "n": "Scotch Finger Biscuits",
+      "p": "329174P",
+      "s": "arnotts-biscuits-scotch-finger",
+      "pd": "Any 2 for $4",
+      "t": "/wcsstore/Coles-CAS/images/3/2/9/329174-th.jpg",
+      "u": "18823",
+      "pi": "10158008",
+      "pl": "12",
+      "u2": "$1.26 per 100G",
+      "t1": "M"
+    },
+    {
+      "p": "5514923P",
+      "p1": {
+        "o": "4.02"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "250g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "arnotts-biscuits-scotch-finger-chocolate-coated",
+      "t": "/wcsstore/Coles-CAS/images/5/5/1/5514923-th.jpg",
+      "u": "12117",
+      "s9": "38516",
+      "pl": "20",
+      "u2": "$1.61 per 100G",
+      "m": "Arnott\u0027s",
+      "n": "Chocolate Coated Scotch Finger Biscuits"
+    },
+    {
+      "p": "2992179P",
+      "p1": {
+        "o": "4.4"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "200g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "arnotts-scotch-finger-minis-biscuits-8-pack",
+      "t": "/wcsstore/Coles-CAS/images/2/9/9/2992179-th.jpg",
+      "u": "700518",
+      "s9": "700592",
+      "pl": "20",
+      "u2": "$2.20 per 100G",
+      "m": "Arnott\u0027s",
+      "n": "Scotch Finger Minis Biscuits 8 pack"
+    },
+    {
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "232g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "p1": {
+        "o": "3.14"
+      },
+      "pq": "2",
+      "pr": "2.00000",
+      "pt": "MultibuyMultiSku",
+      "s9": "508597",
+      "m": "Arnott\u0027s",
+      "n": "Twisted Faves Choc Chip Scotch Finger",
+      "p": "2471653P",
+      "s": "arnotts-twisted-faves-choc-chip-scotch-finger",
+      "pd": "Any 2 for $4",
+      "t": "/wcsstore/Coles-CAS/images/2/4/7/2471653-th.jpg",
+      "u": "508540",
+      "pi": "10158008",
+      "pl": "12",
+      "u2": "$1.35 per 100G",
+      "t1": "M"
+    }
+  ],
+  "searchInfo": {
+    "pageSize": 24,
+    "searchTerm": "scotch finger",
+    "categoryId": "",
+    "searchType": "2",
+    "manufacturer": "",
+    "profileName": "COLRS_findProductsBySearchTerm",
+    "searchSource": "Q",
+    "intentSearchTerm": "scotch finger",
+    "originalSearchTerm": "scotch finger",
+    "metaData": "",
+    "currency": "AUD",
+    "filterTerm": "",
+    "filterType": "",
+    "filterFacet": "",
+    "maxPrice": "",
+    "minPrice": "",
+    "orderBy": "",
+    "physicalStoreIds": "",
+    "advancedFacetList": "",
+    "pageView": "grid",
+    "personaliseSearch": "false",
+    "personaliseSort": "false",
+    "responseTemplate": "",
+    "currentPage": 1,
+    "totalCount": 5,
+    "showAddAllResults": false,
+    "params": {},
+    "suggestedterms": []
+  }
+}

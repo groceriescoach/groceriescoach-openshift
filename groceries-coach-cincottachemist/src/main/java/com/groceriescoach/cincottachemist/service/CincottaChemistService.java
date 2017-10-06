@@ -25,7 +25,7 @@ public class CincottaChemistService extends AbstractScrapingStoreSearchService<C
     }
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "http://www.cincottachemist.com.au/q/" + keywords;
     }
 

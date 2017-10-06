@@ -42,8 +42,6 @@ public class WoolworthsService implements StoreSearchService<WoolworthsProduct> 
 
         logger.info("Searching Woolworths for {}, page {}.", keywords, page);
 
-//        String trimmedKeywords = keywords.trim().replaceAll(" +", " ").replace(" ", "+");
-
         List<WoolworthsProduct> products = getProductsForPage(keywords, sortType, page);
 
         logger.info("Found {} Woolworths products for keywords [{}].", products.size(), keywords);

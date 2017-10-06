@@ -2,6 +2,7 @@ package com.groceriescoach.core.domain.pack;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.udojava.evalex.Expression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,20 +22,59 @@ public class LiquidPack extends Pack {
 
     private static final long serialVersionUID = 925625131255694259L;
 
+    private Unit unit;
+    private Double packageSizeInMls;
+
     private static final Logger logger = LoggerFactory.getLogger(LiquidPack.class);
 
-    private Unit unit;
+    private LiquidPack() {
+    }
+
+    private LiquidPack(LiquidPack liquidPack) {
+        super(liquidPack);
+        this.unit = liquidPack.getUnit();
+        this.packageSizeInMls = liquidPack.getPackageSizeInMls();
+    }
 
     @Override
     public boolean hasUnitPrice() {
         return true;
     }
 
-    public static LiquidPack createPackage(String productName, Double price) {
-        Double priceInCents = price * 100;
-        LiquidPack liquidPack = null;
+    @Override
+    protected void updateUnitPricesInQuantityPrice(GroceriesCoachProduct.QuantityPrice quantityPrice) {
+        LiquidPack liquidPack = new LiquidPack(this);
+        liquidPack.setPackageSizeInMls(liquidPack.packageSizeInMls * quantityPrice.getQuantity());
+        liquidPack.setPriceInCents(quantityPrice.getPrice() * 100);
+        liquidPack.calculateUnitPrice();
+        liquidPack.unit.updateUnitValuesInPack(liquidPack);
+        quantityPrice.setUnitPriceStr(liquidPack.getUnitPriceStr());
+        quantityPrice.setUnitPrice(liquidPack.getUnitPrice());
 
-        String nameWorkingCopy = StringUtils.trimToEmpty(productName).toLowerCase();
+    }
+
+    private void calculateUnitPrice() {
+        setUnitPrice(getPriceInCents() / getPackageSizeInMls());
+    }
+
+    public static LiquidPack createPackage(String productName, Double price) {
+        LiquidPack liquidPack = createBasicPackage(productName);
+        if (liquidPack != null) {
+            liquidPack.setPriceInCents(price * 100);
+            liquidPack.unit.updatePackageSize(liquidPack);
+            liquidPack.unit.updatePackageSizeInMls(liquidPack);
+            liquidPack.calculateUnitPrice();
+            liquidPack.unit.updateUnitValuesInPack(liquidPack);
+        }
+        return liquidPack;
+    }
+
+    private static LiquidPack createBasicPackage(String packageInfo) {
+        LiquidPack liquidPack = null;
+        Unit selectedUnit = null;
+        Double packageSize = null;
+
+        String nameWorkingCopy = StringUtils.trimToEmpty(packageInfo).toLowerCase();
 
         nameWorkingCopy = nameWorkingCopy.replaceAll("-", "");
         nameWorkingCopy = nameWorkingCopy.replaceAll("mls", "ml");
@@ -43,65 +83,35 @@ public class LiquidPack extends Pack {
         nameWorkingCopy = nameWorkingCopy.replaceAll("litre", " l");
         nameWorkingCopy = nameWorkingCopy.replaceAll("(\\d)\\s*x\\s*(\\d)", "$1*$2");
 
-        if (containsIgnoreCase(nameWorkingCopy, "ml")) {
-            final String[] tokens = StringUtils.split(nameWorkingCopy);
-            for (int i = 0; i < tokens.length - 1; i++) {
-                if (StringUtils.equalsIgnoreCase("ml", tokens[i + 1])) {
-                    try {
-                        Expression expression = new Expression(tokens[i]);
-                        BigDecimal result = expression.eval();
+        List<Unit> units = Arrays.asList(MILLILITRE, LITRE);
 
-                        int packageSizeInt = result.intValue();
-                        String packageSize = packageSizeInt + " ml";
-
-                        liquidPack = new LiquidPack();
-                        liquidPack.unit = MILLILITRE;
-                        liquidPack.setPackSize(packageSize);
-                        liquidPack.setPackSizeInt(packageSizeInt);
-                        int packageSizeInMls = packageSizeInt;
-                        liquidPack.setUnitPrice(priceInCents / packageSizeInMls);
-                        liquidPack.setUnitSize("ml");
-                        break;
-                    } catch (Exception e) {
-                        logger.debug("Unable to extract liquid pack: {}", productName);
-                    }
-                }
-            }
-        }
-
-        if (liquidPack == null) {
-
-            nameWorkingCopy = nameWorkingCopy.replaceAll("l", " l");
-            if (containsIgnoreCase(nameWorkingCopy, "l")) {
-                final String[] tokens = StringUtils.split(nameWorkingCopy);
-                for (int i = 0; i < tokens.length - 1; i++) {
-                    if (StringUtils.equalsIgnoreCase("l", tokens[i + 1])) {
-                        try {
-                            Expression expression = new Expression(tokens[i]);
-                            BigDecimal result = expression.eval();
-
-                            int packageSizeInt = result.intValue();
-                            String packageSize = packageSizeInt + " l";
-
-                            liquidPack = new LiquidPack();
-                            liquidPack.unit = LITRE;
-                            liquidPack.setPackSize(packageSize);
-                            liquidPack.setPackSizeInt(packageSizeInt);
-
-                            liquidPack.setUnitPrice(priceInCents / (packageSizeInt * 1000));
-                            liquidPack.setUnitSize("l");
-                            liquidPack.updateUnitPriceStr();
-                            break;
-                        } catch (Exception e) {
-                            logger.debug("Unable to extract solid pack: {}", productName);
+        for (Unit unit : units) {
+            if (packageSize == null) {
+                if (containsIgnoreCase(nameWorkingCopy, unit.getSymbol())) {
+                    nameWorkingCopy = nameWorkingCopy.replaceAll(unit.getSymbol(), " " + unit.getSymbol());
+                    final String[] tokens = StringUtils.split(nameWorkingCopy);
+                    for (int i = 0; i < tokens.length - 1; i++) {
+                        if (StringUtils.equalsIgnoreCase(unit.getSymbol(), tokens[i + 1])) {
+                            try {
+                                Expression expression = new Expression(tokens[i]);
+                                BigDecimal result = expression.eval();
+                                selectedUnit = unit;
+                                packageSize = result.doubleValue();
+                                break;
+                            } catch (Exception e) {
+                                logger.debug("Unable to extract liquid pack: {}", packageInfo);
+                            }
                         }
                     }
                 }
             }
         }
 
-        if (liquidPack != null) {
-            liquidPack.updateUnitPriceStr();
+        if (packageSize != null && selectedUnit != null) {
+            liquidPack = new LiquidPack();
+            liquidPack.setUnit(selectedUnit);
+            liquidPack.setPackSize(packageSize);
+            selectedUnit.updatePackageSizeInMls(liquidPack);
         }
 
         return liquidPack;
@@ -118,7 +128,7 @@ public class LiquidPack extends Pack {
 
         unitPriceStr = unitPriceStr.replaceAll("mls", "ml");
 
-        if (containsIgnoreCase(unitPriceStr, "ml") || containsIgnoreCase(unitPriceStr, "l")) {
+        if (containsIgnoreCase(unitPriceStr, MILLILITRE.symbol) || containsIgnoreCase(unitPriceStr, LITRE.symbol)) {
             unitPriceElements.addAll(Arrays.asList(StringUtils.split(unitPriceStr)));
             if (CollectionUtils.isNotEmpty(unitPriceElements) && unitPriceElements.size() == 3) {
                 unitPriceElements.remove(1);
@@ -129,10 +139,10 @@ public class LiquidPack extends Pack {
                 }
 
                 String unitSize = StringUtils.trimToEmpty(unitPriceElements.get(1)).toLowerCase();
-                if (unitSize.endsWith("ml")) {
+                if (unitSize.endsWith(MILLILITRE.symbol)) {
                     unitSizeInMilliLitres = Double.parseDouble(StringUtils.trimToEmpty(unitSize.replaceAll("ml", "")));
                     unit = MILLILITRE;
-                } else if (unitSize.endsWith("l")) {
+                } else if (unitSize.endsWith(LITRE.symbol)) {
                     unitSizeInMilliLitres = Double.parseDouble(StringUtils.trimToEmpty(unitSize.replaceAll("l", ""))) * 1000;
                     unit = LITRE;
                 }
@@ -141,8 +151,15 @@ public class LiquidPack extends Pack {
             liquidPack = new LiquidPack();
             liquidPack.setUnit(unit);
             liquidPack.setUnitPrice(unitCostInCents / unitSizeInMilliLitres);
-            liquidPack.setPackSize(packageSize);
-            liquidPack.updateUnitPriceStr();
+            liquidPack.setPackSizeStr(packageSize);
+            liquidPack.setPriceInCents(price * 100);
+
+            final LiquidPack basicPackage = createBasicPackage(packageSize);
+            if (basicPackage != null) {
+                liquidPack.setPackSize(basicPackage.getPackSize());
+                liquidPack.setPackageSizeInMls(basicPackage.getPackageSizeInMls());
+            }
+            unit.updateUnitValuesInPack(liquidPack);
         }
 
         return liquidPack;
@@ -156,24 +173,68 @@ public class LiquidPack extends Pack {
         this.unit = unit;
     }
 
-    private void updateUnitPriceStr() {
-        switch (unit) {
-            case MILLILITRE:
-                if (getUnitPrice() < 100) {
-                    setUnitPriceStr(formatCurrencyAmount(getUnitPrice() * 100) + " per 100ml");
-                } else {
-                    setUnitPriceStr(formatCurrencyAmount(getUnitPrice()) + " per ml");
-                }
-                break;
-            case LITRE:
-                setUnitPriceStr(formatCurrencyAmount(getUnitPrice() * 1000) + " per litre");
-                break;
-        }
+    public Double getPackageSizeInMls() {
+        return packageSizeInMls;
     }
 
+    public void setPackageSizeInMls(Double packageSizeInMls) {
+        this.packageSizeInMls = packageSizeInMls;
+    }
 
     enum Unit {
-        MILLILITRE, LITRE
+        MILLILITRE("ml") {
+            @Override
+            void updateUnitValuesInPack(LiquidPack liquidPack) {
+                if (liquidPack.getUnitPrice() < 100) {
+                    liquidPack.setUnitPriceStr(formatCurrencyAmount(liquidPack.getUnitPrice() * 100) + " per 100ml");
+                } else {
+                    liquidPack.setUnitPriceStr(formatCurrencyAmount(liquidPack.getUnitPrice()) + " per ml");
+                }
+                liquidPack.setUnitSize(getSymbol());
+            }
+
+            @Override
+            void updatePackageSizeInMls(LiquidPack liquidPack) {
+                liquidPack.setPackageSizeInMls(liquidPack.getPackSize());
+            }
+
+            @Override
+            void updatePackageSize(LiquidPack liquidPack) {
+                liquidPack.setPackSizeStr(liquidPack.getPackSize() + getSymbol());
+            }
+        }, LITRE("l") {
+            @Override
+            void updateUnitValuesInPack(LiquidPack liquidPack) {
+                liquidPack.setUnitPriceStr(formatCurrencyAmount(liquidPack.getUnitPrice() * 1000) + " per litre");
+            }
+
+            @Override
+            void updatePackageSizeInMls(LiquidPack liquidPack) {
+                liquidPack.setPackageSizeInMls(liquidPack.getPackSize() * 1000);
+            }
+
+            @Override
+            void updatePackageSize(LiquidPack liquidPack) {
+                liquidPack.setPackSizeStr(liquidPack.getPackSize() + getSymbol());
+            }
+        };
+
+        private String symbol;
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        Unit(String symbol) {
+            this.symbol = symbol;
+        }
+
+        abstract void updateUnitValuesInPack(LiquidPack liquidPack);
+
+        abstract void updatePackageSizeInMls(LiquidPack liquidPack);
+
+        abstract void updatePackageSize(LiquidPack liquidPack);
+
     }
 
 }

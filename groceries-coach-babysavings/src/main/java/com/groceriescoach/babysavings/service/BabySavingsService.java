@@ -19,7 +19,7 @@ import static com.groceriescoach.core.domain.Store.BabySavings;
 public class BabySavingsService extends AbstractScrapingStoreSearchService<BabySavingsProduct> {
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "https://www.babysavings.com.au/catalogsearch/result/index";
     }
 

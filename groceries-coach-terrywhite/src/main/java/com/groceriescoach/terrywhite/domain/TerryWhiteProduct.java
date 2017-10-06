@@ -1,5 +1,6 @@
 package com.groceriescoach.terrywhite.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -51,10 +52,7 @@ public class TerryWhiteProduct extends GroceriesCoachJsoupProduct {
     @Override
     protected Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".prod-price").get(0).text();
-        if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
-        }
-        return 0D;
+        return CurrencyUtils.extractPriceFrom(price, 0D);
     }
 
     @Override
@@ -63,9 +61,7 @@ public class TerryWhiteProduct extends GroceriesCoachJsoupProduct {
         if (prodSaveElements != null && !prodSaveElements.isEmpty()) {
             String prodSaveText = StringUtils.trimToEmpty(prodSaveElements.get(0).text()).toLowerCase();
             prodSaveText = StringUtils.trimToEmpty(prodSaveText.replaceAll("save", "").replaceAll("off rrp", ""));
-            if (StringUtils.isNotBlank(prodSaveText) && prodSaveText.startsWith("$")) {
-                return Double.parseDouble(StringUtils.removeCurrencySymbols(prodSaveText));
-            }
+            return CurrencyUtils.extractPriceFrom(prodSaveText, null);
         }
         return null;
     }

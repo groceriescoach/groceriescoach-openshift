@@ -22,7 +22,7 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractScrapingStoreSearchService.class);
 
-    protected abstract String getStoreSearchUrl(String keywords);
+    protected abstract String getStoreSearchUrl(String keywords, int page);
 
     protected abstract Map<String, String> getRequestParameters(int page);
 
@@ -50,7 +50,7 @@ public abstract class AbstractScrapingStoreSearchService<P extends GroceriesCoac
         Document doc;
         try {
 
-            final Connection.Response response = Jsoup.connect(getStoreSearchUrl(reformattedKeywords))
+            final Connection.Response response = Jsoup.connect(getStoreSearchUrl(reformattedKeywords, page))
                     .data(requestParams)
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
                     .header("Accept", "*/*")

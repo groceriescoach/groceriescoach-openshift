@@ -25,7 +25,7 @@ public class RoyYoungService extends AbstractScrapingStoreSearchService<RoyYoung
     }
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "http://www.royyoungchemist.com.au/search/go";
     }
 

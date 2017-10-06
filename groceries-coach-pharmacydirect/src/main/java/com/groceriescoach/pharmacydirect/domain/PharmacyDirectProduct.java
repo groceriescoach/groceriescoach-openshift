@@ -1,6 +1,6 @@
 package com.groceriescoach.pharmacydirect.domain;
 
-import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
@@ -50,7 +50,7 @@ public class PharmacyDirectProduct extends GroceriesCoachJsoupProduct {
     @Override
     protected Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".sli_grid_price .sli_grid_price").get(0).text();
-        return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
+        return CurrencyUtils.extractPriceFrom(price, null);
     }
 
     @Override

@@ -28,66 +28,66 @@ public class WoolworthsProduct extends GroceriesCoachProduct {
         private WoolworthsProductBuilder() {
         }
 
-        public static WoolworthsProductBuilder aWoolworthsProduct() {
+        static WoolworthsProductBuilder aWoolworthsProduct() {
             return new WoolworthsProductBuilder();
         }
 
-        public WoolworthsProductBuilder withName(String name) {
+        WoolworthsProductBuilder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public WoolworthsProductBuilder withDescription(String description) {
+        WoolworthsProductBuilder withDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public WoolworthsProductBuilder withImageUrl(String imageUrl) {
+        WoolworthsProductBuilder withImageUrl(String imageUrl) {
             this.imageUrl = imageUrl;
             return this;
         }
 
-        public WoolworthsProductBuilder withUrl(String url) {
+        WoolworthsProductBuilder withUrl(String url) {
             this.url = url;
             return this;
         }
 
-        public WoolworthsProductBuilder withPrice(Double price) {
+        WoolworthsProductBuilder withPrice(Double price) {
             this.price = price;
             return this;
         }
 
-        public WoolworthsProductBuilder withWasPrice(Double wasPrice) {
+        WoolworthsProductBuilder withWasPrice(Double wasPrice) {
             this.wasPrice = wasPrice;
             return this;
         }
 
-        public WoolworthsProductBuilder withPackageSize(String packageSize) {
+        WoolworthsProductBuilder withPackageSize(String packageSize) {
             this.packageSize = packageSize;
             return this;
         }
 
-        public WoolworthsProductBuilder withSavingsAmount(Double savingsAmount) {
+        WoolworthsProductBuilder withSavingsAmount(Double savingsAmount) {
             this.savingsAmount = savingsAmount;
             return this;
         }
 
-        public WoolworthsProductBuilder withUnitPrice(Double unitPrice) {
+        WoolworthsProductBuilder withUnitPrice(Double unitPrice) {
             this.unitPrice = unitPrice;
             return this;
         }
 
-        public WoolworthsProductBuilder withUnitSize(String unitSize) {
+        WoolworthsProductBuilder withUnitSize(String unitSize) {
             this.unitSize = unitSize;
             return this;
         }
 
-        public WoolworthsProductBuilder withUnitPriceStr(String unitPriceStr) {
+        WoolworthsProductBuilder withUnitPriceStr(String unitPriceStr) {
             this.unitPriceStr = unitPriceStr;
             return this;
         }
 
-        public WoolworthsProduct build(GroceriesCoachSortType sortType) {
+        WoolworthsProduct build(GroceriesCoachSortType sortType) {
             WoolworthsProduct woolworthsProduct = new WoolworthsProduct();
             woolworthsProduct.preProductElementExtraction(sortType);
             woolworthsProduct.setName(name);
@@ -96,7 +96,7 @@ public class WoolworthsProduct extends GroceriesCoachProduct {
             woolworthsProduct.setUrl(url);
             woolworthsProduct.setPrice(price);
             woolworthsProduct.setWasPrice(wasPrice);
-            woolworthsProduct.setPackageSize(packageSize);
+            woolworthsProduct.setPackageSizeStr(packageSize);
             woolworthsProduct.setSaving(savingsAmount);
             woolworthsProduct.setUnitPrice(unitPrice);
             woolworthsProduct.setUnitSize(unitSize);
@@ -104,7 +104,6 @@ public class WoolworthsProduct extends GroceriesCoachProduct {
             woolworthsProduct.postProductElementExtraction(sortType);
             return woolworthsProduct;
         }
-
     }
 
 

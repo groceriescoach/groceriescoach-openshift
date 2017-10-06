@@ -30,7 +30,7 @@ public class TerryWhiteService extends AbstractScrapingStoreSearchService<TerryW
     }
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "https://shop.terrywhitechemmart.com.au/catalogsearch/result";
     }
 

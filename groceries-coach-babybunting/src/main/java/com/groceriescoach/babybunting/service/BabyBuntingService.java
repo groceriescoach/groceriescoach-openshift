@@ -25,7 +25,7 @@ public class BabyBuntingService extends AbstractScrapingStoreSearchService<BabyB
     private static final Logger logger = LoggerFactory.getLogger(BabyBuntingService.class);
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "https://www.babybunting.com.au/catalogsearch/result/index";
     }
 

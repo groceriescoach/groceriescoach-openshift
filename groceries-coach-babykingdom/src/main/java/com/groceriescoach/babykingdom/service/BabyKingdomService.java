@@ -27,7 +27,7 @@ public class BabyKingdomService extends AbstractScrapingStoreSearchService<BabyK
     private static final Logger logger = LoggerFactory.getLogger(BabyKingdomService.class);
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "https://www.babykingdom.com.au/shopsearch.asp?search=Yes";
     }
 

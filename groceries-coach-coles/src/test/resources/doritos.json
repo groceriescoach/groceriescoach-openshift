@@ -1,0 +1,460 @@
+{
+  "type": "COLRSCatalogEntryList",
+  "categories": {
+    "parentCatgroup_id_search": {
+      "27665": "7",
+      "28218": "1",
+      "25578": "3",
+      "25722": "3",
+      "478627": "6",
+      "479110": "6",
+      "28078": "3",
+      "478564": "6",
+      "25991": "11",
+      "25573": "11",
+      "27895": "10"
+    }
+  },
+  "products": [
+    {
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "170g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "p1": {
+        "o": "3.63"
+      },
+      "pq": "2",
+      "pr": "2.50000",
+      "pt": "MultibuyMultiSku",
+      "s9": "445024",
+      "m": "Doritos",
+      "n": "Cheese Supreme Corn Chip",
+      "p": "2358333P",
+      "s": "doritos-cheese-supreme-corn-chips-2358333p",
+      "pd": "Any 2 for $5",
+      "t": "/wcsstore/Coles-CAS/images/2/3/5/2358333-th.jpg",
+      "u": "445003",
+      "pi": "10158006",
+      "pl": "12",
+      "u2": "$2.14 per 100G",
+      "t1": "M"
+    },
+    {
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "170g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "p1": {
+        "o": "3.63"
+      },
+      "pq": "2",
+      "pr": "2.50000",
+      "pt": "MultibuyMultiSku",
+      "s9": "445017",
+      "m": "Doritos",
+      "n": "Nacho Cheese Corn Chips",
+      "p": "2358344P",
+      "s": "doritos-nacho-cheese-corn-chips-2358344p",
+      "pd": "Any 2 for $5",
+      "t": "/wcsstore/Coles-CAS/images/2/3/5/2358344-th.jpg",
+      "u": "445009",
+      "pi": "10158006",
+      "pl": "12",
+      "u2": "$2.14 per 100G",
+      "t1": "M"
+    },
+    {
+      "p": "8486449P",
+      "p1": {
+        "o": "2.5"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "300g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "doritos-dip-salsa-mild",
+      "t": "/wcsstore/Coles-CAS/images/8/4/8/8486449-th.jpg",
+      "u": "50543",
+      "s9": "113796",
+      "pl": "20",
+      "t1": "V",
+      "u2": "$0.83 per 100G",
+      "m": "Doritos",
+      "n": "Mild Salsa"
+    },
+    {
+      "p": "8156058P",
+      "p1": {
+        "o": "3.45"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "114g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "doritos-chips-cheese-supreme",
+      "t": "/wcsstore/Coles-CAS/images/8/1/5/8156058-th.jpg",
+      "u": "56111",
+      "s9": "114996",
+      "pl": "20",
+      "u2": "$3.03 per 100G",
+      "m": "Doritos",
+      "n": "Cheese Supreme Corn Chips 6 pack"
+    },
+    {
+      "p": "8483189P",
+      "p1": {
+        "o": "2.5"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "300g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "doritos-dip-salsa-medium",
+      "t": "/wcsstore/Coles-CAS/images/8/4/8/8483189-th.jpg",
+      "u": "50546",
+      "s9": "115881",
+      "pl": "20",
+      "t1": "V",
+      "u2": "$0.83 per 100G",
+      "m": "Doritos",
+      "n": "Medium Salsa"
+    },
+    {
+      "p": "8486019P",
+      "p1": {
+        "o": "2.5"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "300g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "doritos-dip-salsa-hot",
+      "t": "/wcsstore/Coles-CAS/images/8/4/8/8486019-th.jpg",
+      "u": "54821",
+      "s9": "111607",
+      "pl": "20",
+      "t1": "V",
+      "u2": "$0.83 per 100G",
+      "m": "Doritos",
+      "n": "Hot Salsa"
+    },
+    {
+      "p": "2863879P",
+      "p1": {
+        "o": "5.0"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "330g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "doritos-corn-chips-cheese-supreme-2863879p",
+      "t": "/wcsstore/Coles-CAS/images/2/8/6/2863879-th.jpg",
+      "u": "640001",
+      "s9": "640004",
+      "pl": "20",
+      "t1": "X",
+      "u2": "$1.52 per 100G",
+      "m": "Doritos",
+      "n": "Cheese Supreme Corn Chip Bigger Bag"
+    },
+    {
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "170g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "p1": {
+        "o": "3.63"
+      },
+      "pq": "2",
+      "pr": "2.50000",
+      "pt": "MultibuyMultiSku",
+      "s9": "445023",
+      "m": "Doritos",
+      "n": "Original Corn Chips",
+      "p": "2358355P",
+      "s": "doritos-original-corn-chips",
+      "pd": "Any 2 for $5",
+      "t": "/wcsstore/Coles-CAS/images/2/3/5/2358355-th.jpg",
+      "u": "445002",
+      "pi": "10158006",
+      "pl": "12",
+      "u2": "$2.14 per 100G",
+      "t1": "M"
+    },
+    {
+      "p": "2872530P",
+      "p1": {
+        "l4": "2.2",
+        "o": "1.5"
+      },
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "60g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "s": "doritos-cheese-supreme",
+      "t": "/wcsstore/Coles-CAS/images/2/8/7/2872530-th.jpg",
+      "u": "660524",
+      "s9": "660536",
+      "pl": "12",
+      "t1": "S",
+      "u2": "$2.50 per 100G",
+      "m": "Doritos",
+      "n": "Cheese Supreme Corn Chip"
+    },
+    {
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "150g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "p1": {
+        "o": "3.63"
+      },
+      "pq": "2",
+      "pr": "2.50000",
+      "pt": "MultibuyMultiSku",
+      "s9": "660538",
+      "m": "Doritos",
+      "n": "After Dark Taco at Midnight Corn Chips",
+      "p": "2872519P",
+      "s": "doritos-late-night-corn-chips-taco",
+      "pd": "Any 2 for $5",
+      "t": "/wcsstore/Coles-CAS/images/2/8/7/2872519-th.jpg",
+      "u": "660525",
+      "pi": "10158006",
+      "pl": "12",
+      "u2": "$2.42 per 100G",
+      "t1": "M"
+    },
+    {
+      "a": {
+        "A4": [
+          "1.0"
+        ],
+        "O3": [
+          "150g"
+        ],
+        "L2": [
+          "false"
+        ],
+        "P8": [
+          "Pantry"
+        ],
+        "W1": [
+          "false"
+        ],
+        "T1": [
+          "false"
+        ]
+      },
+      "p1": {
+        "o": "3.63"
+      },
+      "pq": "2",
+      "pr": "2.50000",
+      "pt": "MultibuyMultiSku",
+      "s9": "660537",
+      "m": "Doritos Late Night",
+      "n": "Corn Chips Sth Fried Chkn",
+      "p": "2872520P",
+      "s": "doritos-late-night-corn-chips-sth-fried-chkn",
+      "pd": "Any 2 for $5",
+      "t": "/wcsstore/Coles-CAS/images/2/8/7/2872520-th.jpg",
+      "u": "660508",
+      "pi": "10158006",
+      "pl": "12",
+      "u2": "$2.42 per 100G",
+      "t1": "M"
+    }
+  ],
+  "searchInfo": {
+    "pageSize": 24,
+    "searchTerm": "doritos",
+    "categoryId": "",
+    "searchType": "2",
+    "manufacturer": "",
+    "profileName": "COLRS_findProductsBySearchTerm",
+    "searchSource": "Q",
+    "intentSearchTerm": "doritos",
+    "originalSearchTerm": "doritos",
+    "metaData": "",
+    "currency": "AUD",
+    "filterTerm": "",
+    "filterType": "",
+    "filterFacet": "",
+    "maxPrice": "",
+    "minPrice": "",
+    "orderBy": "",
+    "physicalStoreIds": "",
+    "advancedFacetList": "",
+    "pageView": "grid",
+    "personaliseSearch": "false",
+    "personaliseSort": "false",
+    "responseTemplate": "",
+    "currentPage": 1,
+    "totalCount": 11,
+    "showAddAllResults": false,
+    "params": {},
+    "suggestedterms": []
+  }
+}

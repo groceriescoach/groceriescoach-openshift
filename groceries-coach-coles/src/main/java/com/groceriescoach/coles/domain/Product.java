@@ -35,6 +35,9 @@ public class Product implements Serializable {
     @JsonProperty("u2")
     private String unitPriceStr;
 
+    @JsonProperty("pd")
+    private String multiBuyDetails;
+
     @JsonProperty("t")
     private String thumbnail;
 
@@ -118,6 +121,14 @@ public class Product implements Serializable {
         this.urlSuffix = urlSuffix;
     }
 
+    public String getMultiBuyDetails() {
+        return multiBuyDetails;
+    }
+
+    public void setMultiBuyDetails(String multiBuyDetails) {
+        this.multiBuyDetails = multiBuyDetails;
+    }
+
     public static Collection<ColesProduct> toColesProducts(Product[] products, GroceriesCoachSortType sortType) {
         List<ColesProduct> colesProducts = new ArrayList<>();
         for (Product product : products) {
@@ -143,6 +154,7 @@ public class Product implements Serializable {
                 .withWasPrice(price.getWas())
                 .withUnitPriceStr(unitPriceStr)
                 .withPackageSize(productInfo.getPackageSize())
+                .withMultiBuyDetails(multiBuyDetails)
                 .build(sortType);
     }
 
@@ -158,6 +170,7 @@ public class Product implements Serializable {
                 .append("thumbnail", thumbnail)
                 .append("promotionalLimit", promotionalLimit)
                 .append("urlSuffix", urlSuffix)
+                .append("multiBuyDetails", multiBuyDetails)
                 .toString();
     }
 }

@@ -8,6 +8,7 @@ import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import static com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils.extractPriceFrom;
 import static com.groceriescoach.core.domain.Store.BigW;
 
 public class BigWProduct extends GroceriesCoachJsoupProduct {
@@ -50,10 +51,7 @@ public class BigWProduct extends GroceriesCoachJsoupProduct {
 
     protected Double extractPriceFromProductElement(Element productElement) {
         String price = productElement.select(".price strong").get(0).text();
-        if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
-        }
-        return 0D;
+        return extractPriceFrom(price, 0D);
     }
 
     @Override
@@ -64,8 +62,7 @@ public class BigWProduct extends GroceriesCoachJsoupProduct {
             String savingText = saveElement.text();
             if (StringUtils.isNotBlank(savingText)) {
                 savingText = savingText.replaceAll("Save ", "");
-                savingText = StringUtils.removeCurrencySymbols(savingText);
-                return Double.parseDouble(savingText);
+                return extractPriceFrom(savingText, 0D);
             }
         }
         return 0D;

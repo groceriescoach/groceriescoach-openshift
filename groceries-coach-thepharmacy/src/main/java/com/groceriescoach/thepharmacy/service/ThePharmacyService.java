@@ -25,7 +25,7 @@ public class ThePharmacyService extends AbstractScrapingStoreSearchService<ThePh
     }
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "https://www.thepharmacy.com.au/catalogsearch/result/index";
     }
 

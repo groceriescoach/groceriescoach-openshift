@@ -9,12 +9,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
-import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeCurrencySymbols;
-import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeThousandSeparators;
+import static com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils.extractPriceFrom;
 import static com.groceriescoach.core.domain.Store.BabyVillage;
 
 public class BabyVillageProduct extends GroceriesCoachJsoupProduct {
 
+
+    private static final long serialVersionUID = 3114823354682171187L;
 
     BabyVillageProduct(Document productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
@@ -31,7 +32,9 @@ public class BabyVillageProduct extends GroceriesCoachJsoupProduct {
             } else if (priceElement.childNodeSize() == 2) {
                 priceNode = (TextNode) priceElement.childNode(1);
             }
-            return Double.parseDouble(removeThousandSeparators(removeCurrencySymbols(priceNode.text())));
+            if (priceNode != null) {
+                return extractPriceFrom(priceNode.text(), null);
+            }
         }
 
         return null;
@@ -46,7 +49,7 @@ public class BabyVillageProduct extends GroceriesCoachJsoupProduct {
     protected Double extractOldPriceFromProductElement(Element productElement) {
         final Elements rrpElements = productElement.select(".rrp");
         if (rrpElements != null && !rrpElements.isEmpty()) {
-            return Double.parseDouble(removeThousandSeparators(removeCurrencySymbols(rrpElements.get(0).text())));
+            return extractPriceFrom(rrpElements.get(0).text(), null);
         } else {
             return null;
         }

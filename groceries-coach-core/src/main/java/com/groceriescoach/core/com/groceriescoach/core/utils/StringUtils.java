@@ -31,4 +31,18 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
     }
 
+    public static String replaceAll(String originalString, String[] searchStrings, String replacement) {
+        for (String searchString : searchStrings) {
+            originalString = originalString.replaceAll(searchString, replacement);
+        }
+        return originalString;
+    }
+
+    public static String removeAll(String originalString, String[] searchStrings) {
+        for (String searchString : searchStrings) {
+            originalString = originalString.replaceAll(searchString, "");
+        }
+        return originalString;
+    }
+
 }

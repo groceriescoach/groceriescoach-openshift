@@ -1,5 +1,6 @@
 package com.groceriescoach.royyoung.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -53,10 +54,7 @@ public class RoyYoungProduct extends GroceriesCoachJsoupProduct {
     @Override
     protected Double extractPriceFromProductElement(Element productElement) {
         final String auPrice = StringUtils.trimToEmpty(productElement.select(".price-box-hover").get(0).text()).replaceAll("AU", "");
-        if (StringUtils.isNotBlank(auPrice) && auPrice.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(auPrice));
-        }
-        return 0D;
+        return CurrencyUtils.extractPriceFrom(auPrice, 0D);
     }
 
     @Override

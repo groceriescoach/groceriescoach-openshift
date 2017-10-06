@@ -1,5 +1,6 @@
 package com.groceriescoach.thepharmacy.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -49,9 +50,7 @@ public class ThePharmacyProduct extends GroceriesCoachJsoupProduct {
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             final Element oldPriceElement = oldPriceElements.get(0);
             String oldPrice = StringUtils.trimToEmpty(oldPriceElement.text());
-            if (StringUtils.isNotBlank(oldPrice) && oldPrice.startsWith("$")) {
-                return Double.parseDouble(StringUtils.removeCurrencySymbols(oldPrice));
-            }
+            return CurrencyUtils.extractPriceFrom(oldPrice, null);
         }
         return null;
     }
@@ -65,10 +64,7 @@ public class ThePharmacyProduct extends GroceriesCoachJsoupProduct {
         }
         priceElement = priceElements.get(0);
         String specialPrice = StringUtils.trimToEmpty(priceElement.text());
-        if (StringUtils.isNotBlank(specialPrice) && specialPrice.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(specialPrice));
-        }
-        return null;
+        return CurrencyUtils.extractPriceFrom(specialPrice, null);
     }
 
     @Override

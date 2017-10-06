@@ -1,5 +1,6 @@
 package com.groceriescoach.core.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.pack.Pack;
 import com.groceriescoach.core.domain.pack.PackageCreator;
@@ -26,8 +27,8 @@ public abstract class GroceriesCoachProduct implements Serializable {
     private Double saving;
     private Double wasPrice;
     private String imageUrl;
-    private String packageSize;
-    private Integer packageSizeInt;
+    private String packageSizeStr;
+    private Double packageSize;
     private Double unitPrice;
     private String unitSize;
     private String unitPriceStr;
@@ -69,28 +70,26 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
     protected void calculatePackageSize() {
 
-        Pack pack = null;
-        if (StringUtils.isBlank(packageSize) && StringUtils.isBlank(unitPriceStr)) {
+        Pack pack;
+        if (StringUtils.isBlank(packageSizeStr) && StringUtils.isBlank(unitPriceStr)) {
             pack = PackageCreator.createPackage(name, price);
         } else if (StringUtils.isNotBlank(unitPriceStr)) {
-            pack = PackageCreator.createPackage(packageSize, unitPriceStr, price);
+            pack = PackageCreator.createPackage(packageSizeStr, unitPriceStr, price);
         } else {
-            pack = PackageCreator.createPackage(packageSize, price);
+            pack = PackageCreator.createPackage(packageSizeStr, price);
         }
         if (pack != null) {
-            packageSizeInt = pack.getPackSizeInt();
             packageSize = pack.getPackSize();
+            packageSizeStr = pack.getPackSizeStr();
 
-//            if (packageSizeInt != null) {
-                unitPrice = pack.getUnitPrice();
-                unitPriceStr = pack.getUnitPriceStr();
-                unitSize = pack.getUnitSize();
-//            }
+            unitPrice = pack.getUnitPrice();
+            unitPriceStr = pack.getUnitPriceStr();
+            unitSize = pack.getUnitSize();
         }
-    }
 
-    private boolean unitPriceHasNotBeenSet() {
-        return (unitPrice == null || unitPrice == 0D);
+        if (CollectionUtils.isNotEmpty(quantityPriceList)) {
+            pack.updateUnitPricesInQuantityPriceList(quantityPriceList);
+        }
     }
 
     public String getName() {
@@ -134,12 +133,12 @@ public abstract class GroceriesCoachProduct implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public void setPackageSize(String packageSize) {
-        this.packageSize = packageSize;
+    public void setPackageSizeStr(String packageSizeStr) {
+        this.packageSizeStr = packageSizeStr;
     }
 
-    public String getPackageSize() {
-        return packageSize;
+    public String getPackageSizeStr() {
+        return packageSizeStr;
     }
 
     public String getDescription() {
@@ -190,6 +189,13 @@ public abstract class GroceriesCoachProduct implements Serializable {
         this.quantityPriceList = quantityPriceList;
     }
 
+    public void addQuantityPrice(QuantityPrice quantityPrice) {
+        if (CollectionUtils.isEmpty(quantityPriceList)) {
+            quantityPriceList = new ArrayList<>();
+        }
+        quantityPriceList.add(quantityPrice);
+    }
+
     public String getUrl() {
         return url;
     }
@@ -208,7 +214,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
                 .append("saving", saving)
                 .append("wasPrice", wasPrice)
                 .append("imageUrl", imageUrl)
-                .append("packageSize", packageSize)
+                .append("packageSize", packageSizeStr)
                 .append("unitPrice", unitPrice)
                 .append("unitSize", unitSize)
                 .append("unitPriceStr", unitPriceStr)
@@ -291,7 +297,6 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
         if (sortType.isUnitPriceRequired()) {
             calculatePackageSize();
-//            calculateUnitPrice();
         }
         calculateSavings();
         calculateOldPrice();

@@ -1,5 +1,6 @@
 package com.groceriescoach.nursingangel.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -45,7 +46,7 @@ public class NursingAngelProduct extends GroceriesCoachJsoupProduct {
         if (priceElements != null && !priceElements.isEmpty()) {
             for (Element priceElement : priceElements) {
                 if (priceElement.hasAttr("itemprop") && priceElement.attr("itemprop").equalsIgnoreCase("price")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(priceElement.text()));
+                    return CurrencyUtils.extractPriceFrom(priceElement.text(), 0D);
                 }
             }
         }
@@ -66,10 +67,7 @@ public class NursingAngelProduct extends GroceriesCoachJsoupProduct {
                 if (StringUtils.isNotBlank(price) && price.startsWith("RRP")) {
                     price = StringUtils.trimToEmpty(price.replaceAll("RRP", ""));
                 }
-                if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
-                }
-                return 0D;
+                return CurrencyUtils.extractPriceFrom(price, null);
             }
         }
         return null;

@@ -26,7 +26,7 @@ public class MyChemistService extends AbstractScrapingStoreSearchService<MyChemi
     }
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "http://www.mychemist.com.au/searchresult.asp";
     }
 

@@ -2,6 +2,7 @@ package com.groceriescoach.core.domain.pack;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.udojava.evalex.Expression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,86 +22,96 @@ public class SolidPack extends Pack {
 
     private static final long serialVersionUID = -2168271643181032912L;
 
+    private Unit unit;
+
+    private Double packageSizeInGrams;
+
     private static final Logger logger = LoggerFactory.getLogger(SolidPack.class);
 
-    private Unit unit;
+    private SolidPack() {
+    }
+
+    private SolidPack(SolidPack solidPack) {
+        super(solidPack);
+        this.unit = solidPack.getUnit();
+        this.packageSizeInGrams = solidPack.getPackageSizeInGrams();
+    }
 
     @Override
     public boolean hasUnitPrice() {
         return true;
     }
 
-    static SolidPack createPackage(String productName, Double price) {
-        Double priceInCents = price * 100;
+    private static SolidPack createBasicPackage(String packageInfo) {
         SolidPack solidPack = null;
+        Unit selectedUnit = null;
+        Double packageSize = null;
 
-        String nameWorkingCopy = StringUtils.trimToEmpty(productName).toLowerCase();
+        String nameWorkingCopy = StringUtils.trimToEmpty(packageInfo).toLowerCase();
 
         nameWorkingCopy = nameWorkingCopy.replaceAll("-", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("kg", " kg");
+        nameWorkingCopy = nameWorkingCopy.replaceAll("g\\.", "g");
         nameWorkingCopy = nameWorkingCopy.replaceAll("(\\d)\\s*x\\s*(\\d)", "$1*$2");
 
-        if (containsIgnoreCase(nameWorkingCopy, "kg")) {
-            final String[] tokens = StringUtils.split(nameWorkingCopy);
-            for (int i = 0; i < tokens.length - 1; i++) {
-                if (StringUtils.equalsIgnoreCase("kg", tokens[i + 1])) {
-                    try {
-                        Expression expression = new Expression(tokens[i]);
-                        BigDecimal result = expression.eval();
+        List<Unit> units = Arrays.asList(KILOGRAMS, GRAMS);
 
-                        int packageSizeInt = result.intValue();
-                        String packageSize = packageSizeInt + " kg";
-
-                        solidPack = new SolidPack();
-                        solidPack.unit = KILOGRAMS;
-                        solidPack.setPackSize(packageSize);
-                        solidPack.setPackSizeInt(packageSizeInt);
-                        int packageSizeInGrams = packageSizeInt * 1000;
-                        solidPack.setUnitPrice(priceInCents / packageSizeInGrams);
-                        solidPack.setUnitSize("grams");
-                        break;
-                    } catch (Exception e) {
-                        logger.debug("Unable to extract solid pack: {}", productName);
-                    }
-                }
-            }
-        }
-
-        if (solidPack == null) {
-
-            nameWorkingCopy = nameWorkingCopy.replaceAll("g", " g");
-            if (containsIgnoreCase(nameWorkingCopy, "g")) {
-                final String[] tokens = StringUtils.split(nameWorkingCopy);
-                for (int i = 0; i < tokens.length - 1; i++) {
-                    if (StringUtils.equalsIgnoreCase("g", tokens[i + 1])) {
-                        try {
-                            Expression expression = new Expression(tokens[i]);
-                            BigDecimal result = expression.eval();
-
-                            int packageSizeInt = result.intValue();
-                            String packageSize = packageSizeInt + " g";
-
-                            solidPack = new SolidPack();
-                            solidPack.unit = GRAMS;
-                            solidPack.setPackSize(packageSize);
-                            solidPack.setPackSizeInt(packageSizeInt);
-
-                            solidPack.setUnitPrice(priceInCents / packageSizeInt);
-                            solidPack.setUnitSize("grams");
-                            solidPack.setUnitPriceStr(formatCurrencyAmount(solidPack.getUnitPrice()));
-                            break;
-                        } catch (Exception e) {
-                            logger.debug("Unable to extract solid pack: {}", productName);
+        for (Unit unit : units) {
+            if (packageSize == null) {
+                if (containsIgnoreCase(nameWorkingCopy, unit.getSymbol())) {
+                    nameWorkingCopy = nameWorkingCopy.replaceAll(unit.getSymbol(), " " + unit.getSymbol());
+                    final String[] tokens = StringUtils.split(nameWorkingCopy);
+                    for (int i = 0; i < tokens.length - 1; i++) {
+                        if (StringUtils.equalsIgnoreCase(unit.getSymbol(), tokens[i + 1])) {
+                            try {
+                                Expression expression = new Expression(tokens[i]);
+                                BigDecimal result = expression.eval();
+                                selectedUnit = unit;
+                                packageSize = result.doubleValue();
+                                break;
+                            } catch (Exception e) {
+                                logger.debug("Unable to extract solid pack: {}", packageInfo);
+                            }
                         }
                     }
                 }
             }
         }
 
-        if (solidPack != null) {
-            solidPack.updateUnitPriceStr();
+        if (packageSize != null && selectedUnit != null) {
+            solidPack = new SolidPack();
+            solidPack.setUnit(selectedUnit);
+            solidPack.setPackSize(packageSize);
+            selectedUnit.updatePackageSizeInGrams(solidPack);
         }
 
+        return solidPack;
+    }
+
+    @Override
+    protected void updateUnitPricesInQuantityPrice(GroceriesCoachProduct.QuantityPrice quantityPrice) {
+        SolidPack solidPack = new SolidPack(this);
+        solidPack.setPackageSizeInGrams(solidPack.packageSizeInGrams * quantityPrice.getQuantity());
+        solidPack.setPriceInCents(quantityPrice.getPrice() * 100);
+        solidPack.calculateUnitPrice();
+        solidPack.unit.updateUnitValuesInPack(solidPack);
+
+        quantityPrice.setUnitPriceStr(solidPack.getUnitPriceStr());
+        quantityPrice.setUnitPrice(solidPack.getUnitPrice());
+    }
+
+    private void calculateUnitPrice() {
+        setUnitPrice(getPriceInCents() / getPackageSizeInGrams());
+    }
+
+    static SolidPack createPackage(String productName, Double price) {
+        SolidPack solidPack = createBasicPackage(productName);
+        if (solidPack != null) {
+            solidPack.setPriceInCents(price * 100);
+            solidPack.unit.updatePackageSize(solidPack);
+            solidPack.unit.updatePackageSizeInGrams(solidPack);
+            solidPack.calculateUnitPrice();
+            solidPack.unit.updateUnitValuesInPack(solidPack);
+        }
         return solidPack;
     }
 
@@ -114,7 +125,8 @@ public class SolidPack extends Pack {
 
         Double unitCostInCents = 0D;
         Double unitSizeInGrams = 0D;
-        if (containsIgnoreCase(unitPriceStr, "g") || containsIgnoreCase(unitPriceStr, "kg")) {
+
+        if (containsIgnoreCase(unitPriceStr, GRAMS.symbol) || containsIgnoreCase(unitPriceStr, KILOGRAMS.symbol)) {
             unitPriceElements.addAll(Arrays.asList(StringUtils.split(unitPriceStr)));
             if (CollectionUtils.isNotEmpty(unitPriceElements) && unitPriceElements.size() == 3) {
                 unitPriceElements.remove(1);
@@ -125,11 +137,11 @@ public class SolidPack extends Pack {
                 }
 
                 String unitSize = StringUtils.trimToEmpty(unitPriceElements.get(1)).toLowerCase();
-                if (unitSize.endsWith("kg")) {
-                    unitSizeInGrams = Double.parseDouble(StringUtils.trimToEmpty(unitSize.replaceAll("kg", ""))) * 1000;
+                if (unitSize.endsWith(KILOGRAMS.symbol)) {
+                    unitSizeInGrams = Double.parseDouble(StringUtils.trimToEmpty(unitSize.replaceAll(KILOGRAMS.symbol, ""))) * 1000;
                     unit = KILOGRAMS;
-                } else if (unitSize.endsWith("g")) {
-                    unitSizeInGrams = Double.parseDouble(StringUtils.trimToEmpty(unitSize.replaceAll("g", "")));
+                } else if (unitSize.endsWith(GRAMS.symbol)) {
+                    unitSizeInGrams = Double.parseDouble(StringUtils.trimToEmpty(unitSize.replaceAll(GRAMS.symbol, "")));
                     unit = GRAMS;
                 }
             }
@@ -137,8 +149,14 @@ public class SolidPack extends Pack {
             solidPack = new SolidPack();
             solidPack.setUnit(unit);
             solidPack.setUnitPrice(unitCostInCents / unitSizeInGrams);
-            solidPack.setPackSize(packageSize);
-            solidPack.updateUnitPriceStr();
+            solidPack.setPackSizeStr(packageSize);
+            solidPack.setPriceInCents(price * 100);
+            final SolidPack basicPackage = createBasicPackage(packageSize);
+            if (basicPackage != null) {
+                solidPack.setPackSize(basicPackage.getPackSize());
+                solidPack.setPackageSizeInGrams(basicPackage.getPackageSizeInGrams());
+            }
+            unit.updateUnitValuesInPack(solidPack);
         }
 
         return solidPack;
@@ -152,23 +170,70 @@ public class SolidPack extends Pack {
         this.unit = unit;
     }
 
-    private void updateUnitPriceStr() {
-        switch (getUnit()) {
-            case GRAMS:
-                if (getUnitPrice() < 100) {
-                    setUnitPriceStr(formatCurrencyAmount(getUnitPrice() * 100) + " per 100g");
-                } else {
-                    setUnitPriceStr(formatCurrencyAmount(getUnitPrice()) + " per gram");
-                }
-                break;
-            case KILOGRAMS:
-                setUnitPriceStr(formatCurrencyAmount(getUnitPrice() * 1000) + " per kg");
-                break;
-        }
+    private Double getPackageSizeInGrams() {
+        return packageSizeInGrams;
+    }
+
+    private void setPackageSizeInGrams(Double packageSizeInGrams) {
+        this.packageSizeInGrams = packageSizeInGrams;
     }
 
 
     enum Unit {
-        GRAMS, KILOGRAMS
+        GRAMS("g") {
+            @Override
+            void updateUnitValuesInPack(SolidPack solidPack) {
+                if (solidPack.getUnitPrice() < 100) {
+                    solidPack.setUnitPriceStr(formatCurrencyAmount(solidPack.getUnitPrice() * 100) + " per 100g");
+                } else {
+                    solidPack.setUnitPriceStr(formatCurrencyAmount(solidPack.getUnitPrice()) + " per gram");
+                }
+                solidPack.setUnitSize(getSymbol());
+            }
+
+            @Override
+            void updatePackageSizeInGrams(SolidPack solidPack) {
+                solidPack.setPackageSizeInGrams(solidPack.getPackSize());
+            }
+
+            @Override
+            void updatePackageSize(SolidPack solidPack) {
+                solidPack.setPackSizeStr(solidPack.getPackSize() + getSymbol());
+            }
+
+        }, KILOGRAMS("kg") {
+            @Override
+            void updateUnitValuesInPack(SolidPack solidPack) {
+                solidPack.setUnitPriceStr(formatCurrencyAmount(solidPack.getUnitPrice() * 1000) + " per kg");
+                solidPack.setUnitSize(getSymbol());
+            }
+
+            @Override
+            void updatePackageSizeInGrams(SolidPack solidPack) {
+                solidPack.setPackageSizeInGrams(solidPack.getPackSize() * 1000);
+            }
+
+            @Override
+            void updatePackageSize(SolidPack solidPack) {
+                solidPack.setPackSizeStr(solidPack.getPackSize() + getSymbol());
+            }
+        };
+
+        private String symbol;
+
+        Unit(String symbol) {
+            this.symbol = symbol;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        abstract void updatePackageSizeInGrams(SolidPack solidPack);
+
+        abstract void updateUnitValuesInPack(SolidPack solidPack);
+
+        abstract void updatePackageSize(SolidPack solidPack);
+
     }
 }

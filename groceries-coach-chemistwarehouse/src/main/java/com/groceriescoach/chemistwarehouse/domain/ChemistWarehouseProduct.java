@@ -1,6 +1,7 @@
 package com.groceriescoach.chemistwarehouse.domain;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -15,6 +16,8 @@ import java.util.List;
 import static com.groceriescoach.core.domain.Store.ChemistWarehouse;
 
 public class ChemistWarehouseProduct extends GroceriesCoachJsoupProduct {
+
+    private static final long serialVersionUID = 7215682742298620675L;
 
     ChemistWarehouseProduct(Element productElement, GroceriesCoachSortType sortType) throws ProductInformationUnavailableException {
         super(productElement, sortType);
@@ -51,7 +54,7 @@ public class ChemistWarehouseProduct extends GroceriesCoachJsoupProduct {
             List<TextNode> textNodes = savingsSpan.textNodes();
             for (TextNode textNode : textNodes) {
                 if (StringUtils.isNotBlank(textNode.text())) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(textNode.text().replaceAll("SAVE", "")));
+                    return CurrencyUtils.extractPriceFrom(textNode.text().replaceAll("SAVE", ""), 0D);
                 }
             }
         }
@@ -67,7 +70,7 @@ public class ChemistWarehouseProduct extends GroceriesCoachJsoupProduct {
         List<TextNode> textNodes = priceSpan.textNodes();
         for (TextNode textNode : textNodes) {
             if (StringUtils.isNotBlank(textNode.text())) {
-                return Double.parseDouble(textNode.splitText(1).text());
+                return CurrencyUtils.extractPriceFrom(textNode.splitText(1).text(), 0D);
             }
         }
         return 0D;

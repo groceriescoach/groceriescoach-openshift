@@ -1,6 +1,6 @@
 package com.groceriescoach.babybounce.domain;
 
-import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
@@ -61,10 +61,7 @@ public class BabyBounceProduct extends GroceriesCoachJsoupProduct {
 
         price = specialPriceElements.get(0).text();
 
-        if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
-        }
-        return 0D;
+        return CurrencyUtils.extractPriceFrom(price, null);
     }
 
     @Override
@@ -79,10 +76,7 @@ public class BabyBounceProduct extends GroceriesCoachJsoupProduct {
             Element oldPriceElement = oldPriceElements.get(0);
             if (oldPriceElement != null) {
                 String price = oldPriceElement.text();
-                if (StringUtils.isNotBlank(price) && price.startsWith("$")) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
-                }
-                return 0D;
+                return CurrencyUtils.extractPriceFrom(price, null);
             }
         }
         return null;

@@ -24,15 +24,13 @@ public class PricelineService extends AbstractScrapingStoreSearchService<Priceli
     private static final Logger logger = LoggerFactory.getLogger(PricelineService.class);
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
-        return "https://www.priceline.com.au/search";
+    protected String getStoreSearchUrl(String keywords, int page) {
+        return "https://www.priceline.com.au/search/p/" + page;
     }
 
     @Override
     protected Map<String, String> getRequestParameters(int page) {
-        Map<String, String> requestParams = new HashMap<>();
-        requestParams.put("limit", "40");
-        return requestParams;
+        return new HashMap<>();
     }
 
     @Override

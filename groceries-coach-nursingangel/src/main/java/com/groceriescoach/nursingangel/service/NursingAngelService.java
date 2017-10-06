@@ -27,7 +27,7 @@ public class NursingAngelService extends AbstractScrapingStoreSearchService<Nurs
     private static final Logger logger = LoggerFactory.getLogger(NursingAngelService.class);
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "http://www.nursingangel.com.au";
     }
 

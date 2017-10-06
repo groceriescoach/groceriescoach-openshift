@@ -16,7 +16,7 @@ public class SolidPackTest {
     public void solidPackCreationShouldExtractKgWeightCorrectly() {
         SolidPack solidPack = SolidPack.createPackage("Fab Frangipani Laundry Powder 15kg", 40.00);
         assertThat(solidPack, is(notNullValue()));
-        assertThat(solidPack.getPackSize(), is("15 kg"));
+        assertThat(solidPack.getPackSizeStr(), is("15 kg"));
     }
 
 
@@ -24,7 +24,7 @@ public class SolidPackTest {
     public void solidPackCreationShouldExtractGramWeightCorrectly() {
         SolidPack solidPack = SolidPack.createPackage("Ajax Cleansing Powder 595g", 2.99);
         assertThat(solidPack, is(notNullValue()));
-        assertThat(solidPack.getPackSize(), is("595 g"));
+        assertThat(solidPack.getPackSizeStr(), is("595 g"));
     }
 
 

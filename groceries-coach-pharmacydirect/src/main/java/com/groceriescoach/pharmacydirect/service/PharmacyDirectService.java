@@ -25,7 +25,7 @@ public class PharmacyDirectService extends AbstractScrapingStoreSearchService<Ph
     }
 
     @Override
-    protected String getStoreSearchUrl(String keywords) {
+    protected String getStoreSearchUrl(String keywords, int page) {
         return "http://shop.pharmacydirect.com.au/search";
     }
 

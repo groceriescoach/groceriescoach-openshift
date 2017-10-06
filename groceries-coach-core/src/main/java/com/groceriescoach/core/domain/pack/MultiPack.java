@@ -2,6 +2,7 @@ package com.groceriescoach.core.domain.pack;
 
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.domain.GroceriesCoachProduct;
 import com.udojava.evalex.Expression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils.formatCurrencyAmount;
 import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeCurrencySymbols;
@@ -17,41 +19,50 @@ import static org.apache.commons.lang3.StringUtils.containsAny;
 import static org.apache.commons.lang3.StringUtils.containsIgnoreCase;
 
 public class MultiPack extends Pack {
+
     private static final long serialVersionUID = -8078907127512825078L;
 
     private static final Logger logger = LoggerFactory.getLogger(MultiPack.class);
+
+    private MultiPack() {
+    }
+
+    private MultiPack(MultiPack multiPack) {
+        super(multiPack);
+    }
 
     @Override
     public boolean hasUnitPrice() {
         return true;
     }
 
+    @Override
+    protected void updateUnitPricesInQuantityPrice(GroceriesCoachProduct.QuantityPrice quantityPrice) {
+        MultiPack multiPack = new MultiPack(this);
+        multiPack.setPackSize(multiPack.getPackSize() * quantityPrice.getQuantity());
+        multiPack.setPriceInCents(quantityPrice.getPrice() * 100);
+        multiPack.calculateUnitPrice();
+        quantityPrice.setUnitPriceStr(multiPack.getUnitPriceStr());
+        quantityPrice.setUnitPrice(multiPack.getUnitPrice());
 
-    public static MultiPack createPackage(String productName, Double price) {
-        Double priceInCents = price * 100;
+    }
+
+    static MultiPack createPackage(String productName, Double price) {
         String nameWorkingCopy = StringUtils.trimToEmpty(productName).toLowerCase();
 
-        nameWorkingCopy = nameWorkingCopy.replaceAll("pk", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("pcs", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("pieces", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("piece", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("wipes", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("sheets", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("refill", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("tub", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("'s", "pack");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("’s", "pack");
+        nameWorkingCopy =
+                StringUtils.replaceAll(
+                        nameWorkingCopy,
+                        new String[]{"pk", "pcs", "pieces", "piece", "wipes", "’s", "sheets", "'s", "refill", "tub"},
+                        "pack");
+
         nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("mega", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("bulk", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("bundle", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("box", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("convenience", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("value", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("\\.\\.\\.", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("\\(", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("\\)", "");
-        nameWorkingCopy = nameWorkingCopy.replaceAll("travel", "");
+
+        nameWorkingCopy = StringUtils.removeAll(
+                nameWorkingCopy,
+                new String[]{"mega", "bulk", "bundle", "box", "convenience", "value", "\\.\\.\\.", "\\(", "\\)", "travel",}
+        );
+
         nameWorkingCopy = nameWorkingCopy.replaceAll("pack", " pack ");
         nameWorkingCopy = nameWorkingCopy.replaceAll("(\\d)\\s*x\\s*(\\d)", "$1*$2");
 
@@ -68,16 +79,14 @@ public class MultiPack extends Pack {
                         Expression expression = new Expression(tokens[i]);
                         BigDecimal result = expression.eval();
 
-                        int packageSizeInt = result.intValue();
-                        String packageSize = packageSizeInt + " Pack";
+                        Double packageSize = result.doubleValue();
+                        String packageSizeStr = packageSize + " Pack";
 
                         MultiPack multiPack = new MultiPack();
+                        multiPack.setPackSizeStr(packageSizeStr);
                         multiPack.setPackSize(packageSize);
-                        multiPack.setPackSizeInt(packageSizeInt);
-
-                        multiPack.setUnitPrice(priceInCents / packageSizeInt);
-                        multiPack.setUnitPriceStr(formatCurrencyAmount(multiPack.getUnitPrice()) + " each");
-                        multiPack.setUnitSize("Each");
+                        multiPack.setPriceInCents(price * 100);
+                        multiPack.calculateUnitPrice();
                         return multiPack;
                     } catch (Exception e) {
                         logger.debug("Unable to extract multipack: {}", productName, e);
@@ -89,7 +98,15 @@ public class MultiPack extends Pack {
         return null;
     }
 
-    public static MultiPack createPackage(String packageSize, String unitPriceStr, Double price) {
+    private void calculateUnitPrice() {
+        Objects.requireNonNull(getPriceInCents());
+        Objects.requireNonNull(getPackSize());
+        setUnitPrice(getPriceInCents() / getPackSize());
+        setUnitPriceStr(formatCurrencyAmount(getUnitPrice()) + " each");
+        setUnitSize("Each");
+    }
+
+    static MultiPack createPackage(String packageSize, String unitPriceStr, Double price) {
         MultiPack multiPack = null;
         unitPriceStr = StringUtils.trimToEmpty(unitPriceStr).toLowerCase();
         List<String> unitPriceElements = new ArrayList<>();
@@ -120,6 +137,7 @@ public class MultiPack extends Pack {
                 unitSize = Integer.parseInt(unitSizeStr);
 
                 multiPack = new MultiPack();
+                multiPack.setPriceInCents(price * 100);
                 multiPack.setUnitPrice(unitCostInCents / unitSize);
 
                 String multiPackUnitPriceStr = formatCurrencyAmount(unitCostInCents) + "";
@@ -139,10 +157,11 @@ public class MultiPack extends Pack {
 
                 multiPack.setUnitPriceStr(multiPackUnitPriceStr);
                 multiPack.setUnitSize(unitSizeStr);
-                multiPack.setPackSize(packageSize);
+                multiPack.setPackSizeStr(packageSize);
             }
         }
 
         return multiPack;
     }
+
 }

@@ -8,7 +8,7 @@ import com.groceriescoach.core.domain.Store;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeCurrencySymbols;
+import static com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils.extractPriceFrom;
 import static com.groceriescoach.core.domain.Store.BabySavings;
 
 public class BabySavingsProduct extends GroceriesCoachJsoupProduct {
@@ -45,9 +45,7 @@ public class BabySavingsProduct extends GroceriesCoachJsoupProduct {
         final Elements oldPriceElements = productElement.select(".old-price .price");
         if (oldPriceElements != null && !oldPriceElements.isEmpty()) {
             String oldPriceText = oldPriceElements.get(0).text();
-            if (StringUtils.isNotBlank(oldPriceText)) {
-                return Double.parseDouble(removeCurrencySymbols(oldPriceText));
-            }
+            return extractPriceFrom(oldPriceText, null);
         }
         return null;
     }
@@ -58,13 +56,8 @@ public class BabySavingsProduct extends GroceriesCoachJsoupProduct {
         if (priceElements == null || priceElements.isEmpty()) {
             priceElements = productElement.select(".regular-price .price");
         }
-
         String specialPriceText = StringUtils.trimToEmpty(priceElements.get(0).text());
-        if (StringUtils.isNotBlank(specialPriceText)) {
-            return Double.parseDouble(removeCurrencySymbols(specialPriceText));
-        } else {
-            return 0D;
-        }
+        return extractPriceFrom(specialPriceText, null);
     }
 
     @Override

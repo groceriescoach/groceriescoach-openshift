@@ -1,7 +1,7 @@
 package com.groceriescoach.priceline.domain;
 
 
-import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import com.groceriescoach.core.domain.ProductInformationUnavailableException;
@@ -48,7 +48,7 @@ public class PricelineProduct extends GroceriesCoachJsoupProduct {
         if (oldPriceElements.isEmpty()) {
             return null;
         } else {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(oldPriceElements.text()));
+            return CurrencyUtils.extractPriceFrom(oldPriceElements.text(), null);
         }
     }
 
@@ -61,9 +61,9 @@ public class PricelineProduct extends GroceriesCoachJsoupProduct {
     protected Double extractPriceFromProductElement(Element productElement) {
         Elements regularPriceElements = productElement.select(".regular-price .price");
         if (regularPriceElements.isEmpty()) {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(productElement.select(".special-price .price").text()));
+            return CurrencyUtils.extractPriceFrom(productElement.select(".special-price .price").text(), null);
         } else {
-            return Double.parseDouble(StringUtils.removeCurrencySymbols(regularPriceElements.text()));
+            return CurrencyUtils.extractPriceFrom(regularPriceElements.text(), null);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.groceriescoach.babykingdom.domain;
 
+import com.groceriescoach.core.com.groceriescoach.core.utils.CurrencyUtils;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachJsoupProduct;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -41,7 +42,7 @@ public class BabyKingdomProduct extends GroceriesCoachJsoupProduct {
             String price = prodPriceElements.get(0).text();
             if (StringUtils.isNotBlank(price)) {
                 price = price.replaceAll("AU", "");
-                return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
+                return CurrencyUtils.extractPriceFrom(price, 0D);
             }
         } else {
             final Elements specialPriceElements = productElement.select(".prodprice_special td");
@@ -52,7 +53,7 @@ public class BabyKingdomProduct extends GroceriesCoachJsoupProduct {
                         String specialPrice = StringUtils.trimToEmpty(((TextNode) childNode).text());
                         if (specialPrice.startsWith("AU")) {
                             specialPrice = specialPrice.replaceAll("AU", "");
-                            return Double.parseDouble(StringUtils.removeCurrencySymbols(specialPrice));
+                            return CurrencyUtils.extractPriceFrom(specialPrice, 0D);
                         }
                     }
                 }
@@ -79,10 +80,7 @@ public class BabyKingdomProduct extends GroceriesCoachJsoupProduct {
                 if (StringUtils.isNotBlank(price) && price.startsWith("AU")) {
                     price = StringUtils.trimToEmpty(price.replaceAll("AU", ""));
                 }
-                if (StringUtils.isNotBlank(price)) {
-                    return Double.parseDouble(StringUtils.removeCurrencySymbols(price));
-                }
-                return 0D;
+                return CurrencyUtils.extractPriceFrom(price, null);
             }
         }
         return null;

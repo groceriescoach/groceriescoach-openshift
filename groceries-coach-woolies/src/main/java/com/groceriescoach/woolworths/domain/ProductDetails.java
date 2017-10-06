@@ -1,5 +1,6 @@
 package com.groceriescoach.woolworths.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils;
 import com.groceriescoach.core.domain.GroceriesCoachProduct;
@@ -17,7 +18,7 @@ import java.util.List;
 import static com.groceriescoach.core.com.groceriescoach.core.utils.MathUtils.roundToTwoDecimalPlaces;
 import static com.groceriescoach.core.com.groceriescoach.core.utils.StringUtils.removeHtml;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDetails implements Serializable {
 
     private static final long serialVersionUID = 3253996340428188193L;
