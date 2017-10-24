@@ -110,7 +110,8 @@ public class GroceriesCoachProductService implements ProductSearchService {
         }
 
         if (searchRequest.isAllKeywordsRequired()) {
-            allProducts = GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, searchRequest.getKeywords());
+            allProducts =
+                    GroceriesCoachProduct.eliminateProductsWithoutAllSearchKeywords(allProducts, searchRequest.getKeywords());
         }
 
         SearchCriteria searchCriteria = new SearchCriteria();

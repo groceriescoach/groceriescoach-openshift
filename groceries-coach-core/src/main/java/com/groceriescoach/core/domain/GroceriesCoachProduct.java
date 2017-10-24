@@ -20,7 +20,9 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
     private static final long serialVersionUID = -3912433236010197063L;
     private String name;
+    private String nameWithoutSpecialCharacters;
     private String brand;
+    private String brandWithoutSpecialCharacters;
     private String description;
     private String url;
     private Double price;
@@ -40,16 +42,20 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
     public abstract Store getStore();
 
-    public static List<GroceriesCoachProduct> eliminateProductsWithoutAllSearchKeywords(List<GroceriesCoachProduct> allProducts, String keywords) {
-        List<String> searchKeywords = Arrays.asList(StringUtils.split(trimToEmpty(keywords)));
+    public static List<GroceriesCoachProduct> eliminateProductsWithoutAllSearchKeywords(
+            List<GroceriesCoachProduct> allProducts, String keywords) {
+
         return allProducts.stream()
-                .filter(product -> product.containsAllSearchKeywords(searchKeywords))
+                .filter(product -> product.containsAllSearchKeywords(keywords))
                 .collect(Collectors.toList());
     }
 
-    private boolean containsAllSearchKeywords(List<String> searchKeywords) {
+    private boolean containsAllSearchKeywords(String keywords) {
+        List<String> searchKeywords =
+                Arrays.asList(StringUtils.split(trimToEmpty(StringUtils.removeNonAlphanumericCharacters(keywords))));
         for (String keyword : searchKeywords) {
-            if (!StringUtils.containsIgnoreCase(name, keyword) && !StringUtils.containsIgnoreCase(brand, keyword)) {
+            String keywordWithoutSpecialCharacters = StringUtils.removeNonAlphanumericCharacters(keyword);
+            if (!StringUtils.containsIgnoreCase(nameWithoutSpecialCharacters, keywordWithoutSpecialCharacters) && !StringUtils.containsIgnoreCase(brandWithoutSpecialCharacters, keywordWithoutSpecialCharacters)) {
                 return false;
             }
         }
@@ -98,6 +104,15 @@ public abstract class GroceriesCoachProduct implements Serializable {
 
     public void setName(String name) {
         this.name = trimToEmpty(name);
+        setNameWithoutSpecialCharacters(StringUtils.removeNonAlphanumericCharacters(this.name));
+    }
+
+    public String getNameWithoutSpecialCharacters() {
+        return nameWithoutSpecialCharacters;
+    }
+
+    public void setNameWithoutSpecialCharacters(String nameWithoutSpecialCharacters) {
+        this.nameWithoutSpecialCharacters = nameWithoutSpecialCharacters;
     }
 
     public String getBrand() {
@@ -105,7 +120,16 @@ public abstract class GroceriesCoachProduct implements Serializable {
     }
 
     public void setBrand(String brand) {
-        this.brand = brand;
+        this.brand = trimToEmpty(brand);
+        setBrandWithoutSpecialCharacters(StringUtils.removeNonAlphanumericCharacters(this.brand));
+    }
+
+    public String getBrandWithoutSpecialCharacters() {
+        return brandWithoutSpecialCharacters;
+    }
+
+    public void setBrandWithoutSpecialCharacters(String brandWithoutSpecialCharacters) {
+        this.brandWithoutSpecialCharacters = brandWithoutSpecialCharacters;
     }
 
     public Double getPrice() {
