@@ -47,6 +47,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
 
@@ -83,13 +84,13 @@
                 <artifactId>groceries-coach-amcal</artifactId>
                 <version>${project.version}</version>
             </dependency>
-<!--
-            <dependency>
-                <groupId>com.groceriescoach</groupId>
-                <artifactId>groceries-coach-babiesrus</artifactId>
-                <version>${project.version}</version>
-            </dependency>
--->
+            <!--
+                        <dependency>
+                            <groupId>com.groceriescoach</groupId>
+                            <artifactId>groceries-coach-babiesrus</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+            -->
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-babyandtoddlertown</artifactId>
@@ -202,6 +203,18 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>

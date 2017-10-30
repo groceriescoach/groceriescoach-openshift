@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>groceries-coach</artifactId>
-    <packaging>war</packaging>
+    <!--<packaging>war</packaging>-->
 
     <name>Groceries Coach</name>
     <description>Demo project for Spring Boot</description>
@@ -27,22 +27,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
-<!--
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </dependency>
+        -->
         <dependency>
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-amcal</artifactId>
         </dependency>
-<!--
-        <dependency>
-            <groupId>com.groceriescoach</groupId>
-            <artifactId>groceries-coach-babiesrus</artifactId>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>com.groceriescoach</groupId>
+                    <artifactId>groceries-coach-babiesrus</artifactId>
+                </dependency>
+        -->
         <dependency>
             <groupId>com.groceriescoach</groupId>
             <artifactId>groceries-coach-babyandtoddlertown</artifactId>
@@ -141,7 +141,6 @@
 
     <build>
         <plugins>
-<!--
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -153,18 +152,6 @@
                     </execution>
                 </executions>
             </plugin>
--->
-            <!-- START plugin -->
-<!--
-            <plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>gcloud-maven-plugin</artifactId>
-                <version>2.0.9.130.v20161013</version>
-                <configuration>
-                    <gcloud_directory>C:\products\Google\Cloud SDK\google-cloud-sdk</gcloud_directory>
-                </configuration>
-            </plugin>
--->
         </plugins>
     </build>
 
