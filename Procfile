@@ -1,1 +1,1 @@
-web: java -jar groceries-coach/target/groceries-coach-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar groceries-coach/target/groceries-coach-0.0.1-SNAPSHOT.jar
