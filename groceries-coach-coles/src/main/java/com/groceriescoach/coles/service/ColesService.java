@@ -29,7 +29,7 @@ import java.util.concurrent.Future;
 import static com.groceriescoach.core.domain.Store.Coles;
 
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class ColesService extends AbstractStoreSearchService<ColesProduct> {
 

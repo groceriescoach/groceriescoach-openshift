@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
 
 import static com.groceriescoach.core.domain.Store.Pharmacy4Less;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class Pharmacy4LessService implements StoreSearchService<Pharmacy4LessProduct> {
 

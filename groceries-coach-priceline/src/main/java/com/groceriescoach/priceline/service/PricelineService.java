@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.Priceline;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class PricelineService extends AbstractScrapingStoreSearchService<PricelineProduct> {
 

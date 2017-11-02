@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.Target;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class TargetService extends AbstractScrapingStoreSearchService<TargetProduct> {
 

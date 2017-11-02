@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
 
 import static com.groceriescoach.core.domain.Store.Woolworths;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class WoolworthsService implements StoreSearchService<WoolworthsProduct> {
 

@@ -19,7 +19,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.NursingAngel;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class NursingAngelService extends AbstractScrapingStoreSearchService<NursingAngelProduct> {
 

@@ -17,7 +17,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.TerryWhite;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class TerryWhiteService extends AbstractScrapingStoreSearchService<TerryWhiteProduct> {
 

@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.BigW;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class BigWService extends AbstractScrapingStoreSearchService<BigWProduct> {
 

@@ -19,7 +19,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.BabyKingdom;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class BabyKingdomService extends AbstractScrapingStoreSearchService<BabyKingdomProduct> {
 

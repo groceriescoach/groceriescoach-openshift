@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.Amcal;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class AmcalService extends AbstractScrapingStoreSearchService<AmcalProduct> {
 

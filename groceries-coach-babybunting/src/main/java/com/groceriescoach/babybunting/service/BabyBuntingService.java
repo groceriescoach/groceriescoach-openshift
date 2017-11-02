@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static com.groceriescoach.core.domain.Store.BabyBunting;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class BabyBuntingService extends AbstractScrapingStoreSearchService<BabyBuntingProduct> {
 

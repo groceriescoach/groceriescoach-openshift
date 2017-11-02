@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 
 import static com.groceriescoach.core.domain.Store.BabyVillage;
 
-@Profile("online")
+//@Profile("online")
 @Service
 public class BabyVillageService implements StoreSearchService<BabyVillageProduct> {
 
