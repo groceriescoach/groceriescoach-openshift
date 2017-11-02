@@ -183,9 +183,7 @@ public class ProductDetails implements Serializable {
     private List<ChildProduct> childProducts;
 
 
-
     private static final Logger logger = LoggerFactory.getLogger(ProductDetails.class);
-
 
 
     public String getStockCode() {
@@ -558,7 +556,7 @@ public class ProductDetails implements Serializable {
 
     public static List<WoolworthsProduct> toProducts(ProductDetails[] productDetailsArray, GroceriesCoachSortType sortType) {
         List<WoolworthsProduct> products = new ArrayList<>();
-        for (ProductDetails productDetails: productDetailsArray) {
+        for (ProductDetails productDetails : productDetailsArray) {
             products.add(productDetails.toWoolworthsProduct(sortType));
         }
         return products;
@@ -596,17 +594,18 @@ public class ProductDetails implements Serializable {
 
         GroceriesCoachProduct.QuantityPrice quantityPrice = new GroceriesCoachProduct.QuantityPrice();
 
-        String tagContent = centreTag.getTagContent();
-//        logger.debug("tagContent = {}", tagContent);
-        Document document = Jsoup.parse(tagContent);
+        try {
 
-        if (document.childNodes().get(0).childNode(1).childNode(0).childNode(0).toString().contains("Was ")) {
-            return null;
-        } else if (document.childNodes().get(0).childNode(1).childNode(0).childNode(0).childNodes().isEmpty()) {
-            return null;
-        }
-        String quantityPriceStr = document.childNodes().get(0).childNode(1).childNode(0).childNode(0).childNode(0).toString();
-        if (!StringUtils.containsIgnoreCase(quantityPriceStr, "Offer Details Here")) {
+            String tagContent = centreTag.getTagContent();
+//        logger.debug("tagContent = {}", tagContent);
+            Document document = Jsoup.parse(tagContent);
+
+            if (document.childNodes().get(0).childNode(1).childNode(0).childNode(0).toString().contains("Was ")) {
+                return null;
+            } else if (document.childNodes().get(0).childNode(1).childNode(0).childNode(0).childNodes().isEmpty()) {
+                return null;
+            }
+            String quantityPriceStr = document.childNodes().get(0).childNode(1).childNode(0).childNode(0).childNode(0).toString();
             String[] quantityPriceElements = quantityPriceStr.split("for");
             quantityPrice.setQuantity(Integer.parseInt(StringUtils.trim(quantityPriceElements[0])));
             quantityPrice.setPrice(Double.parseDouble(StringUtils.removeCurrencySymbols(quantityPriceElements[1])));
@@ -623,6 +622,8 @@ public class ProductDetails implements Serializable {
             }
 
             quantityPriceList.add(quantityPrice);
+        } catch (Exception ignored) {
+
         }
         return quantityPriceList;
     }
