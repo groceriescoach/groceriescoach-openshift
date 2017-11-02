@@ -606,24 +606,24 @@ public class ProductDetails implements Serializable {
             return null;
         }
         String quantityPriceStr = document.childNodes().get(0).childNode(1).childNode(0).childNode(0).childNode(0).toString();
-        String[] quantityPriceElements = quantityPriceStr.split("for");
-        quantityPrice.setQuantity(Integer.parseInt(StringUtils.trim(quantityPriceElements[0])));
-        quantityPrice.setPrice(Double.parseDouble(StringUtils.removeCurrencySymbols(quantityPriceElements[1])));
+        if (!StringUtils.containsIgnoreCase(quantityPriceStr, "Offer Details Here")) {
+            String[] quantityPriceElements = quantityPriceStr.split("for");
+            quantityPrice.setQuantity(Integer.parseInt(StringUtils.trim(quantityPriceElements[0])));
+            quantityPrice.setPrice(Double.parseDouble(StringUtils.removeCurrencySymbols(quantityPriceElements[1])));
 
-        String quantityUnitPriceStr = StringUtils.trimToEmpty(document.childNodes().get(0).childNode(1).childNode(0).childNode(1).toString());
-        if (StringUtils.isNotBlank(quantityUnitPriceStr)) {
-            quantityPrice.setUnitPriceStr(quantityUnitPriceStr);
-            quantityPrice.setUnitPrice(Double.parseDouble(StringUtils.removeCurrencySymbols(quantityUnitPriceStr.split("/")[0])));
-            quantityPrice.setUnitSize(quantityUnitPriceStr.split("/")[1]);
-        } else {
-            quantityPrice.setUnitSize(cupMeasure);
-            quantityPrice.setUnitPrice(roundToTwoDecimalPlaces(quantityPrice.getPrice() * cupPrice / (quantityPrice.getQuantity() * price)));
-            quantityPrice.setUnitPriceStr("$" + quantityPrice.getUnitPrice() + " / " + quantityPrice.getUnitSize());
+            String quantityUnitPriceStr = StringUtils.trimToEmpty(document.childNodes().get(0).childNode(1).childNode(0).childNode(1).toString());
+            if (StringUtils.isNotBlank(quantityUnitPriceStr)) {
+                quantityPrice.setUnitPriceStr(quantityUnitPriceStr);
+                quantityPrice.setUnitPrice(Double.parseDouble(StringUtils.removeCurrencySymbols(quantityUnitPriceStr.split("/")[0])));
+                quantityPrice.setUnitSize(quantityUnitPriceStr.split("/")[1]);
+            } else {
+                quantityPrice.setUnitSize(cupMeasure);
+                quantityPrice.setUnitPrice(roundToTwoDecimalPlaces(quantityPrice.getPrice() * cupPrice / (quantityPrice.getQuantity() * price)));
+                quantityPrice.setUnitPriceStr("$" + quantityPrice.getUnitPrice() + " / " + quantityPrice.getUnitSize());
+            }
+
+            quantityPriceList.add(quantityPrice);
         }
-
-        quantityPriceList.add(quantityPrice);
-
-
         return quantityPriceList;
     }
 
