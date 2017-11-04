@@ -1,5 +1,6 @@
 package com.groceriescoach.mrvitamins.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.groceriescoach.core.com.groceriescoach.core.utils.CollectionUtils;
 import com.groceriescoach.core.domain.GroceriesCoachSortType;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static com.groceriescoach.mrvitamins.domain.MrVitaminsProduct.MrVitaminsProductBuilder.aMrVitaminsProduct;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
 
     @JsonProperty("product_id")

@@ -53,14 +53,14 @@ public class MultiPack extends Pack {
         nameWorkingCopy =
                 StringUtils.replaceAll(
                         nameWorkingCopy,
-                        new String[]{"pk", "pcs", "pieces", "piece", "wipes", "’s", "sheets", "'s", "refill", "tub"},
+                        new String[]{"pcs", "pk", "pieces", "piece", "refill", "’s", "sheets", "'s", "tub", "wipes"},
                         "pack");
 
         nameWorkingCopy = nameWorkingCopy.replaceAll("-", " ");
 
         nameWorkingCopy = StringUtils.removeAll(
                 nameWorkingCopy,
-                new String[]{"mega", "bulk", "bundle", "box", "convenience", "value", "\\.\\.\\.", "\\(", "\\)", "travel",}
+                new String[]{"caplets", "capsules", "caps", "exclusive", "size", "gummies", "lozenges", "pastilles", "tablets", "tabs", "bottle", "box", "bulk", "bundle", "chewable", "convenience", "free", "gel", "liquid", "mega", "soft", "softgel", "travel", "value", "\\.\\.\\.", "\\(", "\\)"}
         );
 
         nameWorkingCopy = nameWorkingCopy.replaceAll("pack", " pack ");

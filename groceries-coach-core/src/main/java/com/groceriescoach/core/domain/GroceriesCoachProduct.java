@@ -55,7 +55,7 @@ public abstract class GroceriesCoachProduct implements Serializable {
                 Arrays.asList(StringUtils.split(trimToEmpty(StringUtils.removeNonAlphanumericCharacters(keywords))));
         for (String keyword : searchKeywords) {
             String keywordWithoutSpecialCharacters = StringUtils.removeNonAlphanumericCharacters(keyword);
-            if (!StringUtils.containsIgnoreCase(nameWithoutSpecialCharacters, keywordWithoutSpecialCharacters) && !StringUtils.containsIgnoreCase(brandWithoutSpecialCharacters, keywordWithoutSpecialCharacters)) {
+            if (!StringUtils.containsIgnoreCase( brandWithoutSpecialCharacters + " " + nameWithoutSpecialCharacters, keywordWithoutSpecialCharacters))  {
                 return false;
             }
         }

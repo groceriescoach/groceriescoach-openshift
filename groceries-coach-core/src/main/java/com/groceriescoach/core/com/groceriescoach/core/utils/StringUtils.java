@@ -46,7 +46,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     public static String removeNonAlphanumericCharacters(String str) {
-        return str.replaceAll("[^a-zA-Z0-9]", "");
+        return str.replaceAll("[^a-zA-Z0-9 ]", "");
     }
 
 }
