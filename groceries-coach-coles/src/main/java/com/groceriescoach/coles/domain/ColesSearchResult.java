@@ -7,7 +7,7 @@ import com.groceriescoach.core.domain.GroceriesCoachSortType;
 import java.io.Serializable;
 import java.util.Collection;
 
-@JsonIgnoreProperties({"categories"})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ColesSearchResult implements Serializable {
 
     private static final long serialVersionUID = 183586110809907116L;
