@@ -13,6 +13,7 @@ import com.groceriescoach.chemistwarehouse.config.ChemistWarehouseConfig;
 import com.groceriescoach.cincottachemist.config.CincottaChemistConfig;
 import com.groceriescoach.coles.config.ColesConfig;
 import com.groceriescoach.config.GroceriesCoachConfig;
+import com.groceriescoach.fruitezy.config.FruitEzyConfig;
 import com.groceriescoach.mrvitamins.config.MrVitaminsConfig;
 import com.groceriescoach.mychemist.config.MyChemistConfig;
 import com.groceriescoach.nursingangel.config.NursingAngelConfig;
@@ -34,7 +35,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         GroceriesCoachConfig.class, AmcalConfig.class, BabyAndToddlerTownConfig.class,
         BabyBounceConfig.class, BabyBuntingConfig.class, BabyKingdomConfig.class, BabySavingsConfig.class,
         BabyVillageConfig.class, BigWConfig.class, ChemistWarehouseConfig.class, CincottaChemistConfig.class,
-        ColesConfig.class, MrVitaminsConfig.class, MyChemistConfig.class, NursingAngelConfig.class,
+        ColesConfig.class, FruitEzyConfig.class, MrVitaminsConfig.class, MyChemistConfig.class, NursingAngelConfig.class,
         Pharmacy4LessConfig.class, PricelineConfig.class, RoyYoungConfig.class, TargetConfig.class,
         ThePharmacyConfig.class, TerryWhiteConfig.class, WoolworthsConfig.class
 })

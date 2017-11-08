@@ -21,6 +21,7 @@ public enum Store {
     ChemistWarehouse("CW", "Chemist Warehouse", Pharmacies),
     CincottaChemist("CC", "Cincotta Chemist", Pharmacies),
     Coles("C", "Coles", Supermarkets),
+    FruitEzy("F", "FruitEzy", Supermarkets),
     MrVitamins("M", "Mr. Vitamins", Pharmacies),
     MyChemist("MC", "My Chemist", Pharmacies),
     NursingAngel("N", "Nursing Angel", BabyShops),

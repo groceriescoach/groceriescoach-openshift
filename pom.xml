@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.M5</version>
+        <version>2.0.0.M6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <modules>
@@ -32,6 +32,7 @@
         <module>groceries-coach-chemistwarehouse</module>
         <module>groceries-coach-cincottachemist</module>
         <module>groceries-coach-coles</module>
+        <module>groceries-coach-fruitezy</module>
         <module>groceries-coach-mrvitamins</module>
         <module>groceries-coach-mychemist</module>
         <module>groceries-coach-nursingangel</module>
@@ -139,6 +140,11 @@
             <dependency>
                 <groupId>com.groceriescoach</groupId>
                 <artifactId>groceries-coach-coles</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.groceriescoach</groupId>
+                <artifactId>groceries-coach-fruitezy</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
