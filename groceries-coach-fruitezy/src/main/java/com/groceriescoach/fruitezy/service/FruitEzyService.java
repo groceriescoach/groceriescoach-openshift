@@ -44,4 +44,9 @@ public class FruitEzyService extends AbstractScrapingStoreSearchService<FruitEzy
         FruitEzySearchResult searchResult = new FruitEzySearchResult(doc, sortType);
         return searchResult.getProducts();
     }
+
+    @Override
+    protected String reformatKeywordsForStore(String keywords) {
+        return super.reformatKeywordsForStore(keywords);
+    }
 }
